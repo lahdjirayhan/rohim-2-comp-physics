@@ -6,8 +6,8 @@
 
 # DFTcomplex.py:  Discrete Fourier Transform wi Python complex math
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 # Complex math
 import cmath  
 

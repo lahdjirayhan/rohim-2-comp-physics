@@ -5,8 +5,8 @@
    Support by National Science Foundation , Oregon State Univ, Microsoft Corp"""
 
 # DFT.py:  Discrete Fourier Transform
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 # for the original signal
 signgr = graph( x=0, y=0, width=600, height=250, title="Original signal y(t)= 3 cos(wt)+2 cos(3wt)+ cos(5wt) ", xtitle="x", ytitle="signal", xmax=2.0 * math.pi, xmin=0, ymax=7, ymin=-7, )

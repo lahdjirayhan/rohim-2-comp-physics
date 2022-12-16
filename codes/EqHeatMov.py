@@ -6,8 +6,8 @@
 
 # EqHeatMov.py Animated heat equation soltn via fine differences
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 g = display(width=600, height=300, title="Cooling of Bar, T(t=0) = 100, T(x=0,L)=0")
 # Temperature Curve, its parameters and labels

@@ -6,8 +6,8 @@
 
 # SplineInteract.py  Spline fit with slide to control number of points
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 from visual.graph import graph, gcurve
 from visual.controls import slider, controls, toggle
 

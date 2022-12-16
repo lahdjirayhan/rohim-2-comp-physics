@@ -6,7 +6,7 @@
 
 # Matrix.py:  Matrix multiplication using visual arrays
 
-from visual import *
+from vpython import *
 
 # Fill array
 vector1 = array([1, 2, 3, 4, 5])  

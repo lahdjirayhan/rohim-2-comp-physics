@@ -7,7 +7,7 @@
 # AdvecLax.py:      Solve advection eqnt via Lax-Wendroff scheme
 # du/dt+ c*d(u**2/2)/dx=0;   u(x,t=0)=exp(-300(x-0.12)**2)
 
-from visual.graph import *
+from vpython import *
 
 # No steps in x
 m = 100  

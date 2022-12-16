@@ -6,7 +6,7 @@
 
 # HarmosAnimateSlow.py: Solves & animates S Eq for wavepacket in HO
 
-from visual import *
+from vpython import *
 
 # initialize wave function, Rhoability, potential (2m=1)
 xmax = 300

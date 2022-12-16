@@ -5,8 +5,8 @@
     Please respect copyright & acknowledge our work."""
 
 # Sierpin.py:            Sierpinski gasket
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 imax = 15000

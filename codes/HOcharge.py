@@ -6,7 +6,7 @@
 
 # HOcharge.py: Quantum particle in HO & E field with Visual
 
-from visual import *
+from vpython import *
 
 # Initialize psi, probability, potential
 dx = 0.04

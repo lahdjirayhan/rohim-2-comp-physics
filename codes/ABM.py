@@ -7,7 +7,7 @@
 # ABM.py:   Adams BM method to integrate ODE
 # Solves y' = (t - y)/2,    with y[0] = 1 over [0, 3]
 
-from visual.graph import *
+from vpython import *
 
 numgr = gdisplay(
     x=0,

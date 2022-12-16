@@ -6,7 +6,7 @@
 
 # DFTreal.py:  Discrete Fourier Transform using real numbers
 
-from visual.graph import *
+from vpython import *
 
 signgr = gdisplay(
     x=0,

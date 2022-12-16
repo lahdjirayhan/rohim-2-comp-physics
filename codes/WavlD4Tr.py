@@ -7,8 +7,8 @@
 """ Uses global variables nedeed to perform wavelet or inverse 
  Wavelet Discrete Transform, Daubechies type"""
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 N = 1024
 # number of data points must be, 4,8,16,32,...,1024..

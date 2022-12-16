@@ -5,8 +5,8 @@
     Please respect copyright & acknowledge our work."""
 
 # Walk.py  Random walk with graph
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 # None => system clock

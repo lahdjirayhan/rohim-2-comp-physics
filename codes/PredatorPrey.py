@@ -6,8 +6,8 @@
 
 # PredatorPrey.py:     Lotka-Volterra models
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 Tmin = 0.0
 Tmax = 500.0

@@ -5,9 +5,9 @@
    Support by National Science Foundation , Oregon State Univ, Microsoft Corp"""
 
 # Ising.py: Ising model
-from visual import *
+from vpython import *
 import random
-from visual.graph import *
+from vpython import *
 
 # Display for the arrows
 scene = canvas(x=0, y=0, width=700, height=200, range=40, title="Spins")

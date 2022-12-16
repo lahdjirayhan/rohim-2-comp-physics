@@ -6,7 +6,7 @@
 
 # CircPolarztn.py: Maxwell eqs. for circular polarization using FDTD
 
-from visual import *
+from vpython import *
 
 scene = display(
     x=0,

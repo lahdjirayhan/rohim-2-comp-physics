@@ -6,7 +6,7 @@
 
 # BoundCall.py: p space bound state; imports GaussPoints, matrix
 
-from visual import *
+from vpython import *
 from numpy import *
 from numpy.linalg import *
 from GaussPoints import GaussPoints

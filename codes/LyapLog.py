@@ -6,8 +6,8 @@
 
 # LyapLog.py:                Lyapunov coef for logistic map
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 m_min = 2.1
 m_max = 4.0

@@ -5,7 +5,7 @@
 
 # K_0states.py: Wavepacket in double well
 
-from visual.graph import *
+from vpython import *
 
 dx = 0.04
 dx2 = dx * dx

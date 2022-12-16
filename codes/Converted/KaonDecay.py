@@ -5,7 +5,7 @@
 
 # K_0decay.py:  Probability of K^0 decay into two pions
 
-from visual.graph import *
+from vpython import *
 
 scene = graph( width=800, height=700, background=color.white, foreground=color.black, logy=True, xtitle="Time", ytitle="log Probability", title="K_S -> 2 pi", )
 lin = gcurve(color=color.red)

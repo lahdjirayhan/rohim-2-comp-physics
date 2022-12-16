@@ -6,8 +6,8 @@
 
 # ProjectileAir.py: Order dt^2 projectile trajectory + drag
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 v0 = 22.0
 angle = 34.0

@@ -6,7 +6,7 @@
 
 # EqStringAnimate.py:    Animated leapfrog solution of wave equation
 
-from visual import *
+from vpython import *
 
 # Set up curve
 g = canvas(width=600, height=300, title="Vibrating string")

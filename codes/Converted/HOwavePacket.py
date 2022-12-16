@@ -7,7 +7,7 @@
 # HOwavePacket.py: HO wave packet in motion via Visual
 
 from numpy import *
-from visual.graph import *
+from vpython import *
 
 # Constants & Initial Values
 oneoverpi = 1 / math.sqrt(math.pi)

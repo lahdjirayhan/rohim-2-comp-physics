@@ -7,7 +7,7 @@
 # BurgerLax.py:   Solve Burger's eqnt via Lax-Wendroff scheme
 # du/dt+ c*d(u**2/2)/dx=0;   u(x,t=0)=exp(-300(x-0.12)**2)
 
-from visual.graph import *
+from vpython import *
 
 m = 100  # No steps in x
 c = 1.0

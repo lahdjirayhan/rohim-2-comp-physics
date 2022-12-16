@@ -6,7 +6,7 @@
 
 # 3QMdisksVis.py: Wavepacket scattering from 3 disks wi Visual
 
-from visual import *
+from vpython import *
 
 R = 24
 N = 101

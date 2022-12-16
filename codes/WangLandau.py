@@ -10,9 +10,9 @@
  Universidad de Antioquia, Medellin, Colombia
  Each time fac changes, a new histogrm is generated.
  Only the first Histogram plotted to reduce computational time"""
-from visual import *
+from vpython import *
 import random
-from visual.graph import *
+from vpython import *
 
 L = 8
 N = L * L

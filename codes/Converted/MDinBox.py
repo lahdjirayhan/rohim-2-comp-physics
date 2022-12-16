@@ -6,7 +6,7 @@
 
 # MDinBox.py: MD simulation in a box
 
-from visual.graph import *
+from vpython import *
 import random
 
 # side square

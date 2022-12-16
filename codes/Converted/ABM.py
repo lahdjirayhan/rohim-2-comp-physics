@@ -7,7 +7,7 @@
 # ABM.py:   Adams BM method to integrate ODE
 # Solves y' = (t - y)/2,    with y[0] = 1 over [0, 3]
 
-from visual.graph import *
+from vpython import *
 
 numgr = graph( x=0, y=0, width=600, height=300, xmin=0.0, xmax=3.0, title="Numerical Solution", xtitle="t", ytitle="y", ymax=2.0, ymin=0.9, )
 numsol = gcurve(color=color.yellow, canvas=numgr)

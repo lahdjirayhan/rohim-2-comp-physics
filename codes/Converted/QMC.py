@@ -6,8 +6,8 @@
 
 # QMC.py: Quantum MonteCarlo (Feynman path integration)
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 N = 100

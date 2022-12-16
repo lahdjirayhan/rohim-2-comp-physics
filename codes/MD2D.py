@@ -6,8 +6,8 @@
 
 # MD2.py:           Molecular dynamics in 2D
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 scene = display(x=0, y=0, width=350, height=350, title="Molecular Dynamics", range=10)

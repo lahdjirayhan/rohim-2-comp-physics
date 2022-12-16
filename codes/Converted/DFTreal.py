@@ -6,7 +6,7 @@
 
 # DFTreal.py:  Discrete Fourier Transform using real numbers
 
-from visual.graph import *
+from vpython import *
 
 signgr = graph( x=0, y=0, width=600, height=250, title="Signal y(t)= 3 cos(wt)+2 cos(3wt)+ cos(5wt) ", xtitle="x", ytitle="signal", xmax=2.0 * math.pi, xmin=0, ymax=7, ymin=-7, )
 sigfig = gcurve(color=color.yellow, canvas=signgr)

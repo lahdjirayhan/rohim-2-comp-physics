@@ -11,9 +11,9 @@
  Based on FEM2DL_Box Matlab program in Polycarpou, Intro Finite 
  Element Method in Electromagnetics, Morgan & Claypool (2006) """
 
-from visual import *
+from vpython import *
 import random
-from visual.graph import *
+from vpython import *
 
 # Display for the arrows
 scene = display(x=0, y=0, width=700, height=200, range=40, title="Spins")

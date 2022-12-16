@@ -7,7 +7,7 @@
 # GlauberState.py: Glauber's Coherent Quantum State
 
 from numpy import *
-from visual.graph import *
+from vpython import *
 
 wavef = display(x=0, y=0, width=600, height=600, range=50)
 plotob = curve(x=list(range(0, 80)), color=color.yellow, radius=0.2)

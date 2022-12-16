@@ -14,8 +14,8 @@
    * If less than  2 neighbors are alive the cell dies of loneliness
    * A dead cell will be alive if  3 of its 8 neighbors are alive"""
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 scene = display(width=500, height=500, title="Game of Life")  # 1st array

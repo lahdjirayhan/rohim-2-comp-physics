@@ -7,7 +7,7 @@
 #  vonNeuman: Monte-Carlo integration via stone throwing
 
 import random
-from visual.graph import *
+from vpython import *
 
 # points to plot the function
 N = 100  

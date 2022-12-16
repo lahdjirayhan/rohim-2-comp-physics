@@ -6,7 +6,7 @@
 
 # Bisection.py: zero of f(x) via Bisection algorithm within [a,b]
 
-from visual.graph import *
+from vpython import *
 
 eps = 1e-3
 Nmax = 100

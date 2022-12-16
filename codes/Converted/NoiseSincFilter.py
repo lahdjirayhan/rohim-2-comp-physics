@@ -6,8 +6,8 @@
 
 # NoiseSincFilter.py: Noise reduction by filtering
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 max = 4000

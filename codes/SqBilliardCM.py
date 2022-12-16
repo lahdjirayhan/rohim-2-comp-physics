@@ -6,7 +6,7 @@
 
 # SqBillardCM.py: Animated classical billiards on square table
 
-from visual import *
+from vpython import *
 
 
 dt = 0.01

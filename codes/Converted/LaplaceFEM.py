@@ -5,8 +5,8 @@
    Support by National Science Foundation , Oregon State Univ, Microsoft Corp"""
 
 # LaplaceFEM.py:  Solutn of Laplace Eq via finite elements method
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 from numpy import *
 from numpy.linalg import solve
 

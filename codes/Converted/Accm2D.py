@@ -6,7 +6,7 @@
 
 # Accmd.Py: Python accelerated motion in 2D
 
-from visual.graph import *
+from vpython import *
 
 
 class Um1D:

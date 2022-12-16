@@ -7,7 +7,7 @@
 #  vonNeuman: Monte-Carlo integration via stone throwing
 
 import random
-from visual.graph import *
+from vpython import *
 
 N = 100  # points to plot the function
 graph = display(width=500, height=500, title="vonNeumann Rejection Int")

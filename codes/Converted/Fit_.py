@@ -7,7 +7,7 @@
 # Fit.py     Linear least square fit; e.g. of matrix computation arrays
 
 import pylab as p
-from visual import *
+from vpython import *
 from numpy import *
 from numpy.linalg import inv
 from numpy.linalg import solve

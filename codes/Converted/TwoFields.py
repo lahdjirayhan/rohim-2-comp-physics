@@ -6,7 +6,7 @@
 
 # TwoFileds.py:  Motion 2 charges, 2 frames wi Field TF & Visual
 
-from visual.graph import *
+from vpython import *
 
 scene = canvas(width=700, height=300, range=1, title="Frame S with moving charges")
 graf = curve(color=color.red)

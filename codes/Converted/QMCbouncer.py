@@ -6,9 +6,9 @@
 
 # QMCbouncer.py:       g.s. wavefunction via path integration
 
-from visual import *
+from vpython import *
 import random
-from visual.graph import *
+from vpython import *
 
 # Parameters
 N = 100

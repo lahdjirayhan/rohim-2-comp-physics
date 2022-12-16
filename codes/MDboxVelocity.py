@@ -1,4 +1,4 @@
-from visual.graph import *
+from vpython import *
 import random
 
 L = 1  # side square

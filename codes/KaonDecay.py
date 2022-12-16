@@ -5,7 +5,7 @@
 
 # K_0decay.py:  Probability of K^0 decay into two pions
 
-from visual.graph import *
+from vpython import *
 
 scene = gdisplay(
     width=800,

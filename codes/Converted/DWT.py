@@ -6,8 +6,8 @@
 
 # DWT.py:  Discrete Wavelet Transform, Daubechies type
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 sq3 = sqrt(3)
 fsq2 = 4.0 * sqrt(2)

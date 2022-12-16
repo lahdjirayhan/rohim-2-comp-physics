@@ -6,7 +6,7 @@
 
 # BSwoodSaxon.py # Bound state in Woods-Saxon potential
 
-from visual import *
+from vpython import *
 
 psigr = display(
     x=0,

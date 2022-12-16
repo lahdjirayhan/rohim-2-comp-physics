@@ -5,8 +5,8 @@
     Please respect copyright & acknowledge our work."""
 
 # Decay.py spontaneous decay simulation
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 # Decay constant

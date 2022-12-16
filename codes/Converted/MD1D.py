@@ -6,8 +6,8 @@
 
 # MD1.py          Molecular dynamics in 1D
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random
 
 # Spheres

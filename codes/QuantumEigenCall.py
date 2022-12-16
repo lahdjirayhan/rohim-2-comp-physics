@@ -7,7 +7,7 @@
 # QuantumEigenCall.py: Finds E & psi via rk4 + bisection
 
 # m/(hbar*c)**2 = 940MeV/(197.33MeV-fm)**2 = 0.4829
-from visual import *
+from vpython import *
 from rk4Algor import rk4Algor
 
 psigr = display(x=0, y=0, width=600, height=300, title="R & L Psi")

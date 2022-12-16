@@ -6,8 +6,8 @@
 
 # Spline.py  Spline fit with slide to control number of points
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 # Data
 x = array([0.0, 0.1, 0.2, 0.37, 0.5, 0.55, 0.65, 0.77, 0.9])  

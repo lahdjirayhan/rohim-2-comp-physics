@@ -6,7 +6,7 @@
 
 # DielectVis.py: Visual Animated FDTD E & B free space to dielectric
 
-from visual import *
+from vpython import *
 
 Xmax = 401
 Ymax = 100

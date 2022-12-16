@@ -6,7 +6,7 @@
 
 # FDTD.py  FDTD Maxwell's equations in 1-D wi Visual
 
-from visual import *
+from vpython import *
 
 Xm = 201
 Ym = 100

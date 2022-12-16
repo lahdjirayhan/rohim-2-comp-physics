@@ -6,7 +6,7 @@
 
 # rk4.py 4th order Runge Kutta application wi built in rk4
 
-from visual.graph import *
+from vpython import *
 
 #   Initialization
 a = 0.0

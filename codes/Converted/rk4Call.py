@@ -7,7 +7,7 @@
 # rk4Call.py: 4th O Runge Kutta calling rk4Algor
 #           for ODE y" = -100y-2y'+ 100 sin(3t)
 
-from visual.graph import *
+from vpython import *
 from rk4Algor import rk4Algor
 
 

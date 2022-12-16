@@ -5,8 +5,8 @@
     Please respect copyright & acknowledge our work."""
 
 # Bessel.py
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 Xmax = 40.0
 Xmin = 0.25

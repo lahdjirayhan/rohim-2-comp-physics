@@ -6,7 +6,7 @@
 
 # TwoForces.py Forces on two moving strings
 
-from visual.graph import *
+from vpython import *
 
 posy = 100
 # basic height, cord length

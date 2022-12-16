@@ -6,7 +6,7 @@
 
 # Bugs.py The Logistic map
 
-from visual.graph import *
+from vpython import *
 
 mu_min = 1.0
 mu_max = 4.0

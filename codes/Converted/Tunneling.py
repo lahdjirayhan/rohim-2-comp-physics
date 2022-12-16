@@ -1,4 +1,4 @@
-from visual.graph import *
+from vpython import *
 
 # initialize wave function, probability, potential
 dx = 0.04

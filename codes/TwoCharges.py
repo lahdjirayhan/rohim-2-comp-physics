@@ -6,7 +6,7 @@
 
 # TwoCharges.py:  Motion of 2 charges in 2 frames wi Visual
 
-from visual.graph import *
+from vpython import *
 
 scene = display(
     width=700,

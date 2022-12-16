@@ -6,8 +6,8 @@
    Support by National Science Foundation """
 
 # Simulates radiactive decay
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 import random  # generates random numbers
 
 rejilla = ones((100, 100))  # grid 100x100

@@ -6,8 +6,8 @@
 
 # LaplaceFEM_1D.py:  Solutn 1-D Laplace Eq via finite elements; utf8 coding
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 from numpy import *
 from numpy.linalg import solve
 

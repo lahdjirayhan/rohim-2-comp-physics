@@ -9,7 +9,7 @@
 # mass/((hbar*c)**2)= 940MeV/(197.33MeV-fm)**2 =0.4829
 # well width=20.0 fm, depth 10 MeV, Wave function not normalized.
 
-from visual import *
+from vpython import *
 
 psigr = canvas(x=0, y=0, width=600, height=300, title="R & L Wavefunc")
 Lwf = curve(x=list(range(502)), color=color.red)

@@ -6,9 +6,9 @@
 
 # Lagrange.py: Langrange interpolation tabulated data; 2, 4, 8 degree poly
 
-from visual import *
-from visual.graph import *
-from visual.controls import *
+from vpython import *
+from vpython import *
+from vpython import *
 
 sceneK = canvas( x=0, y=0, width=500, height=500, title="Lagrange Interpolation with Toggle Switch"
 )

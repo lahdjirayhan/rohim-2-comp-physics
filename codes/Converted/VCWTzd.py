@@ -9,8 +9,8 @@
 """Different wavelets (middle) used during transform, and transform (top) 
 for each wavelet. Then wavelet translated and scaled."""
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 N = 240
 transfgr = canvas(x=0, y=0, width=600, height=200, title="Transform, not normalized")

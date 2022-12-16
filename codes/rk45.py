@@ -6,7 +6,7 @@
 
 # rk45.py         Adaptive step size Runge Kutta
 
-from visual.graph import *
+from vpython import *
 
 a = 0.0
 b = 10.0  # Error tolerance, endpoints

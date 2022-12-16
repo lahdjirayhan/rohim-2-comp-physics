@@ -5,8 +5,8 @@
     Please respect copyright & acknowledge our work."""
 # Scatt.py:    Soln p space Lippmann Schwinger for scattering
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 # Numpy's LinearAlgebra
 import numpy.linalg as lina  
 

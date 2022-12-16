@@ -5,8 +5,8 @@
    Support by National Science Foundation , Oregon State Univ, Microsoft Corp"""
 
 # DFT.py:  Discrete Fourier Transform
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 # for the original signal
 signgr = gdisplay(

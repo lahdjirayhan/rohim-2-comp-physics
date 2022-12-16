@@ -6,7 +6,7 @@
 
 # BSwoodSaxon.py # Bound state in Woods-Saxon potential
 
-from visual import *
+from vpython import *
 
 psigr = canvas( x=0, y=0, width=600, height=500, title="Match of R & L Wave Functions @ Vertical Line", background=color.white, foreground=color.black, )
 psi = curve(x=list(range(0, 1000)), canvas=psigr, color=color.orange)

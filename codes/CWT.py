@@ -8,7 +8,7 @@
 
 import matplotlib.pylab as p
 from mpl_toolkits.mplot3d import Axes3D
-from visual.graph import *
+from vpython import *
 
 originalsignal = gdisplay(
     x=0,

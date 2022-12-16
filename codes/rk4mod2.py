@@ -5,7 +5,7 @@
     Please respect copyright & acknowledge our work."""
 # rk4.py 4th O Runge Kutta for ODE y" = -100y-2y'+ 100 sin(3t)
 
-from visual.graph import *
+from vpython import *
 
 #   Initialization
 Tstart = 0.0

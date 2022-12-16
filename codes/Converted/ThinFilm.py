@@ -6,7 +6,7 @@
 
 # ThinFilm.py: Thin film interference by reflection (AJP 72,1248-1253)
 
-from visual.graph import *
+from vpython import *
 
 escene = canvas( width=500, height=500, range=400, background=color.white, foreground=color.black, title="Thin Film Interference", )
 # Red intensities

@@ -6,7 +6,7 @@
 
 # ThinFilm.py: Thin film interference by reflection (AJP 72,1248-1253)
 
-from visual.graph import *
+from vpython import *
 
 escene = display(
     width=500,

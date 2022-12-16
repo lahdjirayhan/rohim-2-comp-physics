@@ -6,7 +6,7 @@
 
 # SlidingBox.py: 3-D animation of forces on a beam as box slides
 
-from visual.graph import *
+from vpython import *
 
 Hsupport = 30
 d = 100  # height, distance supports

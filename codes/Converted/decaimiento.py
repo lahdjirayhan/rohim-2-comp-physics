@@ -6,8 +6,8 @@
    Support by National Science Foundation """
 
 # Simulates radiactive decay
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 # generates random numbers
 import random  
 

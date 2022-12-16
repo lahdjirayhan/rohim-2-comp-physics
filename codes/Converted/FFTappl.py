@@ -6,8 +6,8 @@
 
 #  FFT.py  FFT for complex numbers dtr[][2], returned in dtr
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 # 2**10
 N = 1024  

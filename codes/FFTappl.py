@@ -6,8 +6,8 @@
 
 #  FFT.py  FFT for complex numbers dtr[][2], returned in dtr
 
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 N = 1024  # 2**10
 signalgr = gdisplay(

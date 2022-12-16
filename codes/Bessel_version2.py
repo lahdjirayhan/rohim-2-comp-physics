@@ -5,8 +5,8 @@
    Support by National Science Foundation , Oregon State Univ, Microsoft Corp"""
 
 # Bessel.py
-from visual import *
-from visual.graph import *
+from vpython import *
+from vpython import *
 
 Xmax = 40.0
 Xmin = 0.25

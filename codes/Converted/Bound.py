@@ -6,7 +6,7 @@
 
 # Bound.py: Bound state solutn of Lippmann-Schwinger equation in p space
 
-from visual import *
+from vpython import *
 from numpy import *
 from numpy.linalg import *
 
