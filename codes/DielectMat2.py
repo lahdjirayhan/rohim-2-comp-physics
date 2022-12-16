@@ -16,28 +16,35 @@ Ymax = 100
 Zmax = 100
 eps = 4
 dd = 0.5
-Xmax = 401  # Dielectric, stability param, Npts
+# Dielectric, stability param, Npts
+Xmax = 401  
 Ex = zeros((Xmax), float)
-Hy = zeros((Xmax), float)  # Declare E,H
+# Declare E,H
+Hy = zeros((Xmax), float)  
 beta = zeros((Xmax), float)
 
 for i in range(0, 401):
     if i < 201:
-        beta[i] = dd  # Free space, use stability cond
+# Free space, use stability cond
+        beta[i] = dd  
     else:
-        beta[i] = dd / eps  # In dielectric
+# In dielectric
+        beta[i] = dd / eps  
 
-z = arange(201)  # Initial fields outside dielectric
+# Initial fields outside dielectric
+z = arange(201)  
 xs = np.arange(1, Xmax - 1)
-Ex[:201] = 0.5 * sin(2 * pi * z / 100.0)  # Slice entire range
+# Slice entire range
+Ex[:201] = 0.5 * sin(2 * pi * z / 100.0)  
 Hy[:201] = 0.5 * sin(2 * pi * z / 100.0)
 fig = plt.figure()
-ax = fig.add_subplot(111, autoscale_on=False, xlim=(1, Xmax - 1), ylim=(-0.6, 0.6))
+ax = fig.add_subplot(111, autoscale_on=False, xlim=vector(1, Xmax - 1,0), ylim=vector(-0.6, 0.6,0))
 ax.grid()
 (line,) = ax.plot(xs, Ex[1 : Xmax - 1], lw=2)
 
 
-def animate(dum):  # Called by animation, NB "," in return line
+# Called by animation, NB "," in return line
+def animate(dum):  
     for x in range(1, Xmax - 1):
         Ex[x] = Ex[x] + beta[x] * (Hy[x - 1] - Hy[x])
         Hy[x] = Hy[x] + dd * (Ex[x] - Ex[x + 1])
@@ -48,6 +55,7 @@ def animate(dum):  # Called by animation, NB "," in return line
 plt.title("Refraction and Reflection of Wave at Dielectric (on right)")
 plt.xlabel("z")
 plt.ylabel("Ex")
-p = plt.axvline(x=200, color="r")  # Vertical line separates regions
+# Vertical line separates regions
+p = plt.axvline(x=200, color="r")  
 ani = animation.FuncAnimation(fig, animate, 1, blit=True)
 plt.show()

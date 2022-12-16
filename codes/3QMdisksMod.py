@@ -31,20 +31,23 @@ iy = np.arange(0, 101)
 X, Y = np.meshgrid(ix, iy)
 
 
-def Pot1Disk(xa, ya):  # Potential single disk
+# Potential single disk
+def Pot1Disk(xa, ya):  
     for i in range(ya - r, ya + r + 1):
         for j in range(xa - r, xa + r + 1):
             if np.sqrt((i - ya) ** 2 + (j - xa) ** 2) <= r:
                 V[i, j] = 5.0
 
 
-def Pot3Disks():  # Potential three disk
+# Potential three disk
+def Pot3Disks():  
     Pot1Disk(30, 45)
     Pot1Disk(70, 45)
     Pot1Disk(50, 80)
 
 
-def Psi_0(Xo, Yo):  # Initial Psi
+# Initial Psi
+def Psi_0(Xo, Yo):  
     for i in np.arange(0, N):
         for j in np.arange(0, N):
             Gaussian = np.exp(-0.03 * (i - Yo) ** 2 - 0.03 * (j - Xo) ** 2)
@@ -53,43 +56,28 @@ def Psi_0(Xo, Yo):  # Initial Psi
             Rho[i, j] = RePsi[i, j] ** 2 + ImPsi[i, j] ** 2 + 0.01
 
 
-Pot3Disks()  # Set potential
-Psi_0(Xo, Yo)  # Initial Psi
+# Set potential
+Pot3Disks()  
+# Initial Psi
+Psi_0(Xo, Yo)  
 # RhoInitial()
-fig = p.figure()  # Create figure
+# Create figure
+fig = p.figure()  
 ax = Axes3D(fig)
-for t in range(0, 120):  # 120->30                 # Compute Psi t < 120
+# 120->30                 # Compute Psi t < 120
+for t in range(0, 120):  
     if t % 5 == 0:
-        print(("t =", t))  # Print ea 10th t
-    ImPsi[1:-1, 1:-1] = (
-        ImPsi[1:-1, 1:-1]
-        + fc
-        * (
-            RePsi[2:, 1:-1]
-            + RePsi[:-2, 1:-1]
-            - 4 * RePsi[1:-1, 1:-1]
-            + RePsi[1:-1, 2:]
-            + RePsi[1:-1, :-2]
-        )
-        + V[1:-1, 1:-1] * dt * RePsi[1:-1, 1:-1]
-    )
-    RePsi[1:-1, 1:-1] = (
-        RePsi[1:-1, 1:-1]
-        - fc
-        * (
-            ImPsi[2:, 1:-1]
-            + ImPsi[:-2, 1:-1]
-            - 4 * ImPsi[1:-1, 1:-1]
-            + ImPsi[1:-1, 2:]
-            + ImPsi[1:-1, :-2]
-        )
-        + V[1:-1, 1:-1] * dt * ImPsi[1:-1, 1:-1]
-    )
-    for i in range(1, N - 1):  # Compute Rho
+# Print ea 10th t
+        print(("t =", t))  
+    ImPsi[1:-1, 1:-1] = ( ImPsi[1:-1, 1:-1] + fc * ( RePsi[2:, 1:-1] + RePsi[:-2, 1:-1] - 4 * RePsi[1:-1, 1:-1] + RePsi[1:-1, 2:] + RePsi[1:-1, :-2] ) + V[1:-1, 1:-1] * dt * RePsi[1:-1, 1:-1] )
+    RePsi[1:-1, 1:-1] = ( RePsi[1:-1, 1:-1] - fc * ( ImPsi[2:, 1:-1] + ImPsi[:-2, 1:-1] - 4 * ImPsi[1:-1, 1:-1] + ImPsi[1:-1, 2:] + ImPsi[1:-1, :-2] ) + V[1:-1, 1:-1] * dt * ImPsi[1:-1, 1:-1] )
+# Compute Rho
+    for i in range(1, N - 1):  
         for j in range(1, N - 1):
             if V[i, j] != 0:
                 RePsi[i, j] = 0
-                ImPsi[i, j] = 0  # Hard Disk
+# Hard Disk
+                ImPsi[i, j] = 0  
             Rho[i, j] = 0.1 * (RePsi[i, j] ** 2 + ImPsi[i, j] ** 2) + 0.0002 * V[i, j]
 X, Y = np.meshgrid(ix, iy)
 Z = Rho[X, Y]

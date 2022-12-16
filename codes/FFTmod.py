@@ -6,23 +6,30 @@
 
 # FFTmod.py:  FFT for complex numbers in dtr[][2], returned in dtr
 
-from numpy import *  # from sys import version
+# from sys import version
+from numpy import *  
 
 max = 2100
 points = 1026
-N = 16  # Power of 2
-isign = -1  # -1, 1 TF, inverse TF
+# Power of 2
+N = 16  
+# -1, 1 TF, inverse TF
+isign = -1  
 data = zeros((max), float)
 dtr = zeros((points, 2), float)
 
 
-def FFT(N, isign):  # FFT of dtr[n,2]
+# FFT of dtr[n,2]
+def FFT(N, isign):  
     n = 2 * N
     for i in range(0, N + 1):
         j = 2 * i + 1
-        data[j] = dtr[i, 0]  # Real dtr, odd data[j]
-        data[j + 1] = dtr[i, 1]  # Imag dtr, even data[j+1]
-    j = 1  # Place reverse order
+# Real dtr, odd data[j]
+        data[j] = dtr[i, 0]  
+# Imag dtr, even data[j+1]
+        data[j + 1] = dtr[i, 1]  
+# Place reverse order
+    j = 1  
     for i in range(1, n + 2, 2):
         if (i - j) < 0:
             tempr = data[j]
@@ -42,7 +49,8 @@ def FFT(N, isign):  # FFT of dtr[n,2]
     for i in range(1, n + 1, 2):
         print(("%2d data[%2d] %9.5f " % (i, i, data[i])))
     mmax = 2
-    while (mmax - n) < 0:  # Begin transform
+# Begin transform
+    while (mmax - n) < 0:  
         istep = 2 * mmax
         theta = 6.2831853 / (isign * mmax)
         sinth = math.sin(theta / 2.0)
@@ -71,11 +79,15 @@ def FFT(N, isign):  # FFT of dtr[n,2]
 
 print("\n        Input")
 print("  i   Re part   Im  part")
-for i in range(0, N):  # Form array
-    dtr[i, 0] = 1.0 * i  # Real part
-    dtr[i, 1] = 1.0 * i  # Im part
+# Form array
+for i in range(0, N):  
+# Real part
+    dtr[i, 0] = 1.0 * i  
+# Im part
+    dtr[i, 1] = 1.0 * i  
     print((" %2d %9.5f %9.5f" % (i, dtr[i, 0], dtr[i, 1])))
-FFT(N, isign)  # Call FFT, use global dtr[][]
+# Call FFT, use global dtr[][]
+FFT(N, isign)  
 print("\n    Fourier Transform \n  i      Re      Im    ")
 for i in range(0, N):
     print((" %2d  %9.5f  %9.5f " % (i, dtr[i, 0], dtr[i, 1])))

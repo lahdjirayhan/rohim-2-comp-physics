@@ -9,20 +9,31 @@
 from numpy import *
 from sys import version
 
-if int(version[0]) > 2:  # Python 3 uses input, not raw_input
+# Python 3 uses input, not raw_input
+if int(version[0]) > 2:  
     raw_input = input
-name = eval(input("Key in your name: "))  # raw_input strings
+# raw_input strings
+name = eval(input("Key in your name: "))  
 print(("Hi ", name))
-radius = eval(input("Enter a radius: "))  # For numerical values
-print(("you entered radius= %8.5f" % radius))  # formatted output
-print("Enter new name and r in file Name.dat")  # raw_input  strings
-inpfile = open("Name.dat", "r")  # Read from file Name.dat
+# For numerical values
+radius = eval(input("Enter a radius: "))  
+# formatted output
+print(("you entered radius= %8.5f" % radius))  
+# raw_input  strings
+print("Enter new name and r in file Name.dat")  
+# Read from file Name.dat
+inpfile = open("Name.dat", "r")  
 for line in inpfile:
-    line = line.split()  # Splits components of line
-    name = line[0]  # First entry in the list
-    print((" Hi  %10s" % (name)))  # print Hi + first entry
-    r = float(line[1])  # convert string to float
-    print((" r = %13.5f" % (r)))  # convert to float & print
+# Splits components of line
+    line = line.split()  
+# First entry in the list
+    name = line[0]  
+# print Hi + first entry
+    print((" Hi  %10s" % (name)))  
+# convert string to float
+    r = float(line[1])  
+# convert to float & print
+    print((" r = %13.5f" % (r)))  
 inpfile.close()
 A = math.pi * r**2
 print("Done, look in A.dat\n")
@@ -30,7 +41,8 @@ outfile = open("A.dat", "w")
 outfile.write("r=  %13.5f\n" % (r))
 outfile.write("A =  %13.5f\n" % (A))
 outfile.close()
-print(("r = %13.5f" % (r), ", A = %13.5f" % (A)))  # Screen output
+# Screen output
+print(("r = %13.5f" % (r), ", A = %13.5f" % (A)))  
 print("\n Now example of integer input ")
 age = int(eval(input("Now key in your age as an integer:  ")))
 print(("age: %4d  years old,  you don't look it!\n" % (age)))

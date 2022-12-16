@@ -15,15 +15,19 @@ a = 0.0
 b = 1.0
 eps = 3.0e-14
 w = zeros(2001, float)
-x = zeros(2001, float)  # Arrays
+# Arrays
+x = zeros(2001, float)  
 
 
 def f(x):
-    return exp(x)  # Integrand
+# Integrand
+    return exp(x)  
 
 
-GaussPoints(Npts, a, b, x, w, eps)  #  eps: precison of pts
+#  eps: precison of pts
+GaussPoints(Npts, a, b, x, w, eps)  
 for i in range(0, Npts):
-    Ans += f(x[i]) * w[i]  # Sum integrands
+# Sum integrands
+    Ans += f(x[i]) * w[i]  
 print(("\n Npts =", Npts, ",   Ans =", Ans))
 print((" eps =", eps, ", Error =", Ans - (exp(1) - 1)))

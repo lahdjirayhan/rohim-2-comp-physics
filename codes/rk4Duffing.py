@@ -20,27 +20,36 @@ b = -0.5
 g = 0.02
 F = 0.0008
 w = 1.0
-h = 0.1  # Time step
+# Time step
+h = 0.1  
 i = 0
 y[0] = 0.09
-y[1] = 0  # Initial x, velocity
+# Initial x, velocity
+y[1] = 0  
 
 
-def f(t, y):  # RHS function
+# RHS function
+def f(t, y):  
     rhs[0] = y[1]
     rhs[1] = -2 * g * y[1] - a * y[0] - b * y[0] ** 3 + F * cos(w * t)
     return rhs
 
 
-for t in np.arange(0, 200, h):  # Time Loop
+# Time Loop
+for t in np.arange(0, 200, h):  
     tt[i] = t
-    y = rk4Algor(t, h, 2, y, f)  # Call rk4
-    yy[i] = y[0]  # x(t)
-    vy[i] = y[1]  # v(t)
+# Call rk4
+    y = rk4Algor(t, h, 2, y, f)  
+# x(t)
+    yy[i] = y[0]  
+# v(t)
+    vy[i] = y[1]  
     i = i + 1
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(12, 5))
-axes[0].plot(tt[1000:], yy[1000:])  # 1000 to avoid transients
-axes[0].grid()  # x(t)
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=vector(12, 5,0))
+# 1000 to avoid transients
+axes[0].plot(tt[1000:], yy[1000:])  
+# x(t)
+axes[0].grid()  
 axes[0].set_title("Duffing Oscillator x(t)")
 axes[0].set_xlabel("t")
 axes[0].set_ylabel("x(t)")

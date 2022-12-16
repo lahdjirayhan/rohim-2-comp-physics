@@ -8,11 +8,18 @@
 import sys
 
 print("hello \n")
-print("\t it's me")  # tabulator
+# tabulator
+print("\t it's me")  
 b = 73
-print(("decimal 73 as integer b = %d " % (b)))  # for integer
-print(("as octal b = %o" % (b)))  # octal
-print(("as hexadecimal b = %x " % (b)))  # works hexadecimal
-print('learn "Python" ')  # use of double quote symbol
-print("shows a backslash \\")  # use of \\
-print("use of single ' quotes ' ")  # print single quotes
+# for integer
+print(("decimal 73 as integer b = %d " % (b)))  
+# octal
+print(("as octal b = %o" % (b)))  
+# works hexadecimal
+print(("as hexadecimal b = %x " % (b)))  
+# use of double quote symbol
+print('learn "Python" ')  
+# use of \\
+print("shows a backslash \\")  
+# print single quotes
+print("use of single ' quotes ' ")  

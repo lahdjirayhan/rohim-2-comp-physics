@@ -30,9 +30,7 @@ def GaussPoints(Npts, a, b, x, w, eps):
             for j in range(1, Npts + 1):
                 p3 = p2
                 p2 = p1
-                p1 = ((2.0 * float(j) - 1) * t * p2 - (float(j) - 1.0) * p3) / (
-                    float(j)
-                )
+                p1 = ((2.0 * float(j) - 1) * t * p2 - (float(j) - 1.0) * p3) / ( float(j) )
             pp = Npts * (t * p1 - p2) / (t * t - 1.0)
             t1 = t
             t = t1 - p1 / pp
@@ -41,6 +39,7 @@ def GaussPoints(Npts, a, b, x, w, eps):
         w[i - 1] = 2.0 / ((1.0 - t * t) * pp * pp)
         w[Npts - i] = w[i - 1]
 
-    for j in range(0, Npts):  # Scale [-1,+1] to [a,b]
+# Scale [-1,+1] to [a,b]
+    for j in range(0, Npts):  
         x[j] = x[j] * (b - a) / 2.0 + (b + a) / 2.0
         w[j] = w[j] * (b - a) / 2.0

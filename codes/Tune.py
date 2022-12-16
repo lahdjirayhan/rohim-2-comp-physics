@@ -17,8 +17,10 @@ diag = zeros((Ldim, Ldim), float)
 coef = zeros((Ldim), float)
 sigma = zeros((Ldim), float)
 ham = zeros((Ldim, Ldim), float)
-t0 = datetime.datetime.now()  # Initialize time
-for i in range(1, Ldim):  # Set up Hamiltonian
+# Initialize time
+t0 = datetime.datetime.now()  
+# Set up Hamiltonian
+for i in range(1, Ldim):  
     for j in range(1, Ldim):
         if abs(j - i) > 10:
             ham[j, i] = 0.0
@@ -30,7 +32,8 @@ coef[1] = 1.0
 err = 1.0
 iter = 0
 print("iter  ener      err ")
-while iter < 15 and err > 1.0e-6:  # Compute current E & normalize
+# Compute current E & normalize
+while iter < 15 and err > 1.0e-6:  
     iter = iter + 1
     ener = 0.0
     ovlp = 0.0
@@ -45,11 +48,13 @@ while iter < 15 and err > 1.0e-6:  # Compute current E & normalize
         coef[i] = coef[i] / sqrt(ovlp)
         sigma[i] = sigma[i] / sqrt(ovlp)
     err = 0.0
-    for i in range(2, Ldim):  # Update
+# Update
+    for i in range(2, Ldim):  
         step = (sigma[i] - ener * coef[i]) / (ener - ham[i, i])
         coef[i] = coef[i] + step
         err = err + step * step
     err = sqrt(err)
     print((" %2d  %9.7f  %9.7f " % (iter, ener, err)))
-delta_t = datetime.datetime.now() - t0  # Elapsed time
+# Elapsed time
+delta_t = datetime.datetime.now() - t0  
 print((" time = ", delta_t))

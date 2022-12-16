@@ -21,11 +21,13 @@ delta = np.zeros((nLs), float)
 SigL = np.zeros((nLs, 200), float)
 
 
-def Gam(n, xx):  # Spherical Bessel ratio
+# Spherical Bessel ratio
+def Gam(n, xx):  
     gamma = np.zeros((n), float)
     for nn in range(0, n):
         jn, jpr = scipy.special.sph_jn(nn, xx)
-    gamma = alpha * jpr / jn  # gamma match psi outside-inside
+# gamma match psi outside-inside
+    gamma = alpha * jpr / jn  
     return gamma
 
 
@@ -55,9 +57,11 @@ def totalcrossect(n, alpha, beta):
 
 def plotcross(alpha, beta):
     e = 0.0
-    cross = np.zeros((200), float)  # total crossection
+# total crossection
+    cross = np.zeros((200), float)  
     delta = phaseshifts(n, alpha, beta)
-    en = np.zeros((200), float)  # energies
+# energies
+    en = np.zeros((200), float)  
     for i in range(1, 200):
         e = e + 100 / 300.0
         en[i] = e
@@ -81,8 +85,10 @@ def plotcross(alpha, beta):
 def diffcrossection():
     zz2 = np.zeros((n), complex)
     dcr = np.zeros((180), float)
-    delta = phaseshifts(n, alpha, beta)  # phaseshifts
-    for i in range(0, n):  # n partial waves
+# phaseshifts
+    delta = phaseshifts(n, alpha, beta)  
+# n partial waves
+    for i in range(0, n):  
         cosd = cos(delta[i])
         sind = sin(delta[i])
         zz = complex(cosd, sind)
@@ -90,26 +96,33 @@ def diffcrossection():
     for ang in range(0, 180):
         summ = 0.0
         radi = cos(ang * pi / 180.0)
-        for i in range(0, n):  #  partial wave loop
+#  partial wave loop
+        for i in range(0, n):  
             poL = scipy.special.eval_legendre(i, radi)
             summ += (2 * i + 1) * zz2[i] * poL
         dcr[ang] = (summ.real**2 + summ.imag**2) / beta**2
     angu = np.arange(0, 180)
-    f1 = plt.figure()  # plot separate figure
+# plot separate figure
+    f1 = plt.figure()  
     ax1 = f1.add_subplot(111)
-    plt.semilogy(angu, dcr)  # Semilog dsig/dw plot
+# Semilog dsig/dw plot
+    plt.semilogy(angu, dcr)  
     plt.xlabel("Scattering Angle")
     plt.title("Differential Cross Section")
     plt.grid()
 
 
-def wavefunction():  # Compute Psi(<1) & Psi(>1)
+# Compute Psi(<1) & Psi(>1)
+def wavefunction():  
     delta = phaseshifts(n, alpha, beta)
     BL = np.zeros((n), complex)
-    Rin = np.zeros((n, Nin), float)  # Psi(r<1), nLs
+# Psi(r<1), nLs
+    Rin = np.zeros((n, Nin), float)  
     Rex = np.zeros((n, nexpts), float)
-    for i in range(0, 10):  # BL for matching
-        jnb, jnpr = scipy.special.sph_jn(n, alpha)  # SphBes
+# BL for matching
+    for i in range(0, 10):  
+# SphBes
+        jnb, jnpr = scipy.special.sph_jn(n, alpha)  
         jnf, jnfr = scipy.special.sph_jn(n, beta)
         ynb, yprb = r = scipy.special.sph_yn(n, beta)
         cosd = cos(delta[i])
@@ -117,11 +130,15 @@ def wavefunction():  # Compute Psi(<1) & Psi(>1)
         zz = complex(cosd, -sind)
         num = jnb[i] * zz
         den = cosd * jnf[i] - sind * ynb[i]
-        BL[i] = num / den  # For wavefunction match
-    intr = 1.0 / Nin  # Points increment
-    for i in range(0, n):  # Internal Psi
+# For wavefunction match
+        BL[i] = num / den  
+# Points increment
+    intr = 1.0 / Nin  
+# Internal Psi
+    for i in range(0, n):  
         rin = intr
-        for ri in range(0, Nin):  # PsiIn plot
+# PsiIn plot
+        for ri in range(0, Nin):  
             alpr = alpha * rin
             jnint, jnintpr = scipy.special.sph_jn(n, alpr)
             Rin[i, ri] = rin * jnint[i]
@@ -129,7 +146,8 @@ def wavefunction():  # Compute Psi(<1) & Psi(>1)
     extr = 2.0 / nexpts
     for i in range(0, n):
         rex = 1.0
-        for rx in range(0, nexpts):  # PsiIn plot
+# PsiIn plot
+        for rx in range(0, nexpts):  
             argu = beta * rex
             jnxt, jnintpr = scipy.special.sph_jn(n, argu)
             nxt, jnintpr = scipy.special.sph_yn(n, argu)
@@ -139,7 +157,8 @@ def wavefunction():  # Compute Psi(<1) & Psi(>1)
             Rex[i, rx] = rex * (fcos * BL.real[i] - fsin * BL.imag[i])
             rex = rex + extr
     ai = np.arange(0, 1, intr)
-    nwaf = 0  # PsiL to plot, CHANGE FOR OTHER WAVES
+# PsiL to plot, CHANGE FOR OTHER WAVES
+    nwaf = 0  
     f3 = plt.figure()
     ax3 = f3.add_subplot(111)
     plt.plot(ai, Rin[nwaf, :])
@@ -149,6 +168,9 @@ def wavefunction():  # Compute Psi(<1) & Psi(>1)
     plt.plot(ae, Rex[nwaf, :])
 
 
-diffcrossection()  # Diff crossection
-plotcross(alpha, beta)  # Total crossections
-wavefunction()  # Psi
+# Diff crossection
+diffcrossection()  
+# Total crossections
+plotcross(alpha, beta)  
+# Psi
+wavefunction()  

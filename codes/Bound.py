@@ -19,7 +19,8 @@ b = 10.0
 def gauss(npts, a, b, x, w):
     pp = 0.0
     m = (npts + 1) // 2
-    eps = 3.0e-10  # Accuracy: ADJUST!
+# Accuracy: ADJUST!
+    eps = 3.0e-10  
 
     for i in range(1, m + 1):
         t = cos(math.pi * (float(i) - 0.25) / (float(npts) + 0.5))
@@ -46,20 +47,25 @@ def gauss(npts, a, b, x, w):
 for M in range(16, 32, 8):
     z = [-1024, -512, -256, -128, -64, -32, -16, -8, -4, -2]
     for lmbda in z:
-        A = zeros((M, M), float)  # Hamiltonian
-        WR = zeros((M), float)  # Eigenvalues, potential
+# Hamiltonian
+        A = zeros((M, M), float)  
+# Eigenvalues, potential
+        WR = zeros((M), float)  
         k = zeros((M), float)
         w = zeros((M), float)
         # Pts & wts
-        gauss(M, min1, max1, k, w)  # Call gauss points
-        for i in range(0, M):  # Set Hamiltonian
+# Call gauss points
+        gauss(M, min1, max1, k, w)  
+# Set Hamiltonian
+        for i in range(0, M):  
             for j in range(0, M):
                 VR = lmbda / 2 / u * sin(k[i] * b) / k[i] * sin(k[j] * b) / k[j]
                 A[i, j] = 2.0 / math.pi * VR * k[j] * k[j] * w[j]
                 if i == j:
                     A[i, j] += k[i] * k[i] / 2 / u
         Es, evectors = eig(A)
-        realev = Es.real  # Real eigenvalues
+# Real eigenvalues
+        realev = Es.real  
         for j in range(0, M):
             if realev[j] < 0:
                 print((" M (size), lmbda, ReE = ", M, " ", lmbda, " ", realev[j]))

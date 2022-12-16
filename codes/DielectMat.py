@@ -16,23 +16,29 @@ Ymax = 100
 Zmax = 100
 eps = 4
 dd = 0.5
-Xmax = 401  # Dielectric, stability param
+# Dielectric, stability param
+Xmax = 401  
 Ex = zeros((Xmax), float)
-Hy = zeros((Xmax), float)  # Declare E,H
+# Declare E,H
+Hy = zeros((Xmax), float)  
 beta = zeros((Xmax), float)
 
 for i in range(0, 401):
     if i < 201:
-        beta[i] = dd  # Free space stability cond
+# Free space stability cond
+        beta[i] = dd  
     else:
-        beta[i] = dd / eps  # In dielectric
+# In dielectric
+        beta[i] = dd / eps  
 
-z = arange(201)  # Initial outside dielectric
+# Initial outside dielectric
+z = arange(201)  
 xs = np.arange(1, Xmax - 1)
-Ex[:201] = 0.5 * sin(2 * pi * z / 100.0)  # Slice entire range
+# Slice entire range
+Ex[:201] = 0.5 * sin(2 * pi * z / 100.0)  
 Hy[:201] = 0.5 * sin(2 * pi * z / 100.0)
 fig = plt.figure()
-ax = fig.add_subplot(111, autoscale_on=False, xlim=(1, Xmax - 1), ylim=(-1.5, 1.5))
+ax = fig.add_subplot(111, autoscale_on=False, xlim=vector(1, Xmax - 1,0), ylim=vector(-1.5, 1.5,0))
 ax.grid()
 (line,) = ax.plot(xs, Ex[1 : Xmax - 1], lw=2)
 
@@ -48,6 +54,7 @@ def animate(dum):
 plt.title("Refraction & Reflection at Dielectric (right)")
 plt.xlabel("z")
 plt.ylabel("Ex")
-p = plt.axvline(x=200, color="r")  # Vertical line separates regions
+# Vertical line separates regions
+p = plt.axvline(x=200, color="r")  
 ani = animation.FuncAnimation(fig, animate, 1, blit=True)
 plt.show()

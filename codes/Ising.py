@@ -10,35 +10,36 @@ import random
 from vpython import *
 
 # Display for the arrows
-scene = display(x=0, y=0, width=700, height=200, range=40, title="Spins")
-engraph = gdisplay(
-    y=200,
-    width=700,
-    height=300,
-    title="E of Spin System",
-    xtitle="iteration",
-    ytitle="E",
-    xmax=500,
-    xmin=0,
-    ymax=5,
-    ymin=-5,
-)
-enplot = gcurve(color=color.yellow)  # for the energy plot
-N = 30  # number of spins
-B = 1.0  # magnetic field
-mu = 0.33  # g mu (giromag. times Bohrs magneton)
-J = 0.20  # Exchange energy
-k = 1.0  # Boltmann constant
-T = 100.0  # Temperature
-state = zeros((N))  # spins state some up(1) some down (0)
+scene = canvas(x=0, y=0, width=700, height=200, range=40, title="Spins")
+engraph = graph( y=200, width=700, height=300, title="E of Spin System", xtitle="iteration", ytitle="E", xmax=500, xmin=0, ymax=5, ymin=-5, )
+# for the energy plot
+enplot = gcurve(color=color.yellow)  
+# number of spins
+N = 30  
+# magnetic field
+B = 1.0  
+# g mu (giromag. times Bohrs magneton)
+mu = 0.33  
+# Exchange energy
+J = 0.20  
+# Boltmann constant
+k = 1.0  
+# Temperature
+T = 100.0  
+# spins state some up(1) some down (0)
+state = zeros((N))  
 S = zeros((N), float)
-test = state  # a test state
-random.seed()  # Seed random generator
+# a test state
+test = state  
+# Seed random generator
+random.seed()  
 
 
-def energy(S):  # Method to calc energy
+# Method to calc energy
+def energy(S):  
     FirstTerm = 0.0
-    SecondTerm = 0.0  # Sum  energy
+# Sum  energy
+    SecondTerm = 0.0  
     for i in range(0, N - 2):
         FirstTerm += S[i] * S[i + 1]
     FirstTerm *= -J
@@ -48,44 +49,62 @@ def energy(S):  # Method to calc energy
     return FirstTerm + SecondTerm
 
 
-ES = energy(state)  # State, test's energy
+# State, test's energy
+ES = energy(state)  
 
 
-def spstate(state):  # Plots spins according to state
+# Plots spins according to state
+def spstate(state):  
     for obj in scene.objects:
-        obj.visible = 0  #  erase previous arrows
+#  erase previous arrows
+        obj.visible = 0  
     j = 0
-    for i in range(-N, N, 2):  # 30 spins numbered from 0 to 29
+# 30 spins numbered from 0 to 29
+    for i in range(-N, N, 2):  
         if state[j] == -1:
-            ypos = 5  # case spin down
+# case spin down
+            ypos = 5  
         else:
             ypos = 0
         if 5 * state[j] < 0:
-            arrowcol = (1, 1, 1)  # white arrow if spin down
+# white arrow if spin down
+            arrowcol = vector(1, 1, 1)  
         else:
-            arrowcol = (0.7, 0.8, 0)
-        arrow(pos=(i, ypos, 0), axis=(0, 5 * state[j], 0), color=arrowcol)  # arrow
+            arrowcol = vector(0.7, 0.8, 0)
+# arrow
+        arrow(pos=vector(i, ypos, 0), axis=vector(0, 5 * state[j], 0), color=arrowcol)  
         j += 1
 
 
 for i in range(0, N):
-    state[i] = -1  # initial state, all spins down
+# initial state, all spins down
+    state[i] = -1  
 
 for obj in scene.objects:
     obj.visible = 0
-spstate(state)  # plots initial state: all spins down
-ES = energy(state)  # finds the energy of the spin system
+# plots initial state: all spins down
+spstate(state)  
+# finds the energy of the spin system
+ES = energy(state)  
 # Here is the Metropolis algorithm
-for j in range(1, 500):  # Change state and test
-    rate(3)  # to be able to see the flipping
-    test = state  # test is the previous spin state
+# Change state and test
+for j in range(1, 500):  
+# to be able to see the flipping
+    rate(3)  
+# test is the previous spin state
+    test = state  
     r = int(N * random.random())
     # Flip spin randomly
-    test[r] *= -1  # flips temporarily that spin
-    ET = energy(test)  # finds energy of the test configur.
-    p = math.exp((ES - ET) / (k * T))  # test with Boltzmann factor
-    enplot.plot(pos=(j, ES))  # adds a segment to the curve of E
-    if p >= random.random():  # to see if trial config. is accepted
+# flips temporarily that spin
+    test[r] *= -1  
+# finds energy of the test configur.
+    ET = energy(test)  
+# test with Boltzmann factor
+    p = math.exp((ES - ET) / (k * T))  
+# adds a segment to the curve of E
+    enplot.plot(pos=(j, ES))  
+# to see if trial config. is accepted
+    if p >= random.random():  
         state = test
         spstate(state)
         ES = ET

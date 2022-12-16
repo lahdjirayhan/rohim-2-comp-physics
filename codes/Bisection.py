@@ -11,22 +11,28 @@ from vpython import *
 eps = 1e-3
 Nmax = 100
 a = 0.0
-b = 7.0  # Precision, [a,b]
+# Precision, [a,b]
+b = 7.0  
 
 
 def f(x):
-    return 2 * math.cos(x) - x  # Your function here
+# Your function here
+    return 2 * math.cos(x) - x  
 
 
-def Bisection(Xminus, Xplus, Nmax, eps):  # Do not change
+# Do not change
+def Bisection(Xminus, Xplus, Nmax, eps):  
     for it in range(0, Nmax):
         x = (Xplus + Xminus) / 2.0
         print((" it =", it, " x = ", x, " f(x) =", f(x)))
         if f(Xplus) * f(x) > 0.0:
-            Xplus = x  # Change x+ to x
+# Change x+ to x
+            Xplus = x  
         else:
-            Xminus = x  # Change x- to x
-        if abs(f(x)) < eps:  # Converged?
+# Change x- to x
+            Xminus = x  
+# Converged?
+        if abs(f(x)) < eps:  
             print(("\n Root found with precision eps = ", eps))
             break
         if it == Nmax - 1:

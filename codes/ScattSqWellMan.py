@@ -13,20 +13,26 @@ from math import *
 a = 1
 V = 15
 E = 10
-nLs = 10  # Constants
+# Constants
+nLs = 10  
 ninpts = 100
-Npsi = 100  # Pts for psi
+# Pts for psi
+Npsi = 100  
 alpha = np.sqrt(V + E)
 beta = np.sqrt(E)
-delta = np.zeros((nLs), float)  # Phase shifts
-SigL = np.zeros((nLs, 200), float)  # Partial cross section
+# Phase shifts
+delta = np.zeros((nLs), float)  
+# Partial cross section
+SigL = np.zeros((nLs, 200), float)  
 
 
 def Gam(n, xx):
     gamma = np.zeros((n), float)
     for nn in range(0, n):
-        jn, jpr = scipy.special.sph_jn(nn, xx)  # Spherical Bessel Functions
-    gamma = alpha * jpr / jn  # gamma match owavefunctions outside-inside
+# Spherical Bessel Functions
+        jn, jpr = scipy.special.sph_jn(nn, xx)  
+# gamma match owavefunctions outside-inside
+    gamma = alpha * jpr / jn  
     return gamma
 
 
@@ -57,9 +63,11 @@ def totalcrossect(n, alpha, beta):
 
 def plotcross(alpha, beta):
     e = 0.0
-    cross = np.zeros((200), float)  # for total crossection
+# for total crossection
+    cross = np.zeros((200), float)  
     delta = phaseshifts(n, alpha, beta)
-    en = np.zeros((200), float)  # energies
+# energies
+    en = np.zeros((200), float)  
     for i in range(1, 200):
         e = e + 100 / 300.0
         en[i] = e
@@ -83,35 +91,48 @@ def plotcross(alpha, beta):
 def diffcrossection():
     zz2 = np.zeros((n), complex)
     dcr = np.zeros((180), float)
-    delta = phaseshifts(n, alpha, beta)  # phaseshifts
-    for i in range(0, n):  # n partial waves
+# phaseshifts
+    delta = phaseshifts(n, alpha, beta)  
+# n partial waves
+    for i in range(0, n):  
         cosd = cos(delta[i])
         sind = sin(delta[i])
         zz = complex(cosd, sind)
         zz2[i] = zz * sind
     for ang in range(0, 180):
         summ = 0.0
-        radi = cos(ang * pi / 180.0)  # convert degrees to radians
-        for i in range(0, n):  # for each partial wave
-            poL = scipy.special.eval_legendre(i, radi)  # call legendre pols
+# convert degrees to radians
+        radi = cos(ang * pi / 180.0)  
+# for each partial wave
+        for i in range(0, n):  
+# call legendre pols
+            poL = scipy.special.eval_legendre(i, radi)  
             summ += (2 * i + 1) * zz2[i] * poL
-        dcr[ang] = (summ.real**2 + summ.imag**2) / beta**2  # diffcrossection
-    angu = np.arange(0, 180)  # angle in degrees
-    f1 = plt.figure()  # to plot a separate figure
+# diffcrossection
+        dcr[ang] = (summ.real**2 + summ.imag**2) / beta**2  
+# angle in degrees
+    angu = np.arange(0, 180)  
+# to plot a separate figure
+    f1 = plt.figure()  
     ax1 = f1.add_subplot(111)
-    plt.semilogy(angu, dcr)  # plot semilog diffcrossection
+# plot semilog diffcrossection
+    plt.semilogy(angu, dcr)  
     plt.xlabel("scattering angle")
     plt.title("Differential cross section")
     plt.grid()
 
 
-def wavefunction():  # computes internal r<1 and externalr>1 wavef.
+# computes internal r<1 and externalr>1 wavef.
+def wavefunction():  
     delta = phaseshifts(n, alpha, beta)
     BL = np.zeros((n), complex)
-    Rin = np.zeros((n, ninpts), float)  # internal wavefunction r<1 for n partwaves
+# internal wavefunction r<1 for n partwaves
+    Rin = np.zeros((n, ninpts), float)  
     Rex = np.zeros((n, nexpts), float)
-    for i in range(0, 10):  # to find BL for matching
-        jnb, jnpr = scipy.special.sph_jn(n, alpha)  # SphBessel functions
+# to find BL for matching
+    for i in range(0, 10):  
+# SphBessel functions
+        jnb, jnpr = scipy.special.sph_jn(n, alpha)  
         jnf, jnfr = scipy.special.sph_jn(n, beta)
         ynb, yprb = r = scipy.special.sph_yn(n, beta)
         cosd = cos(delta[i])
@@ -119,19 +140,25 @@ def wavefunction():  # computes internal r<1 and externalr>1 wavef.
         zz = complex(cosd, -sind)
         num = jnb[i] * zz
         den = cosd * jnf[i] - sind * ynb[i]
-        BL[i] = num / den  # to match internal and external wavefunctions
-    intr = 1.0 / ninpts  # 50points inside, increment
-    for i in range(0, n):  # internal wavefunc
+# to match internal and external wavefunctions
+        BL[i] = num / den  
+# 50points inside, increment
+    intr = 1.0 / ninpts  
+# internal wavefunc
+    for i in range(0, n):  
         rin = intr
-        for ri in range(0, ninpts):  # plot internal func
+# plot internal func
+        for ri in range(0, ninpts):  
             alpr = alpha * rin
             jnint, jnintpr = scipy.special.sph_jn(n, alpr)
             Rin[i, ri] = rin * jnint[i]
             rin = rin + intr
-    extr = 2.0 / nexpts  # from r= 1 to 3
+# from r= 1 to 3
+    extr = 2.0 / nexpts  
     for i in range(0, n):
         rex = 1.0
-        for rx in range(0, nexpts):  # plot internal func
+# plot internal func
+        for rx in range(0, nexpts):  
             argu = beta * rex
             jnxt, jnintpr = scipy.special.sph_jn(n, argu)
             nxt, jnintpr = scipy.special.sph_yn(n, argu)
@@ -142,17 +169,22 @@ def wavefunction():  # computes internal r<1 and externalr>1 wavef.
 
             rex = rex + extr
     ai = np.arange(0, 1, intr)
-    nwaf = 0  # partial wavef to plotCHANGE FOR OTHER WAVES 1 2 3..
+# partial wavef to plotCHANGE FOR OTHER WAVES 1 2 3..
+    nwaf = 0  
     f3 = plt.figure()
     ax3 = f3.add_subplot(111)
-    plt.plot(ai, Rin[nwaf, :])  # only plot s wavefunction
+# only plot s wavefunction
+    plt.plot(ai, Rin[nwaf, :])  
     ae = np.arange(1, 3, extr)
     plt.title("  r * partial wavefunction S ")
     plt.xlabel("r")
     plt.plot(ae, Rex[nwaf, :])
 
 
-diffcrossection()  # on graph with diffcrossection
-plotcross(alpha, beta)  # other graph total crossection +partialconttrib
-wavefunction()  # s wave function internal and external
+# on graph with diffcrossection
+diffcrossection()  
+# other graph total crossection +partialconttrib
+plotcross(alpha, beta)  
+# s wave function internal and external
+wavefunction()  
 plt.show()

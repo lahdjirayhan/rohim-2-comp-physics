@@ -9,28 +9,40 @@
 
 import math
 
-name = eval(input("Key in your name: "))  # raw_input is good for strings
+# raw_input is good for strings
+name = eval(input("Key in your name: "))  
 print(("Hi ", name))
-radius = eval(input("Enter a radius: "))  # works with numerical values
-print(("you entered radius= %8.5f" % radius))  # formatted output
-name = eval(input("Key in another name: "))  # raw_input good for strings
+# works with numerical values
+radius = eval(input("Enter a radius: "))  
+# formatted output
+print(("you entered radius= %8.5f" % radius))  
+# raw_input good for strings
+name = eval(input("Key in another name: "))  
 radius = eval(input("Enter a radius: "))
 print("Enter new name and r in file Name.dat")
-inpfile = open("Name.dat", "r")  # to read from file Name.dat
+# to read from file Name.dat
+inpfile = open("Name.dat", "r")  
 for line in inpfile:
-    line = line.split()  # splits components of line
-    name = line[0]  # first entry in the list
-    print((" Hi  %10s" % (name)))  # print Hi plus first entry
-    r = float(line[1])  # second entry convert to float
-    print((" r = %13.5f" % (r)))  # converts x to float and print it
+# splits components of line
+    line = line.split()  
+# first entry in the list
+    name = line[0]  
+# print Hi plus first entry
+    print((" Hi  %10s" % (name)))  
+# second entry convert to float
+    r = float(line[1])  
+# converts x to float and print it
+    print((" r = %13.5f" % (r)))  
 inpfile.close()
-A = math.pi * r**2  # use radius to find circles's area
+# use radius to find circles's area
+A = math.pi * r**2  
 print("Done, look in A.dat\n")
 outfile = open("A.dat", "w")
 outfile.write("r=  %13.5f\n" % (r))
 outfile.write("A =  %13.5f\n" % (A))
 outfile.close()
-print(("r = %13.5f" % (r)))  # screen output
+# screen output
+print(("r = %13.5f" % (r)))  
 print(("A = %13.5f" % (A)))
 print("Now example of integer input ")
 age = int(eval(input("Now key in your age as an integer:  ")))

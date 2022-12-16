@@ -8,21 +8,26 @@
 from numpy import *
 from sys import version
 
-max_in = 11  # Numb intervals
+# Numb intervals
+max_in = 11  
 vmin = 0.0
-vmax = 1.0  # Int ranges
-ME = 2.7182818284590452354e0  # Euler's const
+# Int ranges
+vmax = 1.0  
+# Euler's const
+ME = 2.7182818284590452354e0  
 w = zeros((2001), float)
 x = zeros((2001), float)
 
 
-def f(x):  # The integrand
+# The integrand
+def f(x):  
     return exp(-x)
 
 
 def gauss(npts, job, a, b, x, w):
     m = i = j = t = t1 = pp = p1 = p2 = p3 = 0.0
-    eps = 3.0e-14  # Accuracy: ******ADJUST THIS*******!
+# Accuracy: ******ADJUST THIS*******!
+    eps = 3.0e-14  
     m = int((npts + 1) / 2)
     for i in range(1, m + 1):
         t = cos(math.pi * (float(i) - 0.25) / (float(npts) + 0.5))
@@ -33,9 +38,7 @@ def gauss(npts, job, a, b, x, w):
             for j in range(1, npts + 1):
                 p3 = p2
                 p2 = p1
-                p1 = ((2.0 * float(j) - 1) * t * p2 - (float(j) - 1.0) * p3) / (
-                    float(j)
-                )
+                p1 = ((2.0 * float(j) - 1) * t * p2 - (float(j) - 1.0) * p3) / ( float(j) )
             pp = npts * (t * p1 - p2) / (t * t - 1.0)
             t1 = t
             t = t1 - p1 / pp
@@ -51,14 +54,7 @@ def gauss(npts, job, a, b, x, w):
         for i in range(0, npts):
             xi = x[i]
             x[i] = a * b * (1.0 + xi) / (b + a - (b - a) * xi)
-            w[i] = (
-                w[i]
-                * 2.0
-                * a
-                * b
-                * b
-                / ((b + a - (b - a) * xi) * (b + a - (b - a) * xi))
-            )
+            w[i] = ( w[i] * 2.0 * a * b * b / ((b + a - (b - a) * xi) * (b + a - (b - a) * xi)) )
     if job == 2:
         for i in range(0, npts):
             xi = x[i]
@@ -68,9 +64,11 @@ def gauss(npts, job, a, b, x, w):
 
 def gaussint(no, min, max):
     quadra = 0.0
-    gauss(no, 0, min, max, x, w)  # Returns pts & wts
+# Returns pts & wts
+    gauss(no, 0, min, max, x, w)  
     for n in range(0, no):
-        quadra += f(x[n]) * w[n]  # Calculate integral
+# Calculate integral
+        quadra += f(x[n]) * w[n]  
     return quadra
 
 

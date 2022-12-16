@@ -12,18 +12,23 @@ from numpy.linalg import inv, solve
 
 Nd = 7
 A = zeros((3, 3), float)
-bvec = zeros((3, 1), float)  # Declare
+# Declare
+bvec = zeros((3, 1), float)  
 ss = sx = sxx = sy = sxxx = sxxxx = sxy = sxy = sxxy = 0.0
 x = array([1.0, 1.1, 1.24, 1.35, 1.451, 1.5, 1.92])
 y = array([0.52, 0.8, 0.7, 1.8, 2.9, 2.9, 3.6])
-sig = array([0.1, 0.1, 0.2, 0.3, 0.2, 0.1, 0.1])  # Error bars
-xRange = arange(1.0, 2.0, 0.1)  # For plots
-p.plot(x, y, "bo")  # Blue data
+# Error bars
+sig = array([0.1, 0.1, 0.2, 0.3, 0.2, 0.1, 0.1])  
+# For plots
+xRange = arange(1.0, 2.0, 0.1)  
+# Blue data
+p.plot(x, y, "bo")  
 p.errorbar(x, y, sig)
 p.title("Least Square Fit of Parabola to Blue Data")
 p.xlabel("x")
 p.ylabel("y")
-p.grid(True)  # Plot grid
+# Plot grid
+p.grid(True)  
 
 for i in range(0, Nd):
     sig2 = sig[i] * sig[i]
@@ -38,9 +43,11 @@ for i in range(0, Nd):
     sxxxx += rhl * rhl / sig2
 A = array([[ss, sx, sxx], [sx, sxx, sxxx], [sxx, sxxx, sxxxx]])
 bvec = array([sy, sxy, sxxy])
-xvec = multiply(inv(A), bvec)  # Invert matrix
+# Invert matrix
+xvec = multiply(inv(A), bvec)  
 print(("\n x via Inverse A\n", xvec, "\n"))
-xvec = solve(A, bvec)  # Solve via elimination
+# Solve via elimination
+xvec = solve(A, bvec)  
 print(("\n x via Elimination \n", xvec, "\n Fit to Parabola\n"))
 print(("y(x) = a0 + a1 x + a2 x^2\n a0 =", x[0], "a1 =", x[1], "a2 =", x[2]))
 print("\n i   xi     yi    yfit   ")

@@ -14,8 +14,10 @@ def func(x):
 
 
 def trapezoid(A, B, N):
-    h = (B - A) / (N - 1)  # step size
-    sum = (func(A) + func(B)) / 2  # (1st + last)/2
+# step size
+    h = (B - A) / (N - 1)  
+# (1st + last)/2
+    sum = (func(A) + func(B)) / 2  
     for i in range(1, N - 1):
         sum += func(A + i * h)
     return h * sum

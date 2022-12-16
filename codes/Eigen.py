@@ -9,16 +9,11 @@
 from numpy import *
 from numpy.linalg import eig
 
-I = array(
-    [
-        [2.0 / 3, -1.0 / 4, -1.0 / 4],
-        [-1.0 / 4, 2.0 / 3, -1.0 / 4],
-        [-1.0 / 4, -1.0 / 4, 2.0 / 3],
-    ]
-)
+I = array( [ [2.0 / 3, -1.0 / 4, -1.0 / 4], [-1.0 / 4, 2.0 / 3, -1.0 / 4], [-1.0 / 4, -1.0 / 4, 2.0 / 3], ] )
 print(("\n I =\n", I))
 
-Es, evectors = eig(I)  # Solves eigenvalue problem
+# Solves eigenvalue problem
+Es, evectors = eig(I)  
 print(("\n Eigenvalues = \n", Es))
 print(("\n Matrix of Eigenvectors =\n", evectors))
 

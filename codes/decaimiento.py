@@ -8,65 +8,81 @@
 # Simulates radiactive decay
 from vpython import *
 from vpython import *
-import random  # generates random numbers
+# generates random numbers
+import random  
 
-rejilla = ones((100, 100))  # grid 100x100
-escena = display(
-    x=0, y=0, width=400, height=400, range=120, title="Simulates radiactive decay"
-)  # to see atoms
-graph = gdisplay(
-    x=0,
-    y=400,
-    width=600,
-    height=400,
-    title="Nuclei left",
-    xtitle="time (s)",
-    ytitle="N(t)",
-    xmax=50000,
-    xmin=0.0,
-    ymax=2000,
-    ymin=0,
-    foreground=color.black,
-    background=color.white,
-)  # to see decay cruve
-restantes = gcurve(color=color.red)  # curve in red, instance of gcurve
-Natomos = 0  # At beginning  0 atoms
+# grid 100x100
+rejilla = ones((100, 100))  
+escena = canvas( x=0, y=0, width=400, height=400, range=120, title="Simulates radiactive decay"
+# to see atoms
+)  
+# to see decay cruve
+graph = graph( x=0, y=400, width=600, height=400, title="Nuclei left", xtitle="time (s)", ytitle="N(t)", xmax=50000, xmin=0.0, ymax=2000, ymin=0, foreground=color.black, background=color.white, )  
+# curve in red, instance of gcurve
+restantes = gcurve(color=color.red)  
+# At beginning  0 atoms
+Natomos = 0  
 
 
-def atomos():  # put atoms at random in grid
-    global Natomos  # to know the number
+# put atoms at random in grid
+def atomos():  
+# to know the number
+    global Natomos  
     for i in range(0, 2000):
-        x = int(100 * random.random())  # coord. x integer 0<=x<=100
-        y = int(100 * random.random())  # coord. y integer 0<=y<=100
-        if rejilla[x][y] == 1:  # empty this position?
-            xpos = 2 * x - 100  # x screen position
-            ypos = 2 * y - 100  # y screen position
-            sphere(pos=(xpos, ypos), color=color.green, radius=2.0)  # atom
-            rejilla[x][y] = 0  # occupied cell
-            Natomos += 1  # another atom placed
-    print(Natomos)  # numero de atomos colocados
+# coord. x integer 0<=x<=100
+        x = int(100 * random.random())  
+# coord. y integer 0<=y<=100
+        y = int(100 * random.random())  
+# empty this position?
+        if rejilla[x][y] == 1:  
+# x screen position
+            xpos = 2 * x - 100  
+# y screen position
+            ypos = 2 * y - 100  
+# atom
+            sphere(pos=vector(xpos, ypos,0), color=color.green, radius=2.0)  
+# occupied cell
+            rejilla[x][y] = 0  
+# another atom placed
+            Natomos += 1  
+# numero de atomos colocados
+    print(Natomos)  
 
 
-def decaimiento():  # calcula y grafica el decaimiento
-    global Natomos  # use el valor que calculo de Natomos
-    atomos()  # la llama para colocar los atomos
-    constdec = 0.8  # constante de decaimiento
+# calcula y grafica el decaimiento
+def decaimiento():  
+# use el valor que calculo de Natomos
+    global Natomos  
+# la llama para colocar los atomos
+    atomos()  
+# constante de decaimiento
+    constdec = 0.8  
     print(Natomos)
 
-    for t in range(0, 50000):  # 50000 events
-        rate(3000)  # slow action
-        x = int(100 * random.random())  # generates coord. x  0 to 100
-        y = int(100 * random.random())  # generates y coord. between 0 - 100
-        r = random.random()  # random number between 0 and 1
+# 50000 events
+    for t in range(0, 50000):  
+# slow action
+        rate(3000)  
+# generates coord. x  0 to 100
+        x = int(100 * random.random())  
+# generates y coord. between 0 - 100
+        y = int(100 * random.random())  
+# random number between 0 and 1
+        r = random.random()  
         # following: if atom at xy, if r< decay constant
         # and if atoms to decay
         if rejilla[x][y] == 0 and r < constdec and Natomos > 0:
-            Natomos -= 1  # atom decay
-            xpos = 2 * x - 100  # coord x in screen
-            ypos = 2 * y - 100  # coord y in screen
-            sphere(pos=(xpos, ypos), color=color.white, radius=2.0)
-            rejilla[x][y] = 2  # indicates atom at that point decayed
-            restantes.plot(pos=(t, Natomos))  # plot nondecayed atoms
+# atom decay
+            Natomos -= 1  
+# coord x in screen
+            xpos = 2 * x - 100  
+# coord y in screen
+            ypos = 2 * y - 100  
+            sphere(pos=vector(xpos, ypos,0), color=color.white, radius=2.0)
+# indicates atom at that point decayed
+            rejilla[x][y] = 2  
+# plot nondecayed atoms
+            restantes.plot(pos=(t, Natomos))  
 
 
 decaimiento()

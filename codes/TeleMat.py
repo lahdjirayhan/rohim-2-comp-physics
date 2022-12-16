@@ -16,15 +16,18 @@ c = 1 / sqrt(L * C)
 dt = 0.025
 dx = 0.05
 R = (c * dt / dx) ** 2
-V = np.zeros((101, 3), float)  # (Nx, Nt)
+# (Nx, Nt)
+V = np.zeros((101, 3), float)  
 xx = 0
-fig = plt.figure()  # Figure to plot
-ax = fig.add_subplot(111, autoscale_on=False, xlim=(0, 100), ylim=(-40, 40))
+# Figure to plot
+fig = plt.figure()  
+ax = fig.add_subplot(111, autoscale_on=False, xlim=vector(0, 100,0), ylim=vector(-40, 40,0))
 ax.grid()
 plt.title("Wave Transmission Via Telegrapher's Equations")
 plt.xlabel("x")
 plt.ylabel("V(x,t)")
-(line,) = ax.plot([], [], lw=2)  # x axis, y values, linewidth=2
+# x axis, y values, linewidth=2
+(line,) = ax.plot([], [], lw=2)  
 
 
 def init():
@@ -39,7 +42,8 @@ for i in arange(0, 100):
 for i in range(1, 100):
     V[i, 2] = V[i, 0] + R * (V[i + 1, 1] + V[i - 1, 1] - 2 * V[i, 1])
 V[:, 0] = V[:, 1]
-V[:, 1] = V[:, 2]  # Recycle array
+# Recycle array
+V[:, 1] = V[:, 2]  
 
 
 def animate(dum):
@@ -47,12 +51,11 @@ def animate(dum):
     V[i, 2] = 2.0 * V[i, 1] - V[i, 0] + R * (V[i + 1, 1] + V[i - 1, 1] - 2 * V[i, 1])
     line.set_data(i, V[i, 2])
     V[:, 0] = V[:, 1]
-    V[:, 1] = V[:, 2]  # Recycle array
+# Recycle array
+    V[:, 1] = V[:, 2]  
     return (line,)
 
 
 # Plot 10000 frames, delay 10ms, blit=True redraw only changes
-ani = animation.FuncAnimation(
-    fig, animate, init_func=init, frames=10000, interval=20, blit=True
-)
+ani = animation.FuncAnimation( fig, animate, init_func=init, frames=10000, interval=20, blit=True )
 plt.show()

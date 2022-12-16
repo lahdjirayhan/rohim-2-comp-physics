@@ -15,7 +15,8 @@ def rk4Algor(t, h, N, y, f):
     k4 = [0] * (N)
     fvector = [0] * (N)
     ydumb = [0] * (N)
-    fvector = f(t, y)  # Returns RHS's
+# Returns RHS's
+    fvector = f(t, y)  
     for i in range(0, N):
         k1[i] = h * fvector[i]
     for i in range(0, N):

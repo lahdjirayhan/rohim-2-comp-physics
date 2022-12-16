@@ -7,22 +7,30 @@
 # Duffingrk4.py Solves ODE for Duffing Osc with rk4 & Matplotlib
 
 import numpy as np
-import matplotlib.pylab as plt  # Matplotlib for plotting
+# Matplotlib for plotting
+import matplotlib.pylab as plt  
 from math import *
 
-n = 2  # number rhs eqnts
-tt = np.zeros((10000), float)  # All times for plots
-yy = np.zeros((10000), float)  # All positions for plots
-vy = np.zeros((10000), float)  # All velocities for plots
-y = [0] * (2)  # Declare array for 2 values
-h = 0.01  # Time step
+# number rhs eqnts
+n = 2  
+# All times for plots
+tt = np.zeros((10000), float)  
+# All positions for plots
+yy = np.zeros((10000), float)  
+# All velocities for plots
+vy = np.zeros((10000), float)  
+# Declare array for 2 values
+y = [0] * (2)  
+# Time step
+h = 0.01  
 a = 0.01
 F = 0.1
 w = 1.0
 
 # Force (RHS) function
 def f(t, y):
-    rhs = [0] * (2)  # coupled eqs.
+# coupled eqs.
+    rhs = [0] * (2)  
     rhs[0] = y[1]
     rhs[1] = 0.5 * y[0] * (1 - y[0] ** 2) - a * y[1] + F * cos(w * t)
     return rhs
@@ -30,7 +38,8 @@ def f(t, y):
 
 y[0] = 0.01
 y[1] = 0.01
-f(0.0, y)  # Call function with init conds.
+# Call function with init conds.
+f(0.0, y)  
 i = 0
 
 # Loop over all times, storing positions and velocities

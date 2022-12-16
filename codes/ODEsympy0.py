@@ -9,7 +9,8 @@
 from sympy import *
 
 x, t, kap, w0, w, alf, x0, p0, m = symbols("x t kap w0 w alf x0 p0 m")
-Soltn = exp(alf * t) * (x0 * cos(w * t) + p0 / (m * w) * sin(w * t))  # Soltn
+# Soltn
+Soltn = exp(alf * t) * (x0 * cos(w * t) + p0 / (m * w) * sin(w * t))  
 print(("\n Soltn:\n", Soltn))
 
 # Place in ODE
@@ -31,5 +32,7 @@ print(("\n Coefficients of p0/m, A = ", A))
 eq2 = alf**2 + kap * alf - w**2 + w0**2
 W = simplify(solveset(eq2, w))
 print(("\n W = ", W))
-freq = W.subs(alf, -kap / 2)  # substitute kalf with -kap/2
-print(("\n frequency w = ", simplify(freq)))  # simplify
+# substitute kalf with -kap/2
+freq = W.subs(alf, -kap / 2)  
+# simplify
+print(("\n frequency w = ", simplify(freq)))  

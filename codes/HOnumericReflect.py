@@ -10,14 +10,20 @@ import numpy as np
 import matplotlib.pylab as plt
 from rk4Algor import rk4Algor
 
-n = 5  #  Quantum number n = npr + L + 1 = integer > 0
-xx = np.zeros((1000), float)  # x values for plot
-yy = np.zeros((1000), float)  # wave function values
-fvector = [0] * (2)  # force function f
-y = [0] * (2)  # array for 2 values
+#  Quantum number n = npr + L + 1 = integer > 0
+n = 5  
+# x values for plot
+xx = np.zeros((1000), float)  
+# wave function values
+yy = np.zeros((1000), float)  
+# force function f
+fvector = [0] * (2)  
+# array for 2 values
+y = [0] * (2)  
 
 
-def f(x, y):  # Force function for HO
+# Force function for HO
+def f(x, y):  
     fvector[0] = y[1]
     fvector[1] = -(2 * n + 1 - x**2) * y[0]
     return fvector
@@ -25,29 +31,36 @@ def f(x, y):  # Force function for HO
 
 if n % 2 == 0:
     y[0] = 1.0
-    y[1] = 0.0  # Even parity
+# Even parity
+    y[1] = 0.0  
 else:
     y[0] = 0
-    y[1] = -1.0  # Odd parity
+# Odd parity
+    y[1] = -1.0  
 
 xRight = 5
-f(0, y)  # force function at starting value
+# force function at starting value
+f(0, y)  
 dx = 0.01
 i = 0
 # Compute WF from 0 to xRight in steps of dr
 for x in np.arange(0, xRight, dx):
     xx[i + 500] = x
     y = rk4Algor(x, dr, 2, y, f)
-    yy[i + 500] = y[0]  #
-    i = i + 1  # Advance i as well as x
+#
+    yy[i + 500] = y[0]  
+# Advance i as well as x
+    i = i + 1  
     # Now reflect
 i = 0
 for x in np.arange(-dx, -xRight, -dx):
     xx[499 - i] = -xx[i + 499]
     if n % 2 == 0:
-        yy[499 - i] = yy[i + 499]  # Even parity
+# Even parity
+        yy[499 - i] = yy[i + 499]  
     else:
-        yy[499 - i] = -yy[i + 499]  # Ddd parity
+# Ddd parity
+        yy[499 - i] = -yy[i + 499]  
     i = i + 1
 plt.figure()
 plt.plot(xx, yy)

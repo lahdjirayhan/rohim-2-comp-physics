@@ -64,9 +64,11 @@ r = ct * ct * k / (h * h)
 
 for j in range(1, m + 1):
     t[1, j] = 0.0
-    t[n, j] = 0.0  # BCs
+# BCs
+    t[n, j] = 0.0  
 for i in range(2, n):
-    t[i][1] = sin(pi * h * i)  # ICs
+# ICs
+    t[i][1] = sin(pi * h * i)  
 for i in range(1, n + 1):
     Td[i] = 2.0 + 2.0 / r
 Td[1] = 1.0
@@ -85,16 +87,20 @@ for j in range(2, m + 1):
     print(j)
     for i in range(2, n):
         Tb[i] = t[i - 1][j - 1] + t[i + 1][j - 1] + (2 / r - 2) * t[i][j - 1]
-    Tridiag(a, d, c, b, Ta, Td, Tc, Tb, x, n)  # Solve system
+# Solve system
+    Tridiag(a, d, c, b, Ta, Td, Tc, Tb, x, n)  
     for i in range(1, n + 1):
         t[i][j] = x[i]
 print("Finished")
-x = list(range(1, m + 1))  # Plot every other x
-y = list(range(1, n + 1))  # every other y
+# Plot every other x
+x = list(range(1, m + 1))  
+# every other y
+y = list(range(1, n + 1))  
 X, Y = p.meshgrid(x, y)
 
 
-def functz(t):  # Potential
+# Potential
+def functz(t):  
     z = t[X, Y]
     return z
 
@@ -106,4 +112,5 @@ ax.plot_wireframe(X, Y, Z, color="r")
 ax.set_xlabel("t")
 ax.set_ylabel("x")
 ax.set_zlabel("T")
-p.show()  # Display figure
+# Display figure
+p.show()  

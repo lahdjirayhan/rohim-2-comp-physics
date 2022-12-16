@@ -111,10 +111,7 @@ for i in range(1, Tnebc):
 
 # Solution, place on grid, plot
 V = linalg.solve(A, b)
-(X, Y) = p.meshgrid(
-    arange(Xllc, Xurc + 0.1, 0.1 * (Xurc - Xllc)),
-    arange(Yllc, Yurc + 0.1, 0.1 * (Yurc - Yllc)),
-)
+(X, Y) = p.meshgrid( arange(Xllc, Xurc + 0.1, 0.1 * (Xurc - Xllc)), arange(Yllc, Yurc + 0.1, 0.1 * (Yurc - Yllc)), )
 Vgrid = zeros((11, 11), float)
 for i in arange(1, 11):
     for j in arange(1, 11):
@@ -140,18 +137,12 @@ for i in arange(1, 11):
             y31 = y[node[e, 3]] - y[node[e, 1]]
             J = x21 * y31 - x31 * y21
             if abs(J / 2 - (A1 + A2 + A3)) < 0.00001 * J / 2:
-                ksi = (
-                    y31 * (X[i, j] - x[node[e, 1]]) - x31 * (Y[i, j] - y[node[e, 1]])
-                ) / J
-                ita = (
-                    -y21 * (X[i, j] - x[node[e, 1]]) + x21 * (Y[i, j] - y[node[e, 1]])
-                ) / J
+                ksi = ( y31 * (X[i, j] - x[node[e, 1]]) - x31 * (Y[i, j] - y[node[e, 1]]) ) / J
+                ita = ( -y21 * (X[i, j] - x[node[e, 1]]) + x21 * (Y[i, j] - y[node[e, 1]]) ) / J
                 N1 = 1 - ksi - ita
                 N2 = ksi
                 N3 = ita
-                Vgrid[i, j] = (
-                    N1 * V[node[e, 1]] + N2 * V[node[e, 2]] + N3 * V[node[e, 3]]
-                )
+                Vgrid[i, j] = ( N1 * V[node[e, 1]] + N2 * V[node[e, 2]] + N3 * V[node[e, 3]] )
 
 # Plot the finite element solution of V using a contour plot
 fig = p.figure()

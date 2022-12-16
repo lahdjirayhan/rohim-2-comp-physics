@@ -19,15 +19,7 @@ v0y = v0 * sin(angle * pi / 180.0)
 T = 2.0 * v0y / g
 H = v0y * v0y / 2.0 / g
 R = 2.0 * v0x * v0y / g
-graph1 = gdisplay(
-    title="Projectile with & without Drag",
-    xtitle="x",
-    ytitle="y",
-    xmax=R,
-    xmin=-R / 20.0,
-    ymax=8,
-    ymin=-6.0,
-)
+graph1 = graph( title="Projectile with & without Drag", xtitle="x", ytitle="y", xmax=R, xmin=-R / 20.0, ymax=8, ymin=-6.0, )
 funct = gcurve(color=color.red)
 funct1 = gcurve(color=color.yellow)
 print(("No Drag T =", T, ", H =", H, ", R =", R))

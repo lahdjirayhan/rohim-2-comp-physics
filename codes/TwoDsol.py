@@ -20,7 +20,8 @@ u = zeros((D, D, 3), float)
 psi = zeros((D, D), float)
 
 
-def initial(u):  # initial conditions
+# initial conditions
+def initial(u):  
     yy = -7.0
     for i in range(0, D):
         xx = -7.0
@@ -38,17 +39,20 @@ def solution(nint):
             a2 = u[m + 1][l][0] + u[m - 1][l][0] + u[m][l + 1][0] + u[m][l - 1][0]
             tmp = 0.25 * a2
             u[m][l][1] = 0.5 * (dts * a2 - dt * dt * sin(tmp))
-    for mm in range(1, D - 1):  # Borders in second iteration
+# Borders in second iteration
+    for mm in range(1, D - 1):  
         u[mm][0][1] = u[mm][1][1]
         u[mm][D - 1][1] = u[mm][D - 2][1]
         u[0][mm][1] = u[1][mm][1]
         u[D - 1][mm][1] = u[D - 2][mm][1]
-    u[0][0][1] = u[1][0][1]  # Still undefined terms
+# Still undefined terms
+    u[0][0][1] = u[1][0][1]  
     u[D - 1][0][1] = u[D - 2][0][1]
     u[0][D - 1][1] = u[1][D - 1][1]
     u[D - 1][D - 1][1] = u[D - 2][D - 1][1]
     tmp = 0.0
-    for k in range(0, nint + 1):  # Following iterations
+# Following iterations
+    for k in range(0, nint + 1):  
         print((k, "out of  ", nint))
         for m in range(1, D - 1):
             for l in range(1, D - 1):
@@ -66,7 +70,8 @@ def solution(nint):
         u[D - 1][0][2] = u[D - 2][0][2]
         u[0][D - 1][2] = u[1][D - 1][2]
         u[D - 1][D - 1][2] = u[D - 2][D - 1][2]
-        for l in range(0, D):  # New iterations now old
+# New iterations now old
+        for l in range(0, D):  
             for m in range(0, D):
                 u[l][m][0] = u[l][m][1]
                 u[l][m][1] = u[l][m][2]
@@ -89,7 +94,8 @@ yy = arange(0, D, 5)
 fig = plt.figure()
 ax = Axes3D(fig)
 X, Y = plt.meshgrid(xx, yy)
-solution(22)  # Number of time iterations
+# Number of time iterations
+solution(22)  
 Z = funcz(psi)
 fig = plt.figure()
 ax = Axes3D(fig)

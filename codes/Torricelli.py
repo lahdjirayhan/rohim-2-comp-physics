@@ -6,7 +6,8 @@
 
 # Torricelli.py: solves Navier-Stokes equation for orifice flow
 
-from numpy import *  # Need for zeros
+# Need for zeros
+from numpy import *  
 
 Niter = 700
 Ndown = 20
@@ -32,9 +33,12 @@ uall = open("uall.dat", "w")
 
 
 def BelowHole():
-    for i in range(Nb + 1, Nx + 1):  # Below orifice
-        u[i, 0] = u[i - 1, 1]  # du/dy =vx=0
-        w[i - 1, 0] = w[i - 1, 1]  # Water is at floor
+# Below orifice
+    for i in range(Nb + 1, Nx + 1):  
+# du/dy =vx=0
+        u[i, 0] = u[i - 1, 1]  
+# Water is at floor
+        w[i - 1, 0] = w[i - 1, 1]  
         for j in range(0, Ndown + 1):
             if i == Nb:
                 vy = 0
@@ -42,11 +46,13 @@ def BelowHole():
                 vy = -sqrt(2.0 * g * h * (Ny + Nb - j))
             if i == Nx - 1:
                 vy = -sqrt(2.0 * g * h * (Ny + Nb - j)) / 2.0
-            u[i, j] = u[i - 1, j] - vy * h  # du/dx=-vy
+# du/dx=-vy
+            u[i, j] = u[i - 1, j] - vy * h  
 
 
 def BorderRight():
-    for j in range(1, Ny + 1):  # Center orifice very sensitive
+# Center orifice very sensitive
+    for j in range(1, Ny + 1):  
         vy = -sqrt(2.0 * g * h * (Ny - j))
         u[Nx, j] = u[Nx - 1, j] + vy * h
         u[Nx, j] = u[Nx, j - 1]
@@ -54,27 +60,34 @@ def BorderRight():
 
 
 def BottomBefore():
-    for i in range(1, Nb + 1):  # Bottom,  before the hole
+# Bottom,  before the hole
+    for i in range(1, Nb + 1):  
         u[i, Ndown] = u[i, Ndown - 1]
         w[i, Ndown] = -2 * (u[i, 0] - u[i, 1])
 
 
 def Top():
-    for i in range(1, Nx):  # Top
+# Top
+    for i in range(1, Nx):  
         u[i, Ny] = u[i, Ny - 1]
         w[i, Ny] = 0
 
 
 def Left():
-    for j in range(Ndown, Ny):  # Left wall
+# Left wall
+    for j in range(Ndown, Ny):  
         w[0, j] = -2 * (u[0, j] - u[1, j]) / h**2
-        u[0, j] = u[1, j]  # du/dx=0
+# du/dx=0
+        u[0, j] = u[1, j]  
 
 
-def Borders(iter):  # Method borders: init & B.C.
+# Method borders: init & B.C.
+def Borders(iter):  
     BelowHole()
-    BorderRight()  # right (center of hole)
-    BottomBefore()  # Bottom before the hole
+# right (center of hole)
+    BorderRight()  
+# Bottom before the hole
+    BottomBefore()  
     Top()
     Left()
 
@@ -85,62 +98,47 @@ def Relax(iter):
         for j in range(1, Ny):
             if j <= Ndown:
                 if i > Nb:
-                    r1 = omega * (
-                        (
-                            u[i + 1, j]
-                            + u[i - 1, j]
-                            + u[i, j + 1]
-                            + u[i, j - 1]
-                            + h * h * w[i, j]
-                        )
-                        * 0.25
-                        - u[i, j]
-                    )
+                    r1 = omega * ( ( u[i + 1, j] + u[i - 1, j] + u[i, j + 1] + u[i, j - 1] + h * h * w[i, j] ) * 0.25 - u[i, j] )
                     u[i, j] += r1
             if j > Ndown:
-                r1 = omega * (
-                    (
-                        u[i + 1, j]
-                        + u[i - 1, j]
-                        + u[i, j + 1]
-                        + u[i, j - 1]
-                        + h * h * w[i, j]
-                    )
-                    * 0.25
-                    - u[i, j]
-                )
+                r1 = omega * ( ( u[i + 1, j] + u[i - 1, j] + u[i, j + 1] + u[i, j - 1] + h * h * w[i, j] ) * 0.25 - u[i, j] )
                 u[i, j] += r1
     if iter % 50 == 0:
         print(("Residual r1 ", r1))
     Borders(iter)
-    for i in range(1, Nx):  # Relax stream function
+# Relax stream function
+    for i in range(1, Nx):  
         for j in range(1, Ny):
             if j <= Ndown:
                 if i >= Nb:
                     a1 = w[i + 1, j] + w[i - 1, j] + w[i, j + 1] + w[i, j - 1]
-                    a2 = (u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
-                    a3 = (u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
+                    a2 = vector(u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
+                    a3 = vector(u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
                     r2 = omega * ((a1 + (R / 4.0) * (a3 - a2)) / 4.0 - w[i, j])
                     w[i, j] += r2
             if j > Ndown:
                 a1 = w[i + 1, j] + w[i - 1, j] + w[i, j + 1] + w[i, j - 1]
-                a2 = (u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
-                a3 = (u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
+                a2 = vector(u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
+                a3 = vector(u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
                 r2 = omega * ((a1 + (R / 4.0) * (a3 - a2)) / 4.0 - w[i, j])
                 w[i, j] += r2
 
 
 while iter <= Niter:
     if iter % 100 == 0:
-        print(("Iteration", iter))  # iterations counted
+# iterations counted
+        print(("Iteration", iter))  
     Relax(iter)
-    iter += 1  # counter of iterations
-for j in range(0, Ny):  # Send w to disk in gnuplot format
+# counter of iterations
+    iter += 1  
+# Send w to disk in gnuplot format
+for j in range(0, Ny):  
     for i in range(0, Nx):
         Torri.write("%8.3e \n" % (w[i, j]))
     Torri.write("\n")
 Torri.close()
-for j in range(0, Ny):  # Send symmetric tank data to disk
+# Send symmetric tank data to disk
+for j in range(0, Ny):  
     for i in range(0, N2x):
         if i <= Nx:
             ua[i, j] = u[i, j]
@@ -150,7 +148,8 @@ for j in range(0, Ny):  # Send symmetric tank data to disk
             uall.write("%8.3e \n" % (ua[i, j]))
     uall.write("\n")
 uall.close()
-utorr = open("Torri.dat", "w")  # Send u data to disk
+# Send u data to disk
+utorr = open("Torri.dat", "w")  
 for j in range(0, Ny):
     utorr.write("\n")
     for i in range(0, Nx):

@@ -18,7 +18,8 @@ Dx = 0.01
 Dt = 0.3
 KAPPA = 210.0
 SPH = 900.0
-RHO = 2700.0  # conductivity, specf heat, density
+# conductivity, specf heat, density
+RHO = 2700.0  
 T = zeros((Nx, 2), float)
 Tpl = zeros((Nx, 31), float)
 
@@ -28,40 +29,53 @@ for ix in range(1, Nx - 1):
     T[ix, 0] = 100.0
     # initial temperature
 T[0, 0] = 0.0
-T[0, 1] = 0.0  # first and last points at 0
+# first and last points at 0
+T[0, 1] = 0.0  
 T[Nx - 1, 0] = 0.0
 T[Nx - 1, 1] = 0.0
 cons = KAPPA / (SPH * RHO) * Dt / (Dx * Dx)
 # constant
-m = 1  # counter for rows, one every 300 time steps
+# counter for rows, one every 300 time steps
+m = 1  
 
-for t in range(1, Nt):  # time iteration
-    for ix in range(1, Nx - 1):  # Finite differences
+# time iteration
+for t in range(1, Nt):  
+# Finite differences
+    for ix in range(1, Nx - 1):  
         T[ix, 1] = T[ix, 0] + cons * (T[ix + 1, 0] + T[ix - 1, 0] - 2.0 * T[ix, 0])
-    if t % 300 == 0 or t == 1:  # for t = 1 and every 300 time steps
+# for t = 1 and every 300 time steps
+    if t % 300 == 0 or t == 1:  
         for ix in range(1, Nx - 1, 2):
             Tpl[ix, m] = T[ix, 1]
         print(m)
-        m = m + 1  # increase m every 300 time steps
+# increase m every 300 time steps
+        m = m + 1  
     for ix in range(1, Nx - 1):
-        T[ix, 0] = T[ix, 1]  # 100 positons at t=m
-x = list(range(1, Nx - 1, 2))  # plot every other x point
-y = list(range(1, 30))  # every 10 points in y (time)
-X, Y = p.meshgrid(x, y)  # grid for position and time
+# 100 positons at t=m
+        T[ix, 0] = T[ix, 1]  
+# plot every other x point
+x = list(range(1, Nx - 1, 2))  
+# every 10 points in y (time)
+y = list(range(1, 30))  
+# grid for position and time
+X, Y = p.meshgrid(x, y)  
 
 
-def functz(Tpl):  # Function returns temperature
+# Function returns temperature
+def functz(Tpl):  
     z = Tpl[X, Y]
     return z
 
 
 s = surf(x, y, Tpl)
 # Z = functz(Tpl)
-fig = p.figure()  # create figure
+# create figure
+fig = p.figure()  
 # ax = Axes3D(fig)                                             # plots axis
 # ax.plot_wireframe(X, Y, Z, color = 'r')                   # red wireframe
 # ax.set_xlabel('Position')                                    # label axes
 # ax.set_ylabel('time')
 # ax.set_zlabel('Temperature')
-p.show()  # shows figure, close Python shell
+# shows figure, close Python shell
+p.show()  
 print("finished")

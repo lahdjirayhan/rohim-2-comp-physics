@@ -11,29 +11,38 @@ from matplotlib.patches import Circle
 
 Nx = 50
 Ny = 50
-q = 1  # x, y grids, charge strength
+# x, y grids, charge strength
+q = 1  
 x = np.linspace(-5, 5, Nx)
 y = np.linspace(-5, 5, Ny)
-X, Y = np.meshgrid(x, y)  # Transform coordinates
+# Transform coordinates
+X, Y = np.meshgrid(x, y)  
 Ex = np.zeros((Nx, Ny))
-Ey = np.zeros((Nx, Ny))  # Arrays
+# Arrays
+Ey = np.zeros((Nx, Ny))  
 xx = 3.0
-yy = 3.0  # Charge coordidates
+# Charge coordidates
+yy = 3.0  
 dq = np.sqrt(xx * 2 + yy * 2)
-a = 1.0  # Origin, sphere radius
-qp = -a * q / dq  # Magnitude image charge
+# Origin, sphere radius
+a = 1.0  
+# Magnitude image charge
+qp = -a * q / dq  
 xp = a**2 * xx / dq**2
 yp = a**2 * yy / dq**2
 
 
-def E(xx, yy, x, y):  # xx,yy coord image q
+# xx,yy coord image q
+def E(xx, yy, x, y):  
     r = np.sqrt(x**2 + y**2)
     dx = x - xx
     dy = y - yy
-    d1 = np.sqrt((dx**2 + dy**2))  # Distance q to (x,y)
+# Distance q to (x,y)
+    d1 = np.sqrt((dx**2 + dy**2))  
     dpx = x - xp
     dpy = y - yp
-    d2 = np.sqrt((dpx**2 + dpy**2))  # Distance -q to (x,y)
+# Distance -q to (x,y)
+    d2 = np.sqrt((dpx**2 + dpy**2))  
     Ex = dx / d1**3 - dpx / d2**3
     Ey = dy / d1**3 - dpy / d2**3
     return Ex, Ey

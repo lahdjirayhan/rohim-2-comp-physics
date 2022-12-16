@@ -10,30 +10,10 @@ import matplotlib.pylab as p
 from mpl_toolkits.mplot3d import Axes3D
 from vpython import *
 
-originalsignal = gdisplay(
-    x=0,
-    y=0,
-    width=600,
-    height=200,
-    title="Input Signal",
-    xmin=0,
-    xmax=12,
-    ymin=-20,
-    ymax=20,
-)
+originalsignal = graph( x=0, y=0, width=600, height=200, title="Input Signal", xmin=0, xmax=12, ymin=-20, ymax=20, )
 orsigraph = gcurve(color=color.yellow)
-invtrgr = gdisplay(
-    x=0,
-    y=200,
-    width=600,
-    height=200,
-    title="Inverted Transform",
-    xmin=0,
-    xmax=12,
-    ymin=-20,
-    ymax=20,
-)
-invtr = gcurve(x=list(range(0, 240)), display=invtrgr, color=color.green)
+invtrgr = graph( x=0, y=200, width=600, height=200, title="Inverted Transform", xmin=0, xmax=12, ymin=-20, ymax=20, )
+invtr = gcurve(x=list(range(0, 240)), canvas=invtrgr, color=color.green)
 iT = 0.0
 fT = 12.0
 W = fT - iT
@@ -51,10 +31,12 @@ s = iS
 dTau = W / noTau
 dS = (W / iS) ** (1.0 / noS)
 maxY = 0.001
-sig = zeros((noPtsSig), float)  # Signal
+# Signal
+sig = zeros((noPtsSig), float)  
 
 
-def signal(noPtsSig, y):  # Signal function
+# Signal function
+def signal(noPtsSig, y):  
     t = 0.0
     hs = W / noPtsSig
     t1 = W / 6.0
@@ -65,9 +47,7 @@ def signal(noPtsSig, y):  # Signal function
         elif t >= t1 and t <= t2:
             y[i] = 5.0 * sin(2 * pi * t) + 10.0 * sin(4 * pi * t)
         elif t >= t2 and t <= fT:
-            y[i] = (
-                2.5 * sin(2 * pi * t) + 6.0 * sin(4 * pi * t) + 10.0 * sin(6 * pi * t)
-            )
+            y[i] = ( 2.5 * sin(2 * pi * t) + 6.0 * sin(4 * pi * t) + 10.0 * sin(6 * pi * t) )
         else:
             print("In signal(...) : t out of range.")
             sys.exit(1)
@@ -76,16 +56,20 @@ def signal(noPtsSig, y):  # Signal function
         t += hs
 
 
-signal(noPtsSig, sig)  # Form signal
-Yn = zeros((noS + 1, noTau + 1), float)  # Transform
+# Form signal
+signal(noPtsSig, sig)  
+# Transform
+Yn = zeros((noS + 1, noTau + 1), float)  
 
 
-def morlet(t, s, tau):  # Mother
+# Mother
+def morlet(t, s, tau):  
     T = (t - tau) / s
     return sin(8 * T) * exp(-T * T / 2.0)
 
 
-def transform(s, tau, sig):  # Find wavelet TF
+# Find wavelet TF
+def transform(s, tau, sig):  
     integral = 0.0
     t = iT
     for i in range(0, len(sig)):
@@ -94,12 +78,15 @@ def transform(s, tau, sig):  # Find wavelet TF
     return integral / sqrt(s)
 
 
-def invTransform(t, Yn):  # Compute inverse
-    s = iS  # Transform
+# Compute inverse
+def invTransform(t, Yn):  
+# Transform
+    s = iS  
     tau = iTau
     recSig_t = 0
     for i in range(0, noS):
-        s *= dS  # Scale graph
+# Scale graph
+        s *= dS  
         tau = iTau
         for j in range(0, noTau):
             tau += dTau
@@ -109,27 +96,32 @@ def invTransform(t, Yn):  # Compute inverse
 
 print("working, finding transform, count 20")
 for i in range(0, noS):
-    s *= dS  # Scaling
+# Scaling
+    s *= dS  
     tau = iT
     print(i)
     for j in range(0, noTau):
-        tau += dTau  # Translate
+# Translate
+        tau += dTau  
         Yn[i, j] = transform(s, tau, sig)
 print("transform found")
 for i in range(0, noS):
     for j in range(0, noTau):
         if Yn[i, j] > maxY or Yn[i, j] < -1 * maxY:
-            maxY = abs(Yn[i, j])  # Find max Y
+# Find max Y
+            maxY = abs(Yn[i, j])  
 tau = iT
 s = iS
 print("normalize")
 for i in range(0, noS):
     s *= dS
     for j in range(0, noTau):
-        tau += dTau  # Transform
+# Transform
+        tau += dTau  
         Yn[i, j] = Yn[i, j] / maxY
     tau = iT
-print("finding inverse transform")  # Inverse TF
+# Inverse TF
+print("finding inverse transform")  
 recSigData = "recSig.dat"
 recSig = zeros(len(sig))
 t = 0.0
@@ -138,7 +130,8 @@ kco = 0
 j = 0
 Yinv = Yn
 for rs in range(0, len(recSig)):
-    recSig[rs] = invTransform(t, Yinv)  # Find input signal
+# Find input signal
+    recSig[rs] = invTransform(t, Yinv)  
     xx = rs / 20
     yy = 4.6 * recSig[rs]
     invtr.plot(pos=(xx, yy))
@@ -152,7 +145,8 @@ y = list(range(1, noTau + 1))
 X, Y = p.meshgrid(x, y)
 
 
-def functz(Yn):  # Transform function
+# Transform function
+def functz(Yn):  
     z = Yn[X, Y]
     return z
 

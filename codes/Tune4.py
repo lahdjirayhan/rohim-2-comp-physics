@@ -13,7 +13,8 @@ from math import pi
 from sys import version
 
 if int(version[0]) > 2:
-    raw_input = input  # raw_input deprecated in Python3
+# raw_input deprecated in Python3
+    raw_input = input  
 
 Ldim = 200
 iter1 = 0
@@ -22,9 +23,11 @@ ham = zeros((Ldim, Ldim), float)
 diag = zeros((Ldim), float)
 coef = zeros((Ldim), float)
 sigma = zeros((Ldim), float)
-t0 = datetime.datetime.now()  # Initialize time
+# Initialize time
+t0 = datetime.datetime.now()  
 
-for i in range(1, Ldim):  # Set up Hamiltonian
+# Set up Hamiltonian
+for i in range(1, Ldim):  
     for j in range(1, Ldim):
         if abs(j - i) > 10:
             ham[j, i] = 0.0
@@ -39,7 +42,8 @@ err = 1.0
 iter = 0
 print("iter      ener           err ")
 
-while iter1 < 15 and err > 1.0e-6:  # Compute current energy & normalize
+# Compute current energy & normalize
+while iter1 < 15 and err > 1.0e-6:  
     iter1 = iter1 + 1
     ener = 0.0
     ovlp1 = 0.0
@@ -59,7 +63,8 @@ while iter1 < 15 and err > 1.0e-6:  # Compute current energy & normalize
     ener = ener / ovlp
     fact = 1.0 / sqrt(ovlp)
     coef[1] = fact * coef[1]
-    err = 0.0  # Update & error norm
+# Update & error norm
+    err = 0.0  
     for i in range(2, Ldim):
         t = fact * coef[i]
         u = fact * sigma[i] - ener * t
@@ -68,6 +73,7 @@ while iter1 < 15 and err > 1.0e-6:  # Compute current energy & normalize
         err = err + step * step
     err = sqrt(err)
     print((" %2d  %15.13f  %15.13f " % (iter1, ener, err)))
-delta_t = datetime.datetime.now() - t0  # Elapsed time
+# Elapsed time
+delta_t = datetime.datetime.now() - t0  
 print((" time = ", delta_t))
 print("press a key to finish")

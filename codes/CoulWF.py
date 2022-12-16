@@ -7,7 +7,8 @@
 # CoulWF.py:  Regular Coulomb scattering wave function
 
 from scipy import special
-from mpmath import *  # hypergeometric
+# hypergeometric
+from mpmath import *  
 import matplotlib.pyplot as plt, numpy as np
 from math import *
 
@@ -20,26 +21,35 @@ mAlpha = 4.002602 * 931.494
 Zau = 79
 Zalph = 2
 mu = mAlpha * mAu / (mAlpha + mAu)
-hbarc = 197.33  # MeV-fm, E in MeV, r in fm
+# MeV-fm, E in MeV, r in fm
+hbarc = 197.33  
 Elab = 7.0
 Ecom = Elab * mAu / (mAlpha + mAu)
 vel = sqrt(Ecom * 2 / mu)
 ka = sqrt(2.0 * mu * Ecom) / hbarc
-etaco = Zalph * Zau * mu / (hbarc * ka * 137.0)  # Coulomb parameter
+# Coulomb parameter
+etaco = Zalph * Zau * mu / (hbarc * ka * 137.0)  
 expi = exp(-0.5 * etaco * pi)
 
-i = 0  # Main loop over r and i
+# Main loop over r and i
+i = 0  
 for r in np.arange(0.1, 80.5, 0.5):
-    rho = complex(0, -2 * ka * r)  # -2ikr
-    expo = complex(cos(ka * r), sin(ka * r))  # exp(ikr)
+# -2ikr
+    rho = complex(0, -2 * ka * r)  
+# exp(ikr)
+    expo = complex(cos(ka * r), sin(ka * r))  
     for L in range(0, 10):
-        a = L + 1.0 + etaco * zi  # Arg gamma function
-        sol = hyp1f1(a, 2 * L + 2.0, rho)  # Hypergeometric
+# Arg gamma function
+        a = L + 1.0 + etaco * zi  
+# Hypergeometric
+        sol = hyp1f1(a, 2 * L + 2.0, rho)  
         rhoL = (-rho) ** L
-        gam = special.gamma(a)  # Gamma(l+1+in)
+# Gamma(l+1+in)
+        gam = special.gamma(a)  
         upar = rhoL * expo * sol * gam * expi / factorial(2 * L)
         f1[L] = upar / sqrt(vel)
-        Rea[L, i] = f1.real[L]  # Real psi
+# Real psi
+        Rea[L, i] = f1.real[L]  
     i += 1
 
 rr = np.arange(0.1, 80.5, 0.5)

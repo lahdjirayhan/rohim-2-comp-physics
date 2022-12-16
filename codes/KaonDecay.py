@@ -7,16 +7,7 @@
 
 from vpython import *
 
-scene = gdisplay(
-    width=800,
-    height=700,
-    background=color.white,
-    foreground=color.black,
-    logy=True,
-    xtitle="Time",
-    ytitle="log Probability",
-    title="K_S -> 2 pi",
-)
+scene = graph( width=800, height=700, background=color.white, foreground=color.black, logy=True, xtitle="Time", ytitle="log Probability", title="K_S -> 2 pi", )
 lin = gcurve(color=color.red)
 
 tauS = 0.9e-10

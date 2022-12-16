@@ -15,15 +15,20 @@ k0 = 5.5 * pi
 dt = dx2 / 20.0
 xmax = 6.0
 beta = dt / dx2
-xs = arange(-xmax, xmax + dx / 2, dx)  # Array x values
+# Array x values
+xs = arange(-xmax, xmax + dx / 2, dx)  
 
-g = display(width=500, height=250, title="Wave Packet in HO Well")
+g = canvas(width=500, height=250, title="Wave Packet in HO Well")
 PlotObj = curve(x=xs, color=color.yellow, radius=0.1)
-g.center = (0, 2, 0)  # Center of scene
+# Center of scene
+g.center = vector(0, 2, 0)  
 # Initial wave packet
-R = exp(-0.5 * (xs / 0.5) ** 2) * cos(k0 * xs)  # Array Re I
-I = exp(-0.5 * (xs / 0.5) ** 2) * sin(k0 * xs)  # Array Im I
-V = 15.0 * xs**2  # The potential
+# Array Re I
+R = exp(-0.5 * (xs / 0.5) ** 2) * cos(k0 * xs)  
+# Array Im I
+I = exp(-0.5 * (xs / 0.5) ** 2) * sin(k0 * xs)  
+# The potential
+V = 15.0 * xs**2  
 
 while True:
     rate(500)

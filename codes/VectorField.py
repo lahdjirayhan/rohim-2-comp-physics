@@ -42,18 +42,7 @@ ax = fig.add_subplot(111)
 
 # Plot the streamlines with an appropriate colormap and arrow style
 color = np.log(np.sqrt(Ex**2 + Ey**2))
-ax.streamplot(
-    x,
-    y,
-    Ex,
-    Ey,
-    color=color,
-    linewidth=1,
-    cmap=plt.cm.inferno,
-    density=2,
-    arrowstyle="->",
-    arrowsize=1.5,
-)
+ax.streamplot( x, y, Ex, Ey, color=color, linewidth=1, cmap=plt.cm.inferno, density=2, arrowstyle="->", arrowsize=1.5, )
 
 # Add filled circles for the charges themselves
 charge_colors = {True: "#aa0000", False: "#0000aa"}

@@ -15,55 +15,47 @@ from mpl_toolkits.mplot3d import Axes3D
 
 tim = 15
 N = 71
-c = sqrt(180.0 / 390)  # Speed = sqrt(ten[]/den[kg/m2;])
+# Speed = sqrt(ten[]/den[kg/m2;])
+c = sqrt(180.0 / 390)  
 u = zeros((N, N, N), float)
 v = zeros((N, N), float)
 incrx = pi / N
 incry = pi / N
 cprime = c
 covercp = c / cprime
-ratio = 0.5 * covercp * covercp  # c/c' 0.5 for stable
+# c/c' 0.5 for stable
+ratio = 0.5 * covercp * covercp  
 
 
 def vibration(tim):
     y = 0.0
-    for j in range(0, N):  # Initial position
+# Initial position
+    for j in range(0, N):  
         x = 0.0
         for i in range(0, N):
-            u[i][j][0] = 3 * sin(2.0 * x) * sin(y)  # Initial shape
+# Initial shape
+            u[i][j][0] = 3 * sin(2.0 * x) * sin(y)  
             x += incrx
         y += incry
 
-    for j in range(1, N - 1):  # First time step
+# First time step
+    for j in range(1, N - 1):  
         for i in range(1, N - 1):
-            u[i][j][1] = u[i][j][0] + 0.5 * ratio * (
-                u[i + 1][j][0]
-                + u[i - 1][j][0]
-                + u[i][j + 1][0]
-                + u[i][j - 1][0]
-                - 4.0 * u[i][j][0]
-            )
+            u[i][j][1] = u[i][j][0] + 0.5 * ratio * ( u[i + 1][j][0] + u[i - 1][j][0] + u[i][j + 1][0] + u[i][j - 1][0] - 4.0 * u[i][j][0] )
 
-    for k in range(1, tim):  # Later time steps
+# Later time steps
+    for k in range(1, tim):  
         for j in range(1, N - 1):
             for i in range(1, N - 1):
-                u[i][j][2] = (
-                    2.0 * u[i][j][1]
-                    - u[i][j][0]
-                    + ratio
-                    * (
-                        u[i + 1][j][1]
-                        + u[i - 1][j][1]
-                        + u[i][j + 1][1]
-                        + u[i][j - 1][1]
-                        - 4.0 * u[i][j][1]
-                    )
-                )
-        u[:][:][0] = u[:][:][1]  # Reset past
-        u[:][:][1] = u[:][:][2]  # Reset present
+                u[i][j][2] = ( 2.0 * u[i][j][1] - u[i][j][0] + ratio * ( u[i + 1][j][1] + u[i - 1][j][1] + u[i][j + 1][1] + u[i][j - 1][1] - 4.0 * u[i][j][1] ) )
+# Reset past
+        u[:][:][0] = u[:][:][1]  
+# Reset present
+        u[:][:][1] = u[:][:][2]  
         for j in range(0, N):
             for i in range(0, N):
-                v[i][j] = u[i][j][2]  # Convert to 2D for matplotlib
+# Convert to 2D for matplotlib
+                v[i][j] = u[i][j][2]  
     return v
 
 

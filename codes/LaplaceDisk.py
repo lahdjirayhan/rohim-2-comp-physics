@@ -7,7 +7,8 @@
 # LaplaceDisk.py:  Laplace's eqtn in cyclinder, Matplotlib 3D plot
 
 from scipy import special
-from mpmath import *  # for hypergeo
+# for hypergeo
+from mpmath import *  
 from matplotlib.pyplot import figure, show, rc
 import numpy as np
 
@@ -21,10 +22,12 @@ thView = [pi / 2, 3 * pi / 2]
 Mmax = 10
 x = [0] * (100)
 xx = [0] * (100)
-xxx = [0] * (100)  # Declare arrays
+# Declare arrays
+xxx = [0] * (100)  
 
 
-def legendre(n, x):  # Legendre polymonial
+# Legendre polymonial
+def legendre(n, x):  
     if n == 0:
         p = 1
     elif n == 1:
@@ -33,7 +36,8 @@ def legendre(n, x):  # Legendre polymonial
         p0 = 1
         p1 = x
         for m in range(1, n):
-            p2 = ((2 * m + 1) * x * p1 - m * p0) / (m + 1)  # Recurrence
+# Recurrence
+            p2 = ((2 * m + 1) * x * p1 - m * p0) / (m + 1)  
             p0 = p1
             p1 = p2
             p = p2

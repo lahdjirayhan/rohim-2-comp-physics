@@ -32,7 +32,8 @@ print(h)
 
 xLeft = arange(-10, 0.02, 0.02)
 xRight = arange(10, 0.02, -0.02)
-xp = arange(-10, 10, 0.02)  # Bisection interval
+# Bisection interval
+xp = arange(-10, 10, 0.02)  
 uL = zeros((503), float)
 uR = zeros([503], float)
 k2L = zeros([1000], float)
@@ -43,32 +44,36 @@ uR[0] = 0
 uR[1] = 0.00001
 
 
-def V(x):  # Potential harmonic oscillator
+# Potential harmonic oscillator
+def V(x):  
     v = 4.7 * x * x
     return v
 
 
-def setk2(e):  # Sets k2L=(sqrt(e-V))^2 and k2R
+# Sets k2L=(sqrt(e-V))^2 and k2R
+def setk2(e):  
     for i in range(0, n):
         xLeft = Xleft0 + i * h
         xr = Xright0 - i * h
-        fact = 0.04829  # 2 m*c**2/hbarc**2=2*940/(197.33)**2
+# 2 m*c**2/hbarc**2=2*940/(197.33)**2
+        fact = 0.04829  
         k2L[i] = fact * (e - V(xLeft))
         k2R[i] = fact * (e - V(xr))
 
 
 def Numerov(n, h, k2, u, e):
     setk2(e)
-    b = (h**2) / 12.0  # L & R Psi
+# L & R Psi
+    b = (h**2) / 12.0  
     for i in range(1, n):
-        u[i + 1] = (
-            2 * u[i] * (1 - 5.0 * b * k2[i]) - (1 + b * k2[i - 1]) * u[i - 1]
-        ) / (1 + b * k2[i + 1])
+        u[i + 1] = ( 2 * u[i] * (1 - 5.0 * b * k2[i]) - (1 + b * k2[i - 1]) * u[i - 1] ) / (1 + b * k2[i + 1])
 
 
 def diff(e):
-    Numerov(nl, h, k2L, uL, e)  # Left wf
-    Numerov(nr, h, k2R, uR, e)  # Right wf
+# Left wf
+    Numerov(nl, h, k2L, uL, e)  
+# Right wf
+    Numerov(nr, h, k2R, uR, e)  
     f0 = (uR[nr - 1] + uL[nl - 1] - uR[nr - 3] - uL[nl - 3]) / (h * uR[nr - 2])
     return f0
 
@@ -80,7 +85,8 @@ fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.grid()
 
-while abs(diff(e)) > eps:  # Bisection algorithm
+# Bisection algorithm
+while abs(diff(e)) > eps:  
     e = (amin + amax) / 2
     print((e, istep))
     if diff(e) * diff(amax) > 0:
@@ -95,5 +101,6 @@ while abs(diff(e)) > eps:  # Bisection algorithm
     plt.ylabel("$\psi(x) $", fontsize=18)
     plt.title("R & L Wavefunctions Matched at x = 0")
     istep = istep + 1
-    plt.pause(0.8)  # Pause to delay figures
+# Pause to delay figures
+    plt.pause(0.8)  
 plt.show()

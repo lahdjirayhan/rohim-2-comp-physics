@@ -10,25 +10,34 @@ import numpy as np
 import matplotlib.pylab as plt
 from rk4Algor import rk4Algor
 
-n = 5  #  Quantum number n = npr + L + 1 = integer > 0
-xx = np.zeros((1000), float)  # x values for plot
-yy = np.zeros((1000), float)  # wave function values
-fvector = [0] * (2)  # force function f
-y = [0] * (2)  # array for 2 values
+#  Quantum number n = npr + L + 1 = integer > 0
+n = 5  
+# x values for plot
+xx = np.zeros((1000), float)  
+# wave function values
+yy = np.zeros((1000), float)  
+# force function f
+fvector = [0] * (2)  
+# array for 2 values
+y = [0] * (2)  
 
 
-def f(x, y):  # Force function for HO
+# Force function for HO
+def f(x, y):  
     fvector[0] = y[1]
     fvector[1] = -(2 * n + 1 - x**2) * y[0]
     return fvector
 
 
 if n % 2 == 0:
-    y[0] = 1e-8  # for function parity
+# for function parity
+    y[0] = 1e-8  
 else:
     y[0] = -1e-8
-y[1] = 0.0  # init cond
-f(0.0, y)  # force function at r = 0
+# init cond
+y[1] = 0.0  
+# force function at r = 0
+f(0.0, y)  
 dr = 0.01
 i = 0
 
@@ -36,8 +45,10 @@ i = 0
 for x in np.arange(-5, 5, dr):
     xx[i] = x
     y = rk4Algor(x, dr, 2, y, f)
-    yy[i] = y[0]  #
-    i = i + 1  # Advance i as well as r
+#
+    yy[i] = y[0]  
+# Advance i as well as r
+    i = i + 1  
 plt.figure()
 plt.plot(xx, yy)
 plt.grid()

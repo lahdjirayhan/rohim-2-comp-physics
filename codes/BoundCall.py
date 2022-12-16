@@ -15,24 +15,30 @@ min1 = 0.0
 max1 = 200.0
 u = 0.5
 b = 10.0
-eps = 3.0e-10  # Precision for Gauss points
+# Precision for Gauss points
+eps = 3.0e-10  
 N = 16
 Lambda = -1024
-H = zeros((N, N), float)  # Hamiltonian
-WR = zeros((N), float)  # Eigenvalues, potential
+# Hamiltonian
+H = zeros((N, N), float)  
+# Eigenvalues, potential
+WR = zeros((N), float)  
 k = zeros((N), float)
 w = zeros((N), float)
 # Pts & wts
-GaussPoints(N, min1, max1, k, w, eps)  # Call gauss points
+# Call gauss points
+GaussPoints(N, min1, max1, k, w, eps)  
 for i in range(0, N):
     for j in range(0, N):
         VR = (Lambda / 2 / u) * sin(k[i] * b) / k[i] * sin(k[j] * b) / k[j]
-        H[i, j] = 2.0 / math.pi * VR * k[j] * k[j] * w[j]  # Hamiltonian
+# Hamiltonian
+        H[i, j] = 2.0 / math.pi * VR * k[j] * k[j] * w[j]  
         if i == j:
             H[i, j] += k[i] * k[i] / 2 / u
 Es, evectors = eig(H)
 ReE = real(Es)
-ImE = imag(Es)  # Eigenvalues
+# Eigenvalues
+ImE = imag(Es)  
 
 for j in range(0, N):
     print((" Npoints =", N, "Lambda =", Lambda, " ReE =", ReE[j]))

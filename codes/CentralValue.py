@@ -11,11 +11,14 @@ import numpy as np, matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 
 N = 1000
-NR = 10000  #  Sum N variables, distribution of sums
-SumList = []  # empty list
+#  Sum N variables, distribution of sums
+NR = 10000  
+# empty list
+SumList = []  
 
 
-def SumRandoms():  # Sum N randoms in [0,1]
+# Sum N randoms in [0,1]
+def SumRandoms():  
     sum = 0.0
     for i in range(0, N):
         sum = sum + random.random()
@@ -26,7 +29,8 @@ def normal_dist_param():
     add = sum2 = 0
     for i in range(0, NR):
         add = add + SumList[i]
-    mu = add / NR  # Average distribution
+# Average distribution
+    mu = add / NR  
     for i in range(0, NR):
         sum2 = sum2 + (SumList[i] - mu) ** 2
     sigma = np.sqrt(sum2 / NR)
@@ -35,12 +39,15 @@ def normal_dist_param():
 
 for i in range(0, NR):
     dist = SumRandoms()
-    SumList.append(dist)  # Fill list with NR sums
-plt.hist(SumList, bins=100, normed=True)  # True: normalize
+# Fill list with NR sums
+    SumList.append(dist)  
+# True: normalize
+plt.hist(SumList, bins=100, normed=True)  
 mu, sigma = normal_dist_param()
 x = np.arange(450, 550)
 rho = np.exp(-((x - mu) ** 2) / (2 * sigma**2)) / (np.sqrt(2 * np.pi * sigma**2))
-plt.plot(x, rho, "g-", linewidth=3.0)  # Normal distrib
+# Normal distrib
+plt.plot(x, rho, "g-", linewidth=3.0)  
 plt.xlabel("Random Number x 1000")
 plt.ylabel("Average of Random Numbers")
 plt.title("Generated vs Analytic Normal Distribution")

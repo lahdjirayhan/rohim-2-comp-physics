@@ -11,20 +11,27 @@ from numpy import *
 max = 2100
 points = 1026
 N = 100
-Switch = -1  # Switch= -1: Y, 1: y
+# Switch= -1: Y, 1: y
+Switch = -1  
 y = zeros(2 * (N + 4), float)
 Y = zeros((N + 3, 2), float)
 
 
-def fft(N, Switch):  # FFT of Y[n,2]
+# FFT of Y[n,2]
+def fft(N, Switch):  
     n = 2 * N
-    for i in range(0, N + 1):  # Original y in Y to y
+# Original y in Y to y
+    for i in range(0, N + 1):  
         j = 2 * i + 1
-        y[j] = Y[i, 0]  # Real Y, odd y[j]
-        y[j + 1] = Y[i, 1]  # Imag Y, even y[j+1]
-    j = 1  # Place y in bit reverse order
+# Real Y, odd y[j]
+        y[j] = Y[i, 0]  
+# Imag Y, even y[j+1]
+        y[j + 1] = Y[i, 1]  
+# Place y in bit reverse order
+    j = 1  
     for i in range(1, n + 2, 2):
-        if (i - j) < 0:  # Reorder equivalent to bit reverse
+# Reorder equivalent to bit reverse
+        if (i - j) < 0:  
             tempr = y[j]
             tempi = y[j + 1]
             y[j] = y[i]
@@ -43,7 +50,8 @@ def fft(N, Switch):  # FFT of Y[n,2]
     for i in range(1, n + 1, 2):
         print(("%2d y[%2d] %9.5f " % (i, i, y[i])))
     mmax = 2
-    while (mmax - n) < 0:  # Begin transform
+# Begin transform
+    while (mmax - n) < 0:  
         istep = 2 * mmax
         theta = 6.2831853 / (1.0 * Switch * mmax)
         sinth = math.sin(theta / 2.0)
@@ -73,12 +81,16 @@ def fft(N, Switch):  # FFT of Y[n,2]
 print("\n Input   \n  i   Re y(t)   Im y(t)")
 h = 2 * pi / N
 x = 0.0
-for i in range(0, N + 1):  # Generate signal in Y
-    Y[i, 0] = 30 * cos(x) + 60 * sin(2 * x) + 120 * sin(3 * x)  # Real part
-    Y[i, 1] = 0.0  # Im part
+# Generate signal in Y
+for i in range(0, N + 1):  
+# Real part
+    Y[i, 0] = 30 * cos(x) + 60 * sin(2 * x) + 120 * sin(3 * x)  
+# Im part
+    Y[i, 1] = 0.0  
     x += h
     print((" %2d %9.5f %9.5f" % (i, Y[i, 0], Y[i, 1])))
-fft(N, Switch)  # Call FFT, use global Y[][]
+# Call FFT, use global Y[][]
+fft(N, Switch)  
 print("\n Fourier Transform Y(omega)")
 print("  i      ReY(omega)      ImY(omega)   ")
 for i in range(0, N):

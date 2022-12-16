@@ -8,34 +8,10 @@
 
 from vpython import *
 
-signgr = gdisplay(
-    x=0,
-    y=0,
-    width=600,
-    height=250,
-    title="Signal y(t)= 3 cos(wt)+2 cos(3wt)+ cos(5wt) ",
-    xtitle="x",
-    ytitle="signal",
-    xmax=2.0 * math.pi,
-    xmin=0,
-    ymax=7,
-    ymin=-7,
-)
-sigfig = gcurve(color=color.yellow, display=signgr)
-imagr = gdisplay(
-    x=0,
-    y=250,
-    width=600,
-    height=250,
-    title="Fourier transform imaginary part",
-    xtitle="x",
-    ytitle="Transf.Imag",
-    xmax=10.0,
-    xmin=-1,
-    ymax=20,
-    ymin=-25,
-)
-impart = gvbars(delta=0.05, color=color.red, display=imagr)
+signgr = graph( x=0, y=0, width=600, height=250, title="Signal y(t)= 3 cos(wt)+2 cos(3wt)+ cos(5wt) ", xtitle="x", ytitle="signal", xmax=2.0 * math.pi, xmin=0, ymax=7, ymin=-7, )
+sigfig = gcurve(color=color.yellow, canvas=signgr)
+imagr = graph( x=0, y=250, width=600, height=250, title="Fourier transform imaginary part", xtitle="x", ytitle="Transf.Imag", xmax=10.0, xmin=-1, ymax=20, ymin=-25, )
+impart = gvbars(delta=0.05, color=color.red, canvas=imagr)
 
 N = 200
 Np = N
@@ -43,7 +19,8 @@ signal = zeros((N + 1), float)
 twopi = 2.0 * pi
 sq2pi = 1.0 / sqrt(twopi)
 h = twopi / N
-dftimag = zeros((Np), float)  # Im. transform
+# Im. transform
+dftimag = zeros((Np), float)  
 
 
 def f(signal):
@@ -55,12 +32,14 @@ def f(signal):
         t += step
 
 
-def fourier(dftimag):  # DFT
+# DFT
+def fourier(dftimag):  
     for n in range(0, Np):
         imag = 0.0
         for k in range(0, N):
             imag += signal[k] * sin((twopi * k * n) / N)
-        dftimag[n] = -imag * sq2pi  # Im transform
+# Im transform
+        dftimag[n] = -imag * sq2pi  
         if dftimag[n] != 0:
             impart.plot(pos=(n, dftimag[n]))
 

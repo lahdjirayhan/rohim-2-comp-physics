@@ -11,23 +11,30 @@ from numpy import *
 from sys import version
 from GaussPoints import GaussPoints
 
-Npts = 10  # Numb points
+# Numb points
+Npts = 10  
 a = 0.0
-b = 1.0  # Int ranges
-eps = 3.0e-14  # Precision desired
+# Int ranges
+b = 1.0  
+# Precision desired
+eps = 3.0e-14  
 w = zeros((2001), float)
 x = zeros((2001), float)
 
 
-def f(x):  # Place integrand here
+# Place integrand here
+def f(x):  
     return exp(x)
 
 
-def GaussInt(Npts, a, b, eps):  # Sum integrand*weight
+# Sum integrand*weight
+def GaussInt(Npts, a, b, eps):  
     quadra = 0.0
-    GaussPoints(Npts, a, b, x, w, eps)  # Get pts, eps = precison
+# Get pts, eps = precison
+    GaussPoints(Npts, a, b, x, w, eps)  
     for i in range(0, Npts):
-        quadra += f(x[i]) * w[i]  # Sum weighted integrands
+# Sum weighted integrands
+        quadra += f(x[i]) * w[i]  
     return quadra
 
 

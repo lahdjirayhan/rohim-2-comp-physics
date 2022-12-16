@@ -10,19 +10,22 @@
 from vpython import *
 from rk4Algor import rk4Algor
 
-psigr = display(x=0, y=0, width=600, height=300, title="R & L Psi")
+psigr = canvas(x=0, y=0, width=600, height=300, title="R & L Psi")
 Lwf = curve(x=list(range(502)), color=color.red)
 Rwf = curve(x=list(range(997)), color=color.yellow)
 eps = 1e-1
 Nsteps = 501
 h = 0.04
-Nmax = 100  # Search Params
+# Search Params
+Nmax = 100  
 E = -17.0
 Emax = 1.1 * E
-Emin = E / 1.1  # Init E & limits
+# Init E & limits
+Emin = E / 1.1  
 
 
-def f(x, y):  # RHS for ODE
+# RHS for ODE
+def f(x, y):  
     global E
     F = zeros((2), float)
     F[0] = y[1]
@@ -30,17 +33,20 @@ def f(x, y):  # RHS for ODE
     return F
 
 
-def V(x):  # Potential
+# Potential
+def V(x):  
     if abs(x) < 10.0:
         return -16.0
     else:
         return 0.0
 
 
-def diff(h):  # Change in log deriv
+# Change in log deriv
+def diff(h):  
     global E
     y = zeros((2), float)
-    i_match = Nsteps // 3  # Matching radius
+# Matching radius
+    i_match = Nsteps // 3  
     nL = i_match + 1
     y[0] = 1.0e-15
     # Initial left wf
@@ -48,37 +54,47 @@ def diff(h):  # Change in log deriv
     for ix in range(0, nL + 1):
         x = h * (ix - Nsteps / 2)
         y = rk4Algor(x, h, 2, y, f)
-    left = y[1] / y[0]  # Log  derivative
+# Log  derivative
+    left = y[1] / y[0]  
     y[0] = 1.0e-15
     #  Slope for even; reverse if odd
-    y[1] = -y[0] * sqrt(-E * 0.4829)  # Initialize R wf
+# Initialize R wf
+    y[1] = -y[0] * sqrt(-E * 0.4829)  
     for ix in range(Nsteps, nL + 1, -1):
         x = h * (ix + 1 - Nsteps / 2)
         y = rk4Algor(x, -h, 2, y, f)
-    right = y[1] / y[0]  # Log derivative
+# Log derivative
+    right = y[1] / y[0]  
     return (left - right) / (left + right)
 
 
-def plot(h):  # Repeat integrations for plot
+# Repeat integrations for plot
+def plot(h):  
     global E
     x = 0.0
-    Nsteps = 1501  # Integration steps
+# Integration steps
+    Nsteps = 1501  
     y = zeros((2), float)
     yL = zeros((2, 505), float)
-    i_match = 500  # Matching radius
+# Matching radius
+    i_match = 500  
     nL = i_match + 1
-    y[0] = 1.0e-40  # Initial left wf
+# Initial left wf
+    y[0] = 1.0e-40  
     y[1] = -sqrt(-E * 0.4829) * y[0]
     for ix in range(0, nL + 1):
         yL[0][ix] = y[0]
         yL[1][ix] = y[1]
         x = h * (ix - Nsteps / 2)
         y = rk4Algor(x, h, 2, y, f)
-    y[0] = -1.0e-15  # - slope: even;  reverse if odd
+# - slope: even;  reverse if odd
+    y[0] = -1.0e-15  
     y[1] = -sqrt(-E * 0.4829) * y[0]
     j = 0
-    for ix in range(Nsteps - 1, nL + 2, -1):  # Right WF
-        x = h * (ix + 1 - Nsteps / 2)  # Integrate in
+# Right WF
+    for ix in range(Nsteps - 1, nL + 2, -1):  
+# Integrate in
+        x = h * (ix + 1 - Nsteps / 2)  
         y = rk4Algor(x, -h, 2, y, f)
         Rwf.x[j] = 2.0 * (ix + 1 - Nsteps / 2) - 500.0
         Rwf.y[j] = y[0] * 35e-9 + 200
@@ -86,25 +102,31 @@ def plot(h):  # Repeat integrations for plot
     x = x - h
     normL = y[0] / yL[0][nL]
     j = 0
-    for ix in range(0, nL + 1):  # Normalize L wf & derivative
+# Normalize L wf & derivative
+    for ix in range(0, nL + 1):  
         x = h * (ix - Nsteps / 2 + 1)
         y[0] = yL[0][ix] * normL
         y[1] = yL[1][ix] * normL
         Lwf.x[j] = 2.0 * (ix - Nsteps / 2 + 1) - 500.0
-        Lwf.y[j] = y[0] * 35e-9 + 200  # Factor for scale
+# Factor for scale
+        Lwf.y[j] = y[0] * 35e-9 + 200  
         j += 1
 
 
-for count in range(0, Nmax + 1):  # Main program
-    rate(1)  # Slow rate shows changes
-    E = (Emax + Emin) / 2.0  # Bisec E range
+# Main program
+for count in range(0, Nmax + 1):  
+# Slow rate shows changes
+    rate(1)  
+# Bisec E range
+    E = (Emax + Emin) / 2.0  
     Diff = diff(h)
     Etemp = E
     E = Emax
     diffMax = diff(h)
     E = Etemp
     if diffMax * Diff > 0:
-        Emax = E  # Bisection algor
+# Bisection algor
+        Emax = E  
     else:
         Emin = E
     print(("Iteration, E =", count, E))
@@ -113,13 +135,14 @@ for count in range(0, Nmax + 1):  # Main program
     if count > 3:
         rate(4)
         plot(h)
-    elabel = label(pos=(700, 400), text="E=", box=0)
+    elabel = label(pos=vector(700, 400,0), text="E=", box=0)
     elabel.text = "E=%13.10f" % E
-    ilabel = label(pos=(700, 600), text="istep=", box=0)
+    ilabel = label(pos=vector(700, 600,0), text="istep=", box=0)
     ilabel.text = "istep=%4s" % count
-elabel = label(pos=(700, 400), text="E=", box=0)  # Last
+# Last
+elabel = label(pos=vector(700, 400,0), text="E=", box=0)  
 elabel.text = "E=%13.10f" % E
-ilabel = label(pos=(700, 600), text="istep=", box=0)
+ilabel = label(pos=vector(700, 600,0), text="istep=", box=0)
 ilabel.text = "istep=%4s" % count
 print(("Final eigenvalue E =", E))
 print(("Iterations = ", count, ", max = ", Nmax))

@@ -10,10 +10,13 @@ import sys
 import math
 
 r = 2
-circum = 2.0 * math.pi * r  # Calculate circum
-A = math.pi * r**2  # Calculate A
+# Calculate circum
+circum = 2.0 * math.pi * r  
+# Calculate A
+A = math.pi * r**2  
 try:
-    q = open("ThrowCatch.dat", "w")  # Intentional error 'r'
+# Intentional error 'r'
+    q = open("ThrowCatch.dat", "w")  
     # Replace r' to 'w', run
 except IOError:
     print("Cannot open file")

@@ -9,15 +9,17 @@
 from numpy import *
 from vpython import *
 
-wavef = display(x=0, y=0, width=600, height=600, range=50)
+wavef = canvas(x=0, y=0, width=600, height=600, range=50)
 plotob = curve(x=list(range(0, 80)), color=color.yellow, radius=0.2)
 sqpi = math.sqrt(math.pi)
 E = 3.0
-alpha = sqrt(E - 0.5)  # E, Coherent Eigenvalue
+# E, Coherent Eigenvalue
+alpha = sqrt(E - 0.5)  
 factr = math.exp(-0.5 * alpha * alpha)
 
 
-def Hermite(x, n):  # Hermite polynomial
+# Hermite polynomial
+def Hermite(x, n):  
     if n == 0:
         p = 1.0
     elif n == 1:
@@ -33,7 +35,8 @@ def Hermite(x, n):  # Hermite polynomial
     return p
 
 
-def glauber(x, t, nmax):  # Coherent state
+# Coherent state
+def glauber(x, t, nmax):  
     Reterm = 0.0
     Imterm = 0.0
     factr = math.exp(-0.5 * alpha * alpha)
@@ -52,10 +55,13 @@ def motion(nmax):
     for t in arange(0, 18.0, 0.03):
         xx = -8.0
         for i in range(0, 80):
-            y = glauber(xx, t, nmax)  # Find coherent state
-            plotob.x[i] = 4 * xx  # Plot state
+# Find coherent state
+            y = glauber(xx, t, nmax)  
+# Plot state
+            plotob.x[i] = 4 * xx  
             plotob.y[i] = 15.0 * y
             xx += 0.2
 
 
-motion(20)  # Parameter: max degree Hn
+# Parameter: max degree Hn
+motion(20)  

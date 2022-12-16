@@ -19,12 +19,14 @@ h = (Tmax - Tmin) / Ntimes
 t = Tmin
 
 
-def f(t, y, F):  #  Modify function for your problem
+#  Modify function for your problem
+def f(t, y, F):  
     F[0] = 0.2 * y[0] * (1 - (y[0] / (20.0))) - 0.1 * y[0] * y[1]
     F[1] = -0.1 * y[1] + 0.1 * y[0] * y[1]
 
 
-def rk4(t, y, h, Neqs):  # rk4 method,  DO NOT modify
+# rk4 method,  DO NOT modify
+def rk4(t, y, h, Neqs):  
     F = zeros((Neqs), float)
     ydumb = zeros((Neqs), float)
     k1 = zeros((Neqs), float)
@@ -49,34 +51,10 @@ def rk4(t, y, h, Neqs):  # rk4 method,  DO NOT modify
         y[i] = y[i] + (k1[i] + 2.0 * (k2[i] + k3[i]) + k4[i]) / 6.0
 
 
-graph1 = gdisplay(
-    x=0,
-    y=0,
-    width=500,
-    height=400,
-    title="Prey p & predator P vs time",
-    xtitle="t",
-    ytitle="P, p",
-    xmin=0,
-    xmax=500,
-    ymin=0,
-    ymax=3.5,
-)
+graph1 = graph( x=0, y=0, width=500, height=400, title="Prey p & predator P vs time", xtitle="t", ytitle="P, p", xmin=0, xmax=500, ymin=0, ymax=3.5, )
 funct1 = gcurve(color=color.yellow)
 funct2 = gcurve(color=color.green)
-graph2 = gdisplay(
-    x=0,
-    y=400,
-    width=500,
-    height=400,
-    title="Predator P vs prey p",
-    xtitle="P",
-    ytitle="p",
-    xmin=0,
-    xmax=2.5,
-    ymin=0,
-    ymax=3.5,
-)
+graph2 = graph( x=0, y=400, width=500, height=400, title="Predator P vs prey p", xtitle="P", ytitle="p", xmin=0, xmax=2.5, ymin=0, ymax=3.5, )
 funct3 = gcurve(color=color.red)
 
 for t in arange(Tmin, Tmax + 1, h):

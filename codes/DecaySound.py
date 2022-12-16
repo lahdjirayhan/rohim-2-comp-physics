@@ -10,20 +10,26 @@ from vpython import *
 from vpython import *
 import random, winsound
 
-lambda1 = 0.005  # Decay constant
+# Decay constant
+lambda1 = 0.005  
 max = 80.0
 time_max = 500
 seed = 68111
-number = nloop = max  # Initial value
-graph1 = gdisplay(title="Spontaneous Decay", xtitle="Time", ytitle="Number")
+# Initial value
+number = nloop = max  
+graph1 = graph(title="Spontaneous Decay", xtitle="Time", ytitle="Number")
 decayfunc = gcurve(color=color.green)
 
-for time in arange(0, time_max + 1):  # Time loop
-    for atom in arange(1, number + 1):  # Decay loop
+# Time loop
+for time in arange(0, time_max + 1):  
+# Decay loop
+    for atom in arange(1, number + 1):  
         decay = random.random()
         if decay < lambda1:
-            nloop = nloop - 1  # A decay
-            winsound.Beep(600, 100)  # Sound beep
+# A decay
+            nloop = nloop - 1  
+# Sound beep
+            winsound.Beep(600, 100)  
     number = nloop
     decayfunc.plot(pos=(time, number))
     rate(30)

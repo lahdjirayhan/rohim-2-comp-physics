@@ -17,87 +17,114 @@ h = 0.00
 maxel = 0
 path = zeros([101], float)
 arr = path
-prob = zeros([201], float)  # Init
+# Init
+prob = zeros([201], float)  
 
-trajec = display(width=300, height=500, title="Spacetime Trajectory")
-trplot = curve(y=list(range(0, 100)), color=color.magenta, display=trajec)
-
-
-def trjaxs():  # plot axis for trajectories
-    trax = curve(pos=[(-97, -100), (100, -100)], color=color.cyan, display=trajec)
-    curve(pos=[(-65, -100), (-65, 100)], color=color.cyan, display=trajec)
-    label(pos=(-65, 110), text="t", box=0, display=trajec)
-    label(pos=(-85, -110), text="0", box=0, display=trajec)
-    label(pos=(60, -110), text="x", box=0, display=trajec)
+trajec = canvas(width=300, height=500, title="Spacetime Trajectory")
+trplot = curve(y=list(range(0, 100)), color=color.magenta, canvas=trajec)
 
 
-wvgraph = display(x=350, y=80, width=500, height=300, title="GS Prob")
-wvplot = curve(x=list(range(0, 50)), display=wvgraph)  # wave function plot
+# plot axis for trajectories
+def trjaxs():  
+    trax = curve(pos=[(-97, -100), (100, -100)], color=color.cyan, canvas=trajec)
+    curve(pos=[(-65, -100), (-65, 100)], color=color.cyan, canvas=trajec)
+    label(pos=vector(-65, 110,0), text="t", box=0, canvas=trajec)
+    label(pos=vector(-85, -110,0), text="0", box=0, canvas=trajec)
+    label(pos=vector(60, -110,0), text="x", box=0, canvas=trajec)
+
+
+wvgraph = canvas(x=350, y=80, width=500, height=300, title="GS Prob")
+# wave function plot
+wvplot = curve(x=list(range(0, 50)), canvas=wvgraph)  
 wvfax = curve(color=color.cyan)
 
 
-def wvfaxs():  # plot axis for wavefunction
-    wvfax = curve(pos=[(-200, -155), (800, -155)], display=wvgraph, color=color.cyan)
-    curve(pos=[(-200, -150), (-200, 400)], display=wvgraph, color=color.cyan)
-    label(pos=(-70, 420), text="Probability", box=0, display=wvgraph)
-    label(pos=(600, -220), text="x", box=0, display=wvgraph)
-    label(pos=(-200, -220), text="0", box=0, display=wvgraph)
+# plot axis for wavefunction
+def wvfaxs():  
+    wvfax = curve(pos=[(-200, -155), (800, -155)], canvas=wvgraph, color=color.cyan)
+    curve(pos=[(-200, -150), (-200, 400)], canvas=wvgraph, color=color.cyan)
+    label(pos=vector(-70, 420,0), text="Probability", box=0, canvas=wvgraph)
+    label(pos=vector(600, -220,0), text="x", box=0, canvas=wvgraph)
+    label(pos=vector(-200, -220,0), text="0", box=0, canvas=wvgraph)
 
 
 trjaxs()
-wvfaxs()  # plot axes
+# plot axes
+wvfaxs()  
 
 
-def energy(arr):  # Method for Energy of path
+# Method for Energy of path
+def energy(arr):  
     esum = 0.0
     for i in range(0, N):
         esum += 0.5 * ((arr[i + 1] - arr[i]) / dt) ** 2 + g * (arr[i] + arr[i + 1]) / 2
     return esum
 
 
-def plotpath(path):  # Method to plot xy trajectory
+# Method to plot xy trajectory
+def plotpath(path):  
     for j in range(0, N):
         trplot.x[j] = 20 * path[j] - 65
         trplot.y[j] = 2 * j - 100
 
 
-def plotwvf(prob):  # Method to plot wave function
+# Method to plot wave function
+def plotwvf(prob):  
     for i in range(0, 50):
         wvplot.color = color.yellow
         wvplot.x[i] = 20 * i - 200
         wvplot.y[i] = 0.5 * prob[i] - 150
 
 
-oldE = energy(path)  # Initial E
-counter = 1  # for ea 100 iterations
-norm = 0.0  # wavefunction is plotted
+# Initial E
+oldE = energy(path)  
+# for ea 100 iterations
+counter = 1  
+# wavefunction is plotted
+norm = 0.0  
 maxx = 0.0
 
-while 1:  # "Infinite" loop
+# "Infinite" loop
+while 1:  
     rate(100)
     element = int(N * random.random())
-    if element != 0 and element != N:  # Ends not allowed
-        change = ((random.random() - 0.5) * 20.0) / 10.0  #  -1 =<random  =< 1
-        if path[element] + change > 0.0:  # No negative paths
-            path[element] += change  # change temporarily
-            newE = energy(path)  # New trajectory E
+# Ends not allowed
+    if element != 0 and element != N:  
+#  -1 =<random  =< 1
+        change = ((random.random() - 0.5) * 20.0) / 10.0  
+# No negative paths
+        if path[element] + change > 0.0:  
+# change temporarily
+            path[element] += change  
+# New trajectory E
+            newE = energy(path)  
             if newE > oldE and exp(-newE + oldE) <= random.random():
-                path[element] -= change  # Link rejected
+# Link rejected
+                path[element] -= change  
                 plotpath(path)
-            ele = int(path[element] * 1250.0 / 100.0)  # Scale changed
+# Scale changed
+            ele = int(path[element] * 1250.0 / 100.0)  
             if ele >= maxel:
-                maxel = ele  # Scale change 0 to N
+# Scale change 0 to N
+                maxel = ele  
             if element != 0:
                 prob[ele] += 1
             oldE = newE
-    if counter % 100 == 0:  # plot wavefunction every 100
-        for i in range(0, N):  # max x value of path
+# plot wavefunction every 100
+    if counter % 100 == 0:  
+# max x value of path
+        for i in range(0, N):  
             if path[i] >= maxx:
                 maxx = path[i]
-        h = maxx / maxel  # space step
-        firstlast = h * 0.5 * (prob[0] + prob[maxel])  # for trap. extremes
+# space step
+        h = maxx / maxel  
+# for trap. extremes
+        firstlast = h * 0.5 * (prob[0] + prob[maxel])  
         for i in range(0, maxel + 1):
-            norm = norm + prob[i]  # norm
-        norm = norm * h + firstlast  # Trap rule
-        plotwvf(prob)  # plot probability
+# norm
+            norm = norm + prob[i]  
+# Trap rule
+        norm = norm * h + firstlast  
+# plot probability
+        plotwvf(prob)  
     counter += 1

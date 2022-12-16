@@ -6,7 +6,8 @@
 
 # CavityFlow.py: solves Navier-Stokes equation for cavity flow
 
-from numpy import *  # needed for zeros
+# needed for zeros
+from numpy import *  
 
 Niter = 200
 Nx = 30
@@ -30,36 +31,46 @@ w = zeros((Nx + 1, Ny + 1), float)
 
 def top():
     for i in range(1, Nx + 1):
-        u[i - 1, Ny] = u[i, Ny]  # vy=-du/dx=0
+# vy=-du/dx=0
+        u[i - 1, Ny] = u[i, Ny]  
         w[i, Ny] = 2 * (u[i, Ny] - u[i, Ny - 1]) / h**2 - 2 * u0 / h
 
 
 def bottom():
-    for i in range(1, Nx + 1):  # Bottom
+# Bottom
+    for i in range(1, Nx + 1):  
         w[i, 0] = 2 * (u[i, 0] - u[i, 1]) / h**2
-        u[i, 1] = u[i, 0]  # du/dy=0
-        u[i - 1, 0] = u[i, 0]  # du/dx=0
+# du/dy=0
+        u[i, 1] = u[i, 0]  
+# du/dx=0
+        u[i - 1, 0] = u[i, 0]  
 
 
 def borderleft():
-    for j in range(1, Ny + 1):  # Right
+# Right
+    for j in range(1, Ny + 1):  
         if j < J1:
-            w[0, j] = 2 * (u[0, j] - u[1, j]) / h**2  # Below hole
+# Below hole
+            w[0, j] = 2 * (u[0, j] - u[1, j]) / h**2  
             u[0, j] = u[1, j]
             u[0, j] = u[0, j - 1]
         if j >= J1 and j <= J2:
             w[1, j] = w[0, j]
             u[0, j] = u[0, j - 1] + V0 * h
         if j > J2:
-            u[0, j] = u[0, j - 1]  # du/dy=0
-            u[1, j] = u[0, j]  # du/dx=0
+# du/dy=0
+            u[0, j] = u[0, j - 1]  
+# du/dx=0
+            u[1, j] = u[0, j]  
             w[0, j] = 2 * (u[0, j] - u[1, j]) / h**2
 
 
 def borderight():
-    for j in range(1, Ny + 1):  # Right
+# Right
+    for j in range(1, Ny + 1):  
         if j < J3:
-            w[Nx - 1, j] = 2 * (u[Nx - 1, j] - u[Nx, j]) / h**2  # Below hole
+# Below hole
+            w[Nx - 1, j] = 2 * (u[Nx - 1, j] - u[Nx, j]) / h**2  
             u[Nx - 1, j] = u[Nx, j]
             u[Nx, j] = u[Nx, j - 1]
         if j >= J3 and j <= J4:
@@ -72,7 +83,8 @@ def borderight():
             w[Nx - 1, j] = 2 * (u[Nx - 1, j] - u[Nx, j]) / h**2
 
 
-def Borders(iter):  # Method borders: init & B.C.
+# Method borders: init & B.C.
+def Borders(iter):  
     top()
     bottom()
     borderight()
@@ -83,26 +95,17 @@ def Relax(iter):
     Borders(iter)
     for i in range(1, Nx):
         for j in range(1, Ny):
-            r1 = omega * (
-                (
-                    u[i + 1, j]
-                    + u[i - 1, j]
-                    + u[i, j + 1]
-                    + u[i, j - 1]
-                    + h * h * w[i, j]
-                )
-                * 0.25
-                - u[i, j]
-            )
+            r1 = omega * ( ( u[i + 1, j] + u[i - 1, j] + u[i, j + 1] + u[i, j - 1] + h * h * w[i, j] ) * 0.25 - u[i, j] )
             u[i, j] += r1
     if iter % 100 == 0:
         print(("Residual r1 ", r1))
     Borders(iter)
-    for i in range(1, Nx):  # Relax stream function
+# Relax stream function
+    for i in range(1, Nx):  
         for j in range(1, Ny):
             a1 = w[i + 1, j] + w[i - 1, j] + w[i, j + 1] + w[i, j - 1]
-            a2 = (u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
-            a3 = (u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
+            a2 = vector(u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
+            a3 = vector(u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
             r2 = omega * ((a1 + (R / 4) * (a3 - a2)) / 4.0 - w[i, j])
             w[i, j] += r2
 
@@ -112,7 +115,8 @@ while iter <= Niter:
         print(("Iteration Number", iter))
     Relax(iter)
     iter += 1
-utorr = open("Cavity.dat", "w")  # Send data to disk  of u
+# Send data to disk  of u
+utorr = open("Cavity.dat", "w")  
 for j in range(0, Ny + 1):
     utorr.write("\n")
     for i in range(0, Nx + 1):

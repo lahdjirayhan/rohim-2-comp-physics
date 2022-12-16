@@ -9,31 +9,27 @@ from vpython import *
 from vpython import *
 import random
 
-lambda1 = 0.01  # Decay constant
+# Decay constant
+lambda1 = 0.01  
 max = 50.0
 time_max = 500
-seed = 68111  # Params
-number = nloop = max  # Initial value
+# Params
+seed = 68111  
+# Initial value
+number = nloop = max  
 # random.seed(seed)                               # Seed number generator
 
-graph1 = gdisplay(
-    width=500,
-    height=500,
-    title="Spontaneous Decay",
-    xtitle="Time",
-    ytitle="Number left",
-    xmax=500,
-    xmin=0,
-    ymax=100,
-    ymin=0,
-)
+graph1 = graph( width=500, height=500, title="Spontaneous Decay", xtitle="Time", ytitle="Number left", xmax=500, xmin=0, ymax=100, ymin=0, )
 decayfunc = gcurve(color=color.green)
 
-for time in arange(0, time_max + 1):  # Time loop
-    for atom in arange(1, number + 1):  # Decay loop
+# Time loop
+for time in arange(0, time_max + 1):  
+# Decay loop
+    for atom in arange(1, number + 1):  
         decay = random.random()
         if decay < lambda1:
-            nloop = nloop - 1  # A decay
+# A decay
+            nloop = nloop - 1  
     number = nloop
     decayfunc.plot(pos=(time, number))
     rate(30)

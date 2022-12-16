@@ -21,31 +21,23 @@ u_exact = zeros((21), float)
 error = zeros((21), float)
 x = zeros((N), float)
 
-graph1 = gdisplay(
-    width=500,
-    height=500,
-    title="Exact: blue, FEM: red",
-    xtitle="x",
-    ytitle="U",
-    xmax=1,
-    ymax=1,
-    xmin=0,
-    ymin=0,
-)
+graph1 = graph( width=500, height=500, title="Exact: blue, FEM: red", xtitle="x", ytitle="U", xmax=1, ymax=1, xmin=0, ymin=0, )
 funct1 = gcurve(color=color.blue)
 funct2 = gdots(color=color.red)
 funct3 = gcurve(color=color.cyan)
 
 for i in range(0, N):
     x[i] = i * h
-for i in range(0, N):  # Initialize
+# Initialize
+for i in range(0, N):  
     b[i, 0] = 0.0
     for j in range(0, N):
         A[i][j] = 0.0
 
 
 def lin1(x, x1, x2):
-    return (x - x1) / (x2 - x1)  # Hat func
+# Hat func
+    return (x - x1) / (x2 - x1)  
 
 
 def lin2(x, x1, x2):
@@ -53,17 +45,21 @@ def lin2(x, x1, x2):
 
 
 def f(x):
-    return 1.0  # RHS of equation
+# RHS of equation
+    return 1.0  
 
 
-def int1(min, max):  # Simpson
+# Simpson
+def int1(min, max):  
     no = 1000
     sum = 0.0
     interval = (max - min) / (no - 1)
-    for n in range(2, no, 2):  # Loop odd points
+# Loop odd points
+    for n in range(2, no, 2):  
         x = interval * (n - 1)
         sum += 4 * f(x) * lin1(x, min, max)
-    for n in range(3, no, 2):  # Loop even points
+# Loop even points
+    for n in range(3, no, 2):  
         x = interval * (n - 1)
         sum += 2 * f(x) * lin1(x, min, max)
     sum += f(min) * lin1(min, min, max) + f(max) * lin1(max, min, max)
@@ -71,14 +67,17 @@ def int1(min, max):  # Simpson
     return sum
 
 
-def int2(min, max):  # Simpson
+# Simpson
+def int2(min, max):  
     no = 1000
     sum = 0.0
     interval = (max - min) / (no - 1)
-    for n in range(2, no, 2):  # Loop odd points
+# Loop odd points
+    for n in range(2, no, 2):  
         x = interval * (n - 1)
         sum += 4 * f(x) * lin2(x, min, max)
-    for n in range(3, no, 2):  # Loop even points
+# Loop even points
+    for n in range(3, no, 2):  
         x = interval * (n - 1)
         sum += 2 * f(x) * lin2(x, min, max)
     sum += f(min) * lin2(min, min, max) + f(max) * lin2(max, min, max)
@@ -87,7 +86,8 @@ def int2(min, max):  # Simpson
 
 
 def numerical(x, u, xp):
-    N = 11  # interpolate numerical solution
+# interpolate numerical solution
+    N = 11  
     y = 0.0
     for i in range(0, N - 1):
         if xp >= x[i] and xp <= x[i + 1]:
@@ -95,7 +95,8 @@ def numerical(x, u, xp):
     return y
 
 
-def exact(x):  # Analytic solution
+# Analytic solution
+def exact(x):  
     u = -x * (x - 3.0) / 2.0
     return u
 
@@ -107,13 +108,15 @@ for i in range(1, N):
     A[i, i] = A[i, i] + 1.0 / h
     b[i - 1, 0] = b[i - 1, 0] + int2(x[i - 1], x[i])
     b[i, 0] = b[i, 0] + int1(x[i - 1], x[i])
-for i in range(1, N):  # Dirichlet BC @ left end
+# Dirichlet BC @ left end
+for i in range(1, N):  
     b[i, 0] = b[i, 0] - 0.0 * A[i, 0]
     A[i, 0] = 0.0
     A[0, i] = 0.0
 A[0, 0] = 1.0
 b[0, 0] = 0.0
-for i in range(1, N):  # Dirichlet bc @ right end
+# Dirichlet bc @ right end
+for i in range(1, N):  
     b[i, 0] = b[i, 0] - 1.0 * A[i, N - 1]
     A[i, N - 1] = 0.0
     A[N - 1, i] = 0.0
@@ -132,4 +135,5 @@ for i in range(0, 21):
     # rate(6)
     funct1.plot(pos=(0.05 * i, u_exact[i]))
     funct2.plot(pos=(0.05 * i, u_fem[i]))
-    error[i] = u_fem[i] - u_exact[i]  # Global error
+# Global error
+    error[i] = u_fem[i] - u_exact[i]  

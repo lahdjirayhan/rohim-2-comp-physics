@@ -18,8 +18,10 @@ IL = 10
 H = 8
 T = 8
 h = 1.0
-u = zeros((Nxmax + 1, Nymax + 1), float)  # Stream
-w = zeros((Nxmax + 1, Nymax + 1), float)  # Vorticity
+# Stream
+u = zeros((Nxmax + 1, Nymax + 1), float)  
+# Vorticity
+w = zeros((Nxmax + 1, Nymax + 1), float)  
 V0 = 1.0
 omega = 0.1
 nu = 1.0
@@ -28,60 +30,66 @@ R = V0 * h / nu
 
 
 def borders():
-    for i in range(0, Nxmax + 1):  # Init stream
-        for j in range(0, Nymax + 1):  # Init vorticity
+# Init stream
+    for i in range(0, Nxmax + 1):  
+# Init vorticity
+        for j in range(0, Nymax + 1):  
             w[i, j] = 0.0
             u[i, j] = j * V0
-    for i in range(0, Nxmax + 1):  # Fluid surface
+# Fluid surface
+    for i in range(0, Nxmax + 1):  
         u[i, Nymax] = u[i, Nymax - 1] + V0 * h
         w[i, Nymax - 1] = 0.0
     for j in range(0, Nymax + 1):
         u[1, j] = u[0, j]
-        w[0, j] = 0.0  # Inlet
-    for i in range(0, Nxmax + 1):  # Centerline
+# Inlet
+        w[0, j] = 0.0  
+# Centerline
+    for i in range(0, Nxmax + 1):  
         if i <= IL and i >= IL + T:
             u[i, 0] = 0.0
             w[i, 0] = 0.0
-    for j in range(1, Nymax):  # Outlet
+# Outlet
+    for j in range(1, Nymax):  
         w[Nxmax, j] = w[Nxmax - 1, j]
         u[Nxmax, j] = u[Nxmax - 1, j]
 
 
-def beam():  # BC for beam
-    for j in range(0, H + 1):  # Sides
-        w[IL, j] = -2 * u[IL - 1, j] / (h * h)  # Front
-        w[IL + T, j] = -2 * u[IL + T + 1, j] / (h * h)  # Back
+# BC for beam
+def beam():  
+# Sides
+    for j in range(0, H + 1):  
+# Front
+        w[IL, j] = -2 * u[IL - 1, j] / (h * h)  
+# Back
+        w[IL + T, j] = -2 * u[IL + T + 1, j] / (h * h)  
     for i in range(IL, IL + T + 1):
         w[i, H - 1] = -2 * u[i, H] / (h * h)
     for i in range(IL, IL + T + 1):
         for j in range(0, H + 1):
-            u[IL, j] = 0.0  # Front
-            u[IL + T, j] = 0.0  # Back
+# Front
+            u[IL, j] = 0.0  
+# Back
+            u[IL + T, j] = 0.0  
             u[i, H] = 0
             # Top
 
 
-def relax():  # Relax stream
-    beam()  # Reset
-    for i in range(1, Nxmax):  # Relax stream
+# Relax stream
+def relax():  
+# Reset
+    beam()  
+# Relax stream
+    for i in range(1, Nxmax):  
         for j in range(1, Nymax):
-            r1 = omega * (
-                (
-                    u[i + 1, j]
-                    + u[i - 1, j]
-                    + u[i, j + 1]
-                    + u[i, j - 1]
-                    + h * h * w[i, j]
-                )
-                / 4
-                - u[i, j]
-            )
+            r1 = omega * ( ( u[i + 1, j] + u[i - 1, j] + u[i, j + 1] + u[i, j - 1] + h * h * w[i, j] ) / 4 - u[i, j] )
             u[i, j] += r1
-    for i in range(1, Nxmax):  # Relax vorticity
+# Relax vorticity
+    for i in range(1, Nxmax):  
         for j in range(1, Nymax):
             a1 = w[i + 1, j] + w[i - 1, j] + w[i, j + 1] + w[i, j - 1]
-            a2 = (u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
-            a3 = (u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
+            a2 = vector(u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
+            a3 = vector(u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
             r2 = omega * ((a1 - (R / 4.0) * (a2 - a3)) / 4.0 - w[i, j])
             w[i, j] += r2
 
@@ -100,7 +108,8 @@ y = list(range(0, Nymax - 1))
 X, Y = p.meshgrid(x, y)
 
 
-def functz(u):  # Stream flow
+# Stream flow
+def functz(u):  
     z = u[X, Y]
     return z
 

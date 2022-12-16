@@ -9,32 +9,41 @@
 import numpy as np, matplotlib.pylab as plt
 from rk4Algor import rk4Algor
 
-rVec = np.zeros((1000), float)  # x values for plot
-psiVec = np.zeros((1000), float)  # Wave function values
+# x values for plot
+rVec = np.zeros((1000), float)  
+# Wave function values
+psiVec = np.zeros((1000), float)  
 fVec = [0] * (2)
-y = [0] * (2)  # Declare dimensions
-n = 6  # n = npr L+1
+# Declare dimensions
+y = [0] * (2)  
+# n = npr L+1
+n = 6  
 
 
-def f(x, y):  # ODE RHS
+# ODE RHS
+def f(x, y):  
     fVec[0] = y[1]
     fVec[1] = -(2 * n + 1 - x**2) * y[0]
     return fVec
 
 
 if n % 2 == 0:
-    y[0] = 1e-8  # Set parity
+# Set parity
+    y[0] = 1e-8  
 else:
     y[0] = -1e-8
 y[1] = 1.0
 i = 0
-f(0.0, y)  # RHS at r = 0
+# RHS at r = 0
+f(0.0, y)  
 dr = 0.01
-for r in np.arange(-5, 5, dr):  # Compute WF steps of dr
+# Compute WF steps of dr
+for r in np.arange(-5, 5, dr):  
     rVec[i] = r
     y = rk4Algor(r, dr, 2, y, f)
     psiVec[i] = y[0]
-    i = i + 1  # Advance i & r
+# Advance i & r
+    i = i + 1  
 plt.figure()
 plt.plot(rVec, psiVec)
 plt.grid()

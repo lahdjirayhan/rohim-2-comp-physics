@@ -9,24 +9,20 @@
 from sympy import *
 import numpy as np, matplotlib.pyplot as plt
 
-W, mue, mup, B = symbols("W mu_e mu_p B")  # Symbols & Hamiltonian
+# Symbols & Hamiltonian
+W, mue, mup, B = symbols("W mu_e mu_p B")  
 H = Matrix([[W, 0, 0, 0], [0, -W, 2 * W, 0], [0, 2 * W, -W, 0], [0, 0, 0, W]])
-Hmag = Matrix(
-    [
-        [-(mue + mup) * B, 0, 0, 0],
-        [0, -(mue - mup) * B, 0, 0],
-        [0, 0, -(-mue + mup) * B, 0],
-        [0, 0, 0, (mue + mup) * B],
-    ]
-)
+Hmag = Matrix( [ [-(mue + mup) * B, 0, 0, 0], [0, -(mue - mup) * B, 0, 0], [0, 0, -(-mue + mup) * B, 0], [0, 0, 0, (mue + mup) * B], ] )
 
 print("\n Hyperfine Hamiltonian H =", H)
 print("\n Eigenvalues and multiplicities of H =", H.eigenvals())
 print("\n Hmag =", Hmag)
-Htot = H + Hmag  # Hamiltonian + pertubation
+# Hamiltonian + pertubation
+Htot = H + Hmag  
 print("\n Htot = H + Hmag =", Htot)
 print("\n Eigenvalues of matrix HB")
-e1, e2, e3, e4 = Htot.eigenvals()  # 4 eigenvalues
+# 4 eigenvalues
+e1, e2, e3, e4 = Htot.eigenvals()  
 print(" e1 = ", e1, "\n e2 = ", e2, "\n e3 = ", e3, "\n e4 = ", e4)
 print("\n After substitute mu_e = 1, and mu_p = 0 in eigenvalues")
 print(" e1 = ", e1.subs([(mue, 1), (mup, 0)]), "\n e2 = ", end=" ")

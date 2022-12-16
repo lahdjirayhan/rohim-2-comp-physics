@@ -16,7 +16,8 @@ V = zeros((Nmax, Nmax), float)
 print("Working hard, wait for the figure while I count to 60")
 
 for k in range(0, Nmax - 1):
-    V[0, k] = 100.0  # Line at 100V
+# Line at 100V
+    V[0, k] = 100.0  
 for iter in range(Niter):
     if iter % 10 == 0:
         print(iter)
@@ -29,17 +30,22 @@ y = list(range(0, 50, 2))
 X, Y = p.meshgrid(x, y)
 
 
-def functz(V):  # V(x, y)
+# V(x, y)
+def functz(V):  
     z = V[X, Y]
     return z
 
 
 Z = functz(V)
-fig = p.figure()  # Create figure
-ax = Axes3D(fig)  # Plot axes
-ax.plot_wireframe(X, Y, Z, color="r")  # Red wireframe
+# Create figure
+fig = p.figure()  
+# Plot axes
+ax = Axes3D(fig)  
+# Red wireframe
+ax.plot_wireframe(X, Y, Z, color="r")  
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("V(x,y)")
 ax.set_title("Potential within Square V(x=0)=100V (Rotatable)")
-p.show()  # Show fig
+# Show fig
+p.show()  

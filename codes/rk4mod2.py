@@ -10,7 +10,8 @@ from vpython import *
 #   Initialization
 Tstart = 0.0
 Tend = 10.0
-N = 100  # Number of steps
+# Number of steps
+N = 100  
 ydumb = zeros((2), float)
 y = zeros((2), float)
 fvector = zeros((2), float)
@@ -18,36 +19,13 @@ k1 = zeros((2), float)
 k2 = zeros((2), float)
 k3 = zeros((2), float)
 k4 = zeros((2), float)
-graph1 = gdisplay(
-    x=0,
-    y=0,
-    width=400,
-    height=400,
-    title="RK4",
-    xtitle="t",
-    ytitle="y[0]=Position",
-    xmin=0,
-    xmax=10,
-    ymin=-2,
-    ymax=3,
-)
+graph1 = graph( x=0, y=0, width=400, height=400, title="RK4", xtitle="t", ytitle="y[0]=Position", xmin=0, xmax=10, ymin=-2, ymax=3, )
 funct1 = gcurve(color=color.yellow)
-graph2 = gdisplay(
-    x=400,
-    y=0,
-    width=400,
-    height=400,
-    title="RK4",
-    xtitle="t",
-    ytitle="y[1]=Velocity",
-    xmin=0,
-    xmax=10,
-    ymin=-25,
-    ymax=18,
-)
+graph2 = graph( x=400, y=0, width=400, height=400, title="RK4", xtitle="t", ytitle="y[1]=Velocity", xmin=0, xmax=10, ymin=-25, ymax=18, )
 funct2 = gcurve(color=color.red)
 y[0] = 3.0
-y[1] = -5.0  # Initial position and velocity
+# Initial position and velocity
+y[1] = -5.0  
 t = Tstart
 h = (Tend - Tstart) / N
 
@@ -66,7 +44,8 @@ def rk4(t, h, N):
     k4 = [0] * (N)
     fvector = [0] * (N)
     ydumb = [0] * (N)
-    fvector = f(t, y)  # Returns RHS's
+# Returns RHS's
+    fvector = f(t, y)  
     for i in range(0, N):
         k1[i] = h * fvector[i]
     for i in range(0, N):
@@ -83,9 +62,11 @@ def rk4(t, h, N):
     return y
 
 
-while t < Tend:  # Time loop
+# Time loop
+while t < Tend:  
     if (t + h) > Tend:
-        h = Tend - t  # Last step
+# Last step
+        h = Tend - t  
     y = rk4(t, h, 2)
     t = t + h
     rate(30)

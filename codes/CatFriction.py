@@ -21,40 +21,15 @@ q = open("CatFriction.dat", "w")
 rr = open("CatFunct.dat", "w+t")
 
 for i in range(0, 101):
-    x[i][0] = -0.08 * sin(pi * i * dx)  # IC
-for i in range(1, 100):  # First step
-    x[i][1] = (
-        dt
-        * (T / rho)
-        * (
-            (x[i + 1][0] - x[i][0])
-            / dx
-            * (exp((i - 50) * dx / D) - exp(-(i - 50) * dx / D))
-            / D
-            + (exp((i - 50) * dx / D) + exp(-(i - 50) * dx / D))
-            * (x[i + 1][0] + x[i - 1][0] - 2.0 * x[i][0])
-            / (pow(dx, 2))
-        )
-        - 2 * kappa * x[i][0]
-        + 2 * x[i][0] / dt
-    ) / (2 * kappa + (2 / dt))
-for k in range(0, 300):  # Other steps
+# IC
+    x[i][0] = -0.08 * sin(pi * i * dx)  
+# First step
+for i in range(1, 100):  
+    x[i][1] = vector( dt * (T / rho) * ( (x[i + 1][0] - x[i][0]) / dx * (exp((i - 50) * dx / D) - exp(-(i - 50) * dx / D)) / D + (exp((i - 50) * dx / D) + exp(-(i - 50) * dx / D)) * (x[i + 1][0] + x[i - 1][0] - 2.0 * x[i][0]) / (pow(dx, 2)) ) - 2 * kappa * x[i][0] + 2 * x[i][0] / dt ,0) / (2 * kappa + (2 / dt))
+# Other steps
+for k in range(0, 300):  
     for i in range(1, 100):
-        x[i][2] = (
-            dt
-            * (T / rho)
-            * (
-                (x[i + 1][1] - x[i][1])
-                / dx
-                * (exp((i - 50) * dx / D) - exp(-(i - 50) * dx / D))
-                / D
-                + (exp((i - 50) * dx / D) + exp(-(i - 50) * dx / D))
-                * (x[i + 1][1] + x[i - 1][1] - 2.0 * x[i][1])
-                / (pow(dx, 2))
-            )
-            - 2 * kappa * x[i][1]
-            - (-2 * x[i][1] + x[i][0]) / dt
-        ) / (2 * kappa + (1 / dt))
+        x[i][2] = vector( dt * (T / rho) * ( (x[i + 1][1] - x[i][1]) / dx * (exp((i - 50) * dx / D) - exp(-(i - 50) * dx / D)) / D + (exp((i - 50) * dx / D) + exp(-(i - 50) * dx / D)) * (x[i + 1][1] + x[i - 1][1] - 2.0 * x[i][1]) / (pow(dx, 2)) ) - 2 * kappa * x[i][1] - (-2 * x[i][1] + x[i][0]) / dt ,0) / (2 * kappa + (1 / dt))
     for i in range(1, 101):
         x[i][0] = x[i][1]
         x[i][1] = x[i][2]

@@ -8,73 +8,104 @@
 
 from vpython import *
 
-scene = display(width=600, height=600, title="White Neptune & Black Uranus", range=40)
-sun = sphere(pos=(0, 0, 0), radius=2, color=color.yellow)
-escenau = gdisplay(
-    x=600, width=400, height=400, title="Pertubation of Uranus Angular Position"
+scene = canvas(width=600, height=600, title="White Neptune & Black Uranus", range=40)
+sun = sphere(pos=vector(0, 0, 0), radius=2, color=color.yellow)
+escenau = graph( x=600, width=400, height=400, title="Pertubation of Uranus Angular Position"
 )
 graphu = gcurve(color=color.cyan)
 
-escenan = gdisplay(x=800, y=400, width=400, height=400)
+escenan = graph(x=800, y=400, width=400, height=400)
 graphn = gcurve(color=color.white)
 rfactor = 1.8e-9
-G = 4 * pi * pi  # in units T in years, R AU, Msun=1
-mu = 4.366244e-5  # mass Uranus in solar masses
-M = 1.0  # mass Sun
-mn = 5.151389e-5  # Neptune mass in solar masses
-du = 19.1914  # distance Uranus Sun in AU
-dn = 30.0611  # distance Neptune sun in AU
-Tur = 84.0110  # Uranus Orbital Period yr
-Tnp = 164.7901  # Neptune Orbital Period yr
-omeur = 2 * pi / Tur  # Uranus angular velocity (2pi/T)
-omennp = 2 * pi / Tnp  # Neptune angular velocity
+# in units T in years, R AU, Msun=1
+G = 4 * pi * pi  
+# mass Uranus in solar masses
+mu = 4.366244e-5  
+# mass Sun
+M = 1.0  
+# Neptune mass in solar masses
+mn = 5.151389e-5  
+# distance Uranus Sun in AU
+du = 19.1914  
+# distance Neptune sun in AU
+dn = 30.0611  
+# Uranus Orbital Period yr
+Tur = 84.0110  
+# Neptune Orbital Period yr
+Tnp = 164.7901  
+# Uranus angular velocity (2pi/T)
+omeur = 2 * pi / Tur  
+# Neptune angular velocity
+omennp = 2 * pi / Tnp  
 omreal = omeur
-urvel = 2 * pi * du / Tur  # Uranus orbital velocity UA/yr
-npvel = 2 * pi * dn / Tnp  # Neptune orbital velocity UA/yr
+# Uranus orbital velocity UA/yr
+urvel = 2 * pi * du / Tur  
+# Neptune orbital velocity UA/yr
+npvel = 2 * pi * dn / Tnp  
 # 1 Uranus at lon 2 gr 16 min sep 1821
-radur = (205.64) * pi / 180.0  # to radians in 1690 -wrt x-axis
-urx = du * cos(radur)  # init x- pos ur. in 1690
-ury = du * sin(radur)  # init y-pos ur in 1690
+# to radians in 1690 -wrt x-axis
+radur = (205.64) * pi / 180.0  
+# init x- pos ur. in 1690
+urx = du * cos(radur)  
+# init y-pos ur in 1690
+ury = du * sin(radur)  
 urvelx = urvel * sin(radur)
 urvely = -urvel * cos(radur)
 # 1690 Neptune at long.
-radnp = (288.38) * pi / 180.0  # 1690 rad neptune wrt x-axis
-uranus = sphere(pos=(urx, ury, 0), radius=0.5, color=(0.88, 1, 1), make_trail=True)
-urpert = sphere(pos=(urx, ury, 0), radius=0.5, color=(0.88, 1, 1), make_trail=True)
+# 1690 rad neptune wrt x-axis
+radnp = (288.38) * pi / 180.0  
+uranus = sphere(pos=vector(urx, ury, 0), radius=0.5, color=vector(0.88, 1, 1), make_trail=True)
+urpert = sphere(pos=vector(urx, ury, 0), radius=0.5, color=vector(0.88, 1, 1), make_trail=True)
 fnu = arrow(pos=uranus.pos, color=color.orange, axis=vector(0, 4, 0))
-npx = dn * cos(radnp)  # init coord x neptune 1690
-npy = dn * sin(radnp)  #           y
+# init coord x neptune 1690
+npx = dn * cos(radnp)  
+#           y
+npy = dn * sin(radnp)  
 npvelx = npvel * sin(radnp)
 npvely = -npvel * cos(radnp)
-neptune = sphere(pos=(npx, npy, 0), radius=0.4, color=color.cyan, make_trail=True)
+neptune = sphere(pos=vector(npx, npy, 0), radius=0.4, color=color.cyan, make_trail=True)
 fun = arrow(pos=neptune.pos, color=color.orange, axis=vector(0, -4, 0))
-nppert = sphere(pos=(npx, npy, 0), radius=0.4, color=color.white, make_trail=True)
-velour = vector(urvelx, urvely, 0)  # initial vector velocity Uranus
-velnp = vector(npvelx, npvely, 0)  # initial vector velocity Neptune
-dt = 0.5  # time increment in terrestrial year
-r = vector(urx, ury, 0)  # initial position Uranus wrt Sun
-rnp = vector(npx, npy, 0)  # initial position Neptune wrt Sun
+nppert = sphere(pos=vector(npx, npy, 0), radius=0.4, color=color.white, make_trail=True)
+# initial vector velocity Uranus
+velour = vector(urvelx, urvely, 0)  
+# initial vector velocity Neptune
+velnp = vector(npvelx, npvely, 0)  
+# time increment in terrestrial year
+dt = 0.5  
+# initial position Uranus wrt Sun
+r = vector(urx, ury, 0)  
+# initial position Neptune wrt Sun
+rnp = vector(npx, npy, 0)  
 veltot = velour
 veltotnp = velnp
 rtot = r
 rtotnp = rnp
 
 
-def ftotal(r, rnp, i):  # i==1 Uranus  i==2 Neptune
-    Fus = -G * M * mu * r / (du**3)  # Force sun over URANUS
-    Fns = -G * M * mn * rnp / (dn**3)  # Force Sun over NEPTUNE
-    dnu = mag(rnp - r)  # distance Neptune-Uranus
-    Fnu = -G * mu * mn * (rnp - r) / (dnu**3)  # force N on U
-    Fun = -Fnu  # force uranus on Neptune
-    Ftotur = Fus + Fnu  # total force on U (sun + N)
-    Ftotnp = Fns + Fun  # On Neptune F sun +F urn
+# i==1 Uranus  i==2 Neptune
+def ftotal(r, rnp, i):  
+# Force sun over URANUS
+    Fus = -G * M * mu * r / (du**3)  
+# Force Sun over NEPTUNE
+    Fns = -G * M * mn * rnp / (dn**3)  
+# distance Neptune-Uranus
+    dnu = mag(rnp - r)  
+# force N on U
+    Fnu = -G * mu * mn * (rnp - r) / (dnu**3)  
+# force uranus on Neptune
+    Fun = -Fnu  
+# total force on U (sun + N)
+    Ftotur = Fus + Fnu  
+# On Neptune F sun +F urn
+    Ftotnp = Fns + Fun  
     if i == 1:
         return Ftotur
     else:
         return Ftotnp
 
 
-def rkn(r, veltot, rnp, m, i):  # on Neptune
+# on Neptune
+def rkn(r, veltot, rnp, m, i):  
     k1v = ftotal(r, rnp, i) / m
     k1r = veltot
     k2v = ftotal(r, rnp + 0.5 * k1r * dt, i) / m
@@ -88,7 +119,8 @@ def rkn(r, veltot, rnp, m, i):  # on Neptune
     return r, veltot
 
 
-def rk(r, veltot, rnp, m, i):  # on Uranus
+# on Uranus
+def rk(r, veltot, rnp, m, i):  
     k1v = ftotal(r, rnp, i) / m
     k1r = veltot
     k2v = ftotal(r + 0.5 * k1r * dt, rnp, i) / m
@@ -102,29 +134,45 @@ def rk(r, veltot, rnp, m, i):  # on Uranus
     return r, veltot
 
 
-for i in arange(0, 320):  # estaba 1240
+# estaba 1240
+for i in arange(0, 320):  
     rate(10)
-    rnewu, velnewu = rk(r, velour, rnp, mu, 1)  # uranus
-    rnewn, velnewn = rkn(rnp, velnp, r, mn, 2)  # neptune
-    r = rnewu  # uranus position
-    velour = velnewu  # uranus velocity
+# uranus
+    rnewu, velnewu = rk(r, velour, rnp, mu, 1)  
+# neptune
+    rnewn, velnewn = rkn(rnp, velnp, r, mn, 2)  
+# uranus position
+    r = rnewu  
+# uranus velocity
+    velour = velnewu  
     du = mag(r)
-    omeur = mag(velour) / du  # new abgykar velocity of uranus
-    degr = 205.64 * pi / 180 - omeur * i * dt  # angular position uranus
-    rnp = rnewn  # neptune pos
-    velnp = velnewn  # neptune pos
+# new abgykar velocity of uranus
+    omeur = mag(velour) / du  
+# angular position uranus
+    degr = 205.64 * pi / 180 - omeur * i * dt  
+# neptune pos
+    rnp = rnewn  
+# neptune pos
+    velnp = velnewn  
     dn = mag(rnp)
     omenp = mag(velnp) / dn
-    radnp = radnp - dt * omenp  # radians neptune
+# radians neptune
+    radnp = radnp - dt * omenp  
     npx = dn * cos(radnp)
     npy = dn * sin(radnp)
-    rnp = vector(npx, npy, 0)  # neptune position
+# neptune position
+    rnp = vector(npx, npy, 0)  
     deltaomgs = -omeur + omreal
     graphu.plot(pos=(i, deltaomgs * 180 / pi * 3600))
     urpert.pos = r
-    fnu.pos = urpert.pos  # position of arrow on uranus
-    dnu = mag(rnp - r)  # distance Neptune-Uranus
-    fnu.axis = 75 * norm(rnp - r) / dnu  # axes  the arrow over uranus
-    neptune.pos = rnp  # radiovector Neptune
+# position of arrow on uranus
+    fnu.pos = urpert.pos  
+# distance Neptune-Uranus
+    dnu = mag(rnp - r)  
+# axes  the arrow over uranus
+    fnu.axis = 75 * norm(rnp - r) / dnu  
+# radiovector Neptune
+    neptune.pos = rnp  
     fun.pos = neptune.pos
-    fun.axis = -fnu.axis  # arrow on neptune
+# arrow on neptune
+    fun.axis = -fnu.axis  

@@ -8,29 +8,27 @@
 
 from vpython import *
 
-escene = display(
-    width=500,
-    height=500,
-    range=400,
-    background=color.white,
-    foreground=color.black,
-    title="Thin Film Interference",
-)
-Rcurve = curve(color=color.red)  # Red intensities
-Gcurve = curve(color=color.green)  # Green intensities
-Bcurve = curve(color=color.blue)  # Blue intensities
-title = label(pos=(-20, 350, 0), text="Intensity vs Thickness nA in nm", box=0)
-waves = label(pos=(-30, 320, 0), text="Red, Green, and Blue Intensities", box=0)
-trans = label(pos=(-280, 300, 0), text="Transmission", box=0)
-refl = label(pos=(210, 300, 0), text="Reflection", box=0)
+escene = canvas( width=500, height=500, range=400, background=color.white, foreground=color.black, title="Thin Film Interference", )
+# Red intensities
+Rcurve = curve(color=color.red)  
+# Green intensities
+Gcurve = curve(color=color.green)  
+# Blue intensities
+Bcurve = curve(color=color.blue)  
+title = label(pos=vector(-20, 350, 0), text="Intensity vs Thickness nA in nm", box=0)
+waves = label(pos=vector(-30, 320, 0), text="Red, Green, and Blue Intensities", box=0)
+trans = label(pos=vector(-280, 300, 0), text="Transmission", box=0)
+refl = label(pos=vector(210, 300, 0), text="Reflection", box=0)
 lamR = 572
 lamB = 430
 lamG = 540
-i = 0  # R,B, G wavelengths
+# R,B, G wavelengths
+i = 0  
 film = curve(pos=[(-150, -250), (150, -250), (150, 250), (-150, 250), (-150, -250)])
 Rc = []
 Gc = []
-Bc = []  # R,G,B intensity arrays
+# R,G,B intensity arrays
+Bc = []  
 nA = arange(0, 1250, 10)
 delR = 2 * pi * nA / lamR + pi
 delG = 2 * pi * nA / lamG + pi
@@ -40,8 +38,10 @@ intG = (cos(delG / 2)) ** 2
 intB = (cos(delB / 2)) ** 2
 xrp = 300 * intR - 150
 xbp = 300 * intB - 150
-xgp = 300 * intG - 150  # Linear TFs
-ap = -500 * nA / 1240 + 250  # Film height
+# Linear TFs
+xgp = 300 * intG - 150  
+# Film height
+ap = -500 * nA / 1240 + 250  
 Rcurve.x = xrp
 Rcurve.y = ap
 Gcurve.x = xgp
@@ -50,7 +50,8 @@ Bcurve.x = xbp
 Bcurve.y = ap
 Rc = Rc + [intR]
 Gc = Gc + [intG]
-Bc = Bc + [intB]  # Fill I's
+# Fill I's
+Bc = Bc + [intB]  
 Rt = []
 Gt = []
 Bt = []
@@ -66,16 +67,20 @@ xGpt = 300 * intG - 150
 Rt = Rt + [intR]
 Gt = Gt + [intG]
 Bt = Bt + [intB]
-ap = -500 * nA / 1240 + 250  #  Film height
+#  Film height
+ap = -500 * nA / 1240 + 250  
 
 for nA in range(0, 125):
-    col = (intR[nA], intG[nA], intB[nA])  # RGB reflection
+# RGB reflection
+    col = vector(intR[nA], intG[nA], intB[nA])  
     reflesc = -500 * nA / 125 + 250
-    box(pos=(205, reflesc, 0), width=0.1, height=10, length=50, color=col)
-    colt = (IntRt[nA], IntGt[nA], IntBt[nA])  # Colors by transmission
-    box(pos=(-270, reflesc, 0), width=0.1, height=10, length=50, color=colt)
-    if nA % 20 == 0:  # Labels for vertical axis
+    box(pos=vector(205, reflesc, 0), width=0.1, height=10, length=50, color=col)
+# Colors by transmission
+    colt = vector(IntRt[nA], IntGt[nA], IntBt[nA])  
+    box(pos=vector(-270, reflesc, 0), width=0.1, height=10, length=50, color=colt)
+# Labels for vertical axis
+    if nA % 20 == 0:  
         prof = nA * 10
         escal = -500 * nA / 125 + 250
         print(escal)
-        depth = label(pos=(-200, escal, 0), text="%4d" % prof, box=0)
+        depth = label(pos=vector(-200, escal, 0), text="%4d" % prof, box=0)

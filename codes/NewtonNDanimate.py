@@ -10,8 +10,7 @@ from vpython import *
 from numpy.linalg import solve
 from vpython import *
 
-scene = display(
-    x=0, y=0, width=500, height=500, title="String and masses configuration"
+scene = canvas( x=0, y=0, width=500, height=500, title="String and masses configuration"
 )
 tempe = curve(x=list(range(0, 500)), color=color.black)
 
@@ -24,26 +23,38 @@ x = array([0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0])
 
 def plotconfig():
     for obj in scene.objects:
-        obj.visible = 0  # Erase previous configuration
+# Erase previous configuration
+        obj.visible = 0  
     L1 = 3.0
     L2 = 4.0
     L3 = 4.0
-    xa = L1 * x[3]  # L1*cos(th1)
-    ya = L1 * x[0]  # L1 sin(th1)
-    xb = xa + L2 * x[4]  # L1*cos(th1)+L2*cos(th2)
-    yb = ya + L2 * x[1]  # L1*sin(th1)+L2*sen(th2)
-    xc = xb + L3 * x[5]  # L1*cos(th1)+L2*cos(th2)+L3*cos(th3)
-    yc = yb - L3 * x[2]  # L1*sin(th1)+L2*sen(th2)-L3*sin(th3)
-    mx = 100.0  # for linear coordinate transformation
-    bx = -500.0  # from 0=< x =<10
-    my = -100.0  # to    -500 =<x_window=>500
-    by = 400.0  # same transformation for y
-    xap = mx * xa + bx  # to keep aspect ratio
+# L1*cos(th1)
+    xa = L1 * x[3]  
+# L1 sin(th1)
+    ya = L1 * x[0]  
+# L1*cos(th1)+L2*cos(th2)
+    xb = xa + L2 * x[4]  
+# L1*sin(th1)+L2*sen(th2)
+    yb = ya + L2 * x[1]  
+# L1*cos(th1)+L2*cos(th2)+L3*cos(th3)
+    xc = xb + L3 * x[5]  
+# L1*sin(th1)+L2*sen(th2)-L3*sin(th3)
+    yc = yb - L3 * x[2]  
+# for linear coordinate transformation
+    mx = 100.0  
+# from 0=< x =<10
+    bx = -500.0  
+# to    -500 =<x_window=>500
+    my = -100.0  
+# same transformation for y
+    by = 400.0  
+# to keep aspect ratio
+    xap = mx * xa + bx  
     yap = my * ya + by
-    ball1 = sphere(pos=(xap, yap), color=color.cyan, radius=15)
+    ball1 = sphere(pos=vector(xap, yap,0), color=color.cyan, radius=15)
     xbp = mx * xb + bx
     ybp = my * yb + by
-    ball2 = sphere(pos=(xbp, ybp), color=color.cyan, radius=25)
+    ball2 = sphere(pos=vector(xbp, ybp,0), color=color.cyan, radius=25)
     xcp = mx * xc + bx
     ycp = my * yc + by
     x0 = mx * 0 + bx
@@ -54,7 +65,8 @@ def plotconfig():
     topline = curve(pos=[(x0, y0), (xcp, ycp)], color=color.red, radius=4)
 
 
-def F(x, f):  # F function
+# F function
+def F(x, f):  
     f[0] = 3 * x[3] + 4 * x[4] + 4 * x[5] - 8.0
     f[1] = 3 * x[0] + 4 * x[1] - 4 * x[2]
     f[2] = x[6] * x[0] - x[7] * x[1] - 10.0
@@ -66,7 +78,8 @@ def F(x, f):  # F function
     f[8] = pow(x[2], 2) + pow(x[5], 2) - 1.0
 
 
-def dFi_dXj(x, deriv, n):  # Derivatives
+# Derivatives
+def dFi_dXj(x, deriv, n):  
     h = 1e-4
     for j in range(0, n):
         temp = x[j]
@@ -80,29 +93,19 @@ def dFi_dXj(x, deriv, n):  # Derivatives
         x[j] = x[j] - h / 2.0
         F(x, f)
         for i in range(0, n):
-            deriv[i, j] = (deriv[i, j] - f[i]) / h
+            deriv[i, j] = vector(deriv[i, j] - f[i],0) / h
         x[j] = temp
 
 
 for it in range(1, 100):
-    rate(1)  # 1 second between graphs
+# 1 second between graphs
+    rate(1)  
     F(x, f)
     dFi_dXj(x, deriv, n)
-    B = array(
-        [
-            [-f[0]],
-            [-f[1]],
-            [-f[2]],
-            [-f[3]],
-            [-f[4]],
-            [-f[5]],
-            [-f[6]],
-            [-f[7]],
-            [-f[8]],
-        ]
-    )
+    B = array( [ [-f[0]], [-f[1]], [-f[2]], [-f[3]], [-f[4]], [-f[5]], [-f[6]], [-f[7]], [-f[8]], ] )
     sol = solve(deriv, B)
-    dx = take(sol, (0,), 1)  # First column of sol
+# First column of sol
+    dx = take(sol, (0,), 1)  
     for i in range(0, n):
         x[i] = x[i] + dx[i]
     plotconfig()

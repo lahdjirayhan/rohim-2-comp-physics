@@ -10,20 +10,29 @@ import numpy as np, matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 
 Nx = 50
-Ny = 50  # x,y 50 grid
+# x,y 50 grid
+Ny = 50  
 x = np.linspace(-5, 5, Nx)
 y = np.linspace(-5, 5, Ny)
-X, Y = np.meshgrid(x, y)  # Transform coordinates
+# Transform coordinates
+X, Y = np.meshgrid(x, y)  
 Ex = np.zeros((Nx, Ny))
-Ey = np.zeros((Nx, Ny))  # Ex,Ey(x,y)
+# Ex,Ey(x,y)
+Ey = np.zeros((Nx, Ny))  
 
 
-def E(xx, x, y):  # E  due to charge q at xx
-    r = np.sqrt(x**2 + y**2)  # Distance
-    dm = x - xx  # Position q to xx
-    d1 = np.sqrt((dm**2 + y**2))  # Position q to x
-    dp = x + xx  # x component q
-    d2 = np.sqrt((dp**2 + y**2))  # Distance -q to (x,y)
+# E  due to charge q at xx
+def E(xx, x, y):  
+# Distance
+    r = np.sqrt(x**2 + y**2)  
+# Position q to xx
+    dm = x - xx  
+# Position q to x
+    d1 = np.sqrt((dm**2 + y**2))  
+# x component q
+    dp = x + xx  
+# Distance -q to (x,y)
+    d2 = np.sqrt((dp**2 + y**2))  
     Ex = dm / d1**3 - dp / d2**3
     Ey = y / d1**3 - y / d2**3
     return Ex, Ey

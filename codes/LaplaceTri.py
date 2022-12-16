@@ -27,14 +27,18 @@ sq3 = sqrt(3.0)
 y0 = -sq3 / 4.0
 
 
-def contour():  # Potential on one side
-    for i in range(0, 100):  # Rows
-        for j in range(0, 100):  # Columns
+# Potential on one side
+def contour():  
+# Rows
+    for i in range(0, 100):  
+# Columns
+        for j in range(0, 100):  
             if i == 0:
                 V[0, j] = 1000
 
 
-for i in range(0, 100):  # Set interior grid points to 0
+# Set interior grid points to 0
+for i in range(0, 100):  
     y = y0 + i * 0.01
     x0 = -0.5
     for j in range(0, 100):
@@ -44,31 +48,42 @@ for i in range(0, 100):  # Set interior grid points to 0
             grid[i, j] = 0
         else:
             if y <= sq3 / 4.0 + 0.01:
-                V[i, j] = 0.0  # Triangle tip
-for iter in range(1, Niter):  # Iterate
+# Triangle tip
+                V[i, j] = 0.0  
+# Iterate
+for iter in range(1, Niter):  
     if iter % 50 == 0:
         print(("Working, iteration", iter, "out of", Niter))
-    contour()  # keep one side at 1000V
+# keep one side at 1000V
+    contour()  
     for i in range(1, Nmax - 2):
         for j in range(1, Nmax - 2):
-            if grid[i, j] == 0.0:  # interior points
+# interior points
+            if grid[i, j] == 0.0:  
                 V[i, j] = 0.25 * (V[i + 1, j] + V[i - 1, j] + V[i, j + 1] + V[i, j - 1])
 x = list(range(0, Nmax - 1, 2))
-y = list(range(0, Nmax, 2))  # Plot every other point
+# Plot every other point
+y = list(range(0, Nmax, 2))  
 X, Y = p.meshgrid(x, y)
 
 
-def functz(V):  # Function returns V(x, y)
+# Function returns V(x, y)
+def functz(V):  
     z = V[X, Y]
     return z
 
 
 Z = functz(V)
-fig = p.figure()  # Create figure
-ax = Axes3D(fig)  # Plot axes
-ax.plot_wireframe(X, Y, Z, color="r")  # Red wireframe
+# Create figure
+fig = p.figure()  
+# Plot axes
+ax = Axes3D(fig)  
+# Red wireframe
+ax.plot_wireframe(X, Y, Z, color="r")  
 ax.set_title("Potential within Triangle (Rotatable)")
-ax.set_xlabel("X")  # Label axes
+# Label axes
+ax.set_xlabel("X")  
 ax.set_ylabel("Y")
 ax.set_zlabel("Potential")
-p.show()  # Display fig
+# Display fig
+p.show()  

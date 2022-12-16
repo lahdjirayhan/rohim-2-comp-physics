@@ -8,13 +8,18 @@
 
 from vpython import *
 
-vector1 = array([1, 2, 3, 4, 5])  # Fill array
+# Fill array
+vector1 = array([1, 2, 3, 4, 5])  
 print((" vector1 =", vector1))
-vector2 = vector1 + vector1  # Add vectors
+# Add vectors
+vector2 = vector1 + vector1  
 print(("\n vector2 =", vector2))
-vector2 = 3 * vector1  # Mult array by scalar
+# Mult array by scalar
+vector2 = 3 * vector1  
 print(("\n 3 * vector1 = ", vector2))
-matrix1 = array(([0, 1], [1, 3]))  # An array of arrays
+# An array of arrays
+matrix1 = array(([0, 1], [1, 3]))  
 print(("\n matrix1 = \n", matrix1))
 print(("\n vector1.shape= ", vector1.shape))
-print(("\n matrix1 * matrix1 =\n", matrix1 * matrix1))  # Matrix multiply
+# Matrix multiply
+print(("\n matrix1 * matrix1 =\n", matrix1 * matrix1))  

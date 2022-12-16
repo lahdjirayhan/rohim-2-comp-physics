@@ -11,23 +11,29 @@ from vpython import *
 
 # Constants & Initial Values
 oneoverpi = 1 / math.sqrt(math.pi)
-a = 1.0  # Constants, m=1=hbar
+# Constants, m=1=hbar
+a = 1.0  
 xx = 5
-tt = 0  # Initial x & t (classical)
-wavef = display(x=0, y=0, width=600, height=600, range=8)
+# Initial x & t (classical)
+tt = 0  
+wavef = canvas(x=0, y=0, width=600, height=600, range=8)
 plotob = curve(color=color.yellow, radius=0.1)
-spring = helix(
-    pos=(-4, -3, 0), radius=0.4, color=color.white, coils=10.4, axis=(10, 0, 0)
-)  # Classical spring
-mass = box(pos=(1, -3, 0), length=1, width=1, height=1, color=color.yellow)
+# Classical spring
+spring = helix( pos=vector(-4, -3, 0), radius=0.4, color=color.white, coils=10.4, axis=vector(10, 0, 0) )  
+mass = box(pos=vector(1, -3, 0), length=1, width=1, height=1, color=color.yellow)
 
-for t in arange(0, 20, 0.1):  # Time loop
+# Time loop
+for t in arange(0, 20, 0.1):  
     xx = cos(tt)
     x = arange(-5.0, 5.0, 0.001)
     rate(3)
     y = oneoverpi * exp(-((x - a * math.cos(t)) ** 2))
-    plotob.x = x  # x coord
-    plotob.y = 4 * y  # y coord
-    spring.axis = vector(4 + xx, 0, 0)  # Classical oscillator
-    mass.pos = (xx, -3, 0)  # Position oscillator
+# x coord
+    plotob.x = x  
+# y coord
+    plotob.y = 4 * y  
+# Classical oscillator
+    spring.axis = vector(4 + xx, 0, 0)  
+# Position oscillator
+    mass.pos = vector(xx, -3, 0)  
     tt = tt + 0.1

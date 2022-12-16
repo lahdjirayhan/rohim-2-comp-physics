@@ -16,30 +16,23 @@ import random
 from vpython import *
 
 # Display for the arrows
-scene = display(x=0, y=0, width=700, height=200, range=40, title="Spins")
-engraph = gdisplay(
-    y=200,
-    width=700,
-    height=300,
-    title="E of Spin System",
-    xtitle="iteration",
-    ytitle="E",
-    xmax=500,
-    xmin=0,
-    ymax=5,
-    ymin=-5,
-)
+scene = canvas(x=0, y=0, width=700, height=200, range=40, title="Spins")
+engraph = graph( y=200, width=700, height=300, title="E of Spin System", xtitle="iteration", ytitle="E", xmax=500, xmin=0, ymax=5, ymin=-5, )
 enplot = gcurve(color=color.yellow)
 N = 30
 B = 1.0
-mu = 0.33  # g mu
+# g mu
+mu = 0.33  
 J = 0.20
-k = 1.0  # Boltmann
+# Boltmann
+k = 1.0  
 T = 100.0
-state = zeros((N))  # spins up(1), down (0)
+# spins up(1), down (0)
+state = zeros((N))  
 S = zeros((N), float)
 test = state
-random.seed()  # Seed generator
+# Seed generator
+random.seed()  
 
 
 def energy(S):
@@ -57,25 +50,30 @@ def energy(S):
 ES = energy(state)
 
 
-def spstate(state):  # Plots spins
+# Plots spins
+def spstate(state):  
     for obj in scene.objects:
-        obj.visible = 0  # Erase arrows
+# Erase arrows
+        obj.visible = 0  
     j = 0
     for i in range(-N, N, 2):
         if state[j] == -1:
-            ypos = 5  # Spin down
+# Spin down
+            ypos = 5  
         else:
             ypos = 0
         if 5 * state[j] < 0:
-            arrowcol = (1, 1, 1)  # White = down
+# White = down
+            arrowcol = vector(1, 1, 1)  
         else:
-            arrowcol = (0.7, 0.8, 0)
-        arrow(pos=(i, ypos, 0), axis=(0, 5 * state[j], 0), color=arrowcol)
+            arrowcol = vector(0.7, 0.8, 0)
+        arrow(pos=vector(i, ypos, 0), axis=vector(0, 5 * state[j], 0), color=arrowcol)
         j += 1
 
 
 for i in range(0, N):
-    state[i] = -1  # Initial spins all down
+# Initial spins all down
+    state[i] = -1  
 
 for obj in scene.objects:
     obj.visible = 0
@@ -89,8 +87,10 @@ for j in range(1, 500):
     # Flip spin randomly
     test[r] *= -1
     ET = energy(test)
-    p = math.exp((ES - ET) / (k * T))  #  Boltzmann test
-    enplot.plot(pos=(j, ES))  # Adds segment to curve
+#  Boltzmann test
+    p = math.exp((ES - ET) / (k * T))  
+# Adds segment to curve
+    enplot.plot(pos=(j, ES))  
     if p >= random.random():
         state = test
         spstate(state)

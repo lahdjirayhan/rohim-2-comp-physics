@@ -8,37 +8,44 @@
 
 from vpython import *
 
-g = display(width=600, height=300, title="Telegrapher`s Eqnt")
+g = canvas(width=600, height=300, title="Telegrapher`s Eqnt")
 vibst = curve(x=list(range(0, 101)), color=color.yellow, radius=0.5)
 L = 0.1
 C = 2.5
 c = 1 / sqrt(L * C)
 dt = 0.025
 dx = 0.05
-R = (c * dt / dx) ** 2  # R  = 1 for stabiity
-V = zeros((101, 3), float)  # Declare array
+# R  = 1 for stabiity
+R = (c * dt / dx) ** 2  
+# Declare array
+V = zeros((101, 3), float)  
 xx = 0
 
 for i in arange(0, 100):
     V[i, 0] = 10 * exp(-(xx**2) / 0.1)
     xx = xx + dx
-    vibst.x[i] = 2.0 * i - 100.0  # i=0-> x=-100;  i =100, x=100
-    vibst.y[i] = 0.0  # Eliminate a curve
+# i=0-> x=-100;  i =100, x=100
+    vibst.x[i] = 2.0 * i - 100.0  
+# Eliminate a curve
+    vibst.y[i] = 0.0  
 
 for i in range(1, 100):
     V[i, 2] = V[i, 0] + R * (V[i + 1, 1] + V[i - 1, 1] - 2 * V[i, 1])
-    vibst.x[i] = 2.0 * i - 100.0  #  x scale again
+#  x scale again
+    vibst.x[i] = 2.0 * i - 100.0  
     vibst.y[i] = V[i, 2]
 V[:, 0] = V[:, 1]
-V[:, 1] = V[:, 2]  # Recycle array
+# Recycle array
+V[:, 1] = V[:, 2]  
 
 while 1:
-    rate(20)  # Delay plot, large = slow
+# Delay plot, large = slow
+    rate(20)  
     for i in range(1, 100):
-        V[i, 2] = (
-            2.0 * V[i, 1] - V[i, 0] + R * (V[i + 1, 1] + V[i - 1, 1] - 2 * V[i, 1])
-        )
-        vibst.x[i] = 2.0 * i - 100.0  # Scale x
+        V[i, 2] = ( 2.0 * V[i, 1] - V[i, 0] + R * (V[i + 1, 1] + V[i - 1, 1] - 2 * V[i, 1]) )
+# Scale x
+        vibst.x[i] = 2.0 * i - 100.0  
         vibst.y[i] = V[i, 2]
     V[:, 0] = V[:, 1]
-    V[:, 1] = V[:, 2]  # Recycle array
+# Recycle array
+    V[:, 1] = V[:, 2]  

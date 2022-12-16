@@ -7,12 +7,14 @@
 
 from vpython import *
 from vpython import *
-import numpy.linalg as lina  # Numpy's LinearAlgebra
+# Numpy's LinearAlgebra
+import numpy.linalg as lina  
 
 
 def gauss(npts, job, a, b, x, w):
     m = i = j = t = t1 = pp = p1 = p2 = p3 = 0.0
-    eps = 3.0e-14  # Accuracy: ******ADJUST THIS*******!
+# Accuracy: ******ADJUST THIS*******!
+    eps = 3.0e-14  
     m = (npts + 1) / 2
     for i in arange(1, m + 1):
         t = cos(math.pi * (float(i) - 0.25) / (float(npts) + 0.5))
@@ -23,9 +25,7 @@ def gauss(npts, job, a, b, x, w):
             for j in range(1, npts + 1):
                 p3 = p2
                 p2 = p1
-                p1 = ((2.0 * float(j) - 1) * t * p2 - (float(j) - 1.0) * p3) / (
-                    float(j)
-                )
+                p1 = ((2.0 * float(j) - 1) * t * p2 - (float(j) - 1.0) * p3) / ( float(j) )
             pp = npts * (t * p1 - p2) / (t * t - 1.0)
             t1 = t
             t = t1 - p1 / pp
@@ -41,14 +41,7 @@ def gauss(npts, job, a, b, x, w):
         for i in range(0, npts):
             xi = x[i]
             x[i] = a * b * (1.0 + xi) / (b + a - (b - a) * xi)
-            w[i] = (
-                w[i]
-                * 2.0
-                * a
-                * b
-                * b
-                / ((b + a - (b - a) * xi) * (b + a - (b - a) * xi))
-            )
+            w[i] = ( w[i] * 2.0 * a * b * b / ((b + a - (b - a) * xi) * (b + a - (b - a) * xi)) )
     if job == 2:
         for i in range(0, npts):
             xi = x[i]
@@ -56,19 +49,7 @@ def gauss(npts, job, a, b, x, w):
             w[i] = w[i] * 2.0 * (a + b) / ((1.0 - xi) * (1.0 - xi))
 
 
-graphscatt = gdisplay(
-    x=0,
-    y=0,
-    xmin=0,
-    xmax=6,
-    ymin=0,
-    ymax=1,
-    width=600,
-    height=400,
-    title="S Wave Cross Section vs E",
-    xtitle="kb",
-    ytitle="[sin(delta)]**2",
-)
+graphscatt = graph( x=0, y=0, xmin=0, xmax=6, ymin=0, ymax=1, width=600, height=400, title="S Wave Cross Section vs E", xtitle="kb", ytitle="[sin(delta)]**2", )
 sin2plot = gcurve(color=color.yellow)
 M = 27
 b = 10.0
@@ -84,17 +65,20 @@ Vvec = zeros((n + 1, 1), float)
 scale = n / 2
 lambd = 1.5
 
-gauss(n, 2, 0.0, scale, k, w)  # Set up points & wts
+# Set up points & wts
+gauss(n, 2, 0.0, scale, k, w)  
 ko = 0.02
 for m in range(1, 901):
     k[n] = ko
     for i in range(0, n):
-        D[i] = 2 / pi * w[i] * k[i] * k[i] / (k[i] * k[i] - ko * ko)  # D
+# D
+        D[i] = 2 / pi * w[i] * k[i] * k[i] / (k[i] * k[i] - ko * ko)  
     D[n] = 0.0
     for j in range(0, n):
         D[n] = D[n] + w[j] * ko * ko / (k[j] * k[j] - ko * ko)
     D[n] = D[n] * (-2.0 / pi)
-    for i in range(0, n + 1):  # Set up F &  V
+# Set up F &  V
+    for i in range(0, n + 1):  
         for j in range(0, n + 1):
             pot = -b * b * lambd * sin(b * k[i]) * sin(b * k[j]) / (k[i] * b * k[j] * b)
             F[i][j] = pot * D[j]
@@ -103,11 +87,14 @@ for m in range(1, 901):
         V[i] = pot
     for i in range(0, n + 1):
         Vvec[i][0] = V[i]
-    Finv = lina.inv(F)  # LinearAlgebra for inverse
-    R = dot(Finv, Vvec)  # Matrix multiply
+# LinearAlgebra for inverse
+    Finv = lina.inv(F)  
+# Matrix multiply
+    R = dot(Finv, Vvec)  
     RN1 = R[n][0]
     shift = atan(-RN1 * ko)
     sin2 = (sin(shift)) ** 2
-    sin2plot.plot(pos=(ko * b, sin2))  # Plot sin**2(delta)
+# Plot sin**2(delta)
+    sin2plot.plot(pos=(ko * b, sin2))  
     ko = ko + 0.2 * pi / 1000.0
 print("Done")

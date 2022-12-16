@@ -21,11 +21,14 @@ for k in range(0, 26):
     c = factorial(n) / (factorial(n - k) * factorial(k))
     E = -(n - k) * mu * B + k * mu * B
     print((k, E - Eo, c))
-    if k < 13:  # Plot only first half (symmetry)
-        Energy[i] = E - Eo  #
+# Plot only first half (symmetry)
+    if k < 13:  
+#
+        Energy[i] = E - Eo  
         Combo[i] = c
         i += 1
-plt.subplot(121)  # L: accessible states vs E-Eo
+# L: accessible states vs E-Eo
+plt.subplot(121)  
 plt.plot(Energy, Combo)
 plt.title("Number vs E-Eo")
 plt.subplot(122)

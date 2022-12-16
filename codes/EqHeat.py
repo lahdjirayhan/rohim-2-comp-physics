@@ -25,22 +25,26 @@ for ix in range(1, Nx - 1):
     T[ix, 0] = 100.0
     # Initial T
 T[0, 0] = 0.0
-T[0, 1] = 0.0  # 1st & last T = 0
+# 1st & last T = 0
+T[0, 1] = 0.0  
 T[Nx - 1, 0] = 0.0
 T[Nx - 1, 1] = 0.0
 cons = kappa / (C * rho) * Dt / (Dx * Dx)
-m = 1  # Counter
+# Counter
+m = 1  
 for t in range(1, Nt):
     for ix in range(1, Nx - 1):
         T[ix, 1] = T[ix, 0] + cons * (T[ix + 1, 0] + T[ix - 1, 0] - 2.0 * T[ix, 0])
-    if t % 300 == 0 or t == 1:  # Every 300 steps
+# Every 300 steps
+    if t % 300 == 0 or t == 1:  
         for ix in range(1, Nx - 1, 2):
             Tpl[ix, m] = T[ix, 1]
         print(m)
         m = m + 1
     for ix in range(1, Nx - 1):
         T[ix, 0] = T[ix, 1]
-x = list(range(1, Nx - 1, 2))  # Plot alternate pts
+# Plot alternate pts
+x = list(range(1, Nx - 1, 2))  
 y = list(range(1, 30))
 X, Y = p.meshgrid(x, y)
 
@@ -51,7 +55,8 @@ def functz(Tpl):
 
 
 Z = functz(Tpl)
-fig = p.figure()  # Create figure
+# Create figure
+fig = p.figure()  
 ax = Axes3D(fig)
 ax.plot_wireframe(X, Y, Z, color="r")
 ax.set_xlabel("Position")

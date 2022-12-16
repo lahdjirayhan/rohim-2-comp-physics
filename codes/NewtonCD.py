@@ -16,15 +16,19 @@ Nmax = 100
 
 
 def f(x):
-    return 2 * cos(x) - x  # Function
+# Function
+    return 2 * cos(x) - x  
 
 
 for it in range(0, Nmax + 1):
     F = f(x)
-    if abs(F) <= eps:  # Converged?
+# Converged?
+    if abs(F) <= eps:  
         print(("\n Root found, f(root) =", F, ", eps = ", eps))
         break
     print(("Iteration # = ", it, " x = ", x, " f(x) = ", F))
-    df = (f(x + dx / 2) - f(x - dx / 2)) / dx  # Central diff
+# Central diff
+    df = (f(x + dx / 2) - f(x - dx / 2)) / dx  
     dx = -F / df
-    x += dx  # New guess
+# New guess
+    x += dx  

@@ -6,7 +6,8 @@
 
 # Beam.py: solves Navier-Stokes equation for the flow around a beam
 
-from numpy import *  # Needed for range
+# Needed for range
+from numpy import *  
 import pylab as p
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import image
@@ -14,76 +15,92 @@ from matplotlib import image
 Nxmax = 70
 Nymax = 20
 # Grid parameters
-u = zeros((Nxmax + 1, Nymax + 1), float)  # Stream
-w = zeros((Nxmax + 1, Nymax + 1), float)  # Vorticity
-V0 = 1.0  # Initial v
-omega = 0.1  # Relaxation param
-IL = 10  # Geometry
+# Stream
+u = zeros((Nxmax + 1, Nymax + 1), float)  
+# Vorticity
+w = zeros((Nxmax + 1, Nymax + 1), float)  
+# Initial v
+V0 = 1.0  
+# Relaxation param
+omega = 0.1  
+# Geometry
+IL = 10  
 H = 8
 T = 8
 h = 1.0
-nu = 1.0  # Viscosity
-iter = 0  # Number iterations
-R = V0 * h / nu  # Reynold number, normal units
+# Viscosity
+nu = 1.0  
+# Number iterations
+iter = 0  
+# Reynold number, normal units
+R = V0 * h / nu  
 print("Working, wait for the figure, count to 30")
 
 
-def borders():  # Initialize stream,vorticity, sets BC
-    for i in range(0, Nxmax + 1):  # Initialize stream function
-        for j in range(0, Nymax + 1):  # Init vorticity
+# Initialize stream,vorticity, sets BC
+def borders():  
+# Initialize stream function
+    for i in range(0, Nxmax + 1):  
+# Init vorticity
+        for j in range(0, Nymax + 1):  
             w[i, j] = 0.0
             u[i, j] = j * V0
-    for i in range(0, Nxmax + 1):  # Fluid surface
+# Fluid surface
+    for i in range(0, Nxmax + 1):  
         u[i, Nymax] = u[i, Nymax - 1] + V0 * h
         w[i, Nymax - 1] = 0.0
     for j in range(0, Nymax + 1):
         u[1, j] = u[0, j]
-        w[0, j] = 0.0  # Inlet
-    for i in range(0, Nxmax + 1):  # Centerline
+# Inlet
+        w[0, j] = 0.0  
+# Centerline
+    for i in range(0, Nxmax + 1):  
         if i <= IL and i >= IL + T:
             u[i, 0] = 0.0
             w[i, 0] = 0.0
-    for j in range(1, Nymax):  # Outlet
+# Outlet
+    for j in range(1, Nymax):  
         w[Nxmax, j] = w[Nxmax - 1, j]
-        u[Nxmax, j] = u[Nxmax - 1, j]  #  Borders
+#  Borders
+        u[Nxmax, j] = u[Nxmax - 1, j]  
 
 
-def beam():  # BC for the beam
-    for j in range(0, H + 1):  # Beam sides
-        w[IL, j] = -2 * u[IL - 1, j] / (h * h)  # Front side
-        w[IL + T, j] = -2 * u[IL + T + 1, j] / (h * h)  # Back side
+# BC for the beam
+def beam():  
+# Beam sides
+    for j in range(0, H + 1):  
+# Front side
+        w[IL, j] = -2 * u[IL - 1, j] / (h * h)  
+# Back side
+        w[IL + T, j] = -2 * u[IL + T + 1, j] / (h * h)  
     for i in range(IL, IL + T + 1):
         w[i, H - 1] = -2 * u[i, H] / (h * h)
         # Top
     for i in range(IL, IL + T + 1):
         for j in range(0, H + 1):
-            u[IL, j] = 0.0  # Front
-            u[IL + T, j] = 0.0  # Back
+# Front
+            u[IL, j] = 0.0  
+# Back
+            u[IL + T, j] = 0.0  
             u[i, H] = 0
             # Top
 
 
-def relax():  # Method to relax stream
-    beam()  # Reset conditions at beam
-    for i in range(1, Nxmax):  # Relax stream function
+# Method to relax stream
+def relax():  
+# Reset conditions at beam
+    beam()  
+# Relax stream function
+    for i in range(1, Nxmax):  
         for j in range(1, Nymax):
-            r1 = omega * (
-                (
-                    u[i + 1, j]
-                    + u[i - 1, j]
-                    + u[i, j + 1]
-                    + u[i, j - 1]
-                    + h * h * w[i, j]
-                )
-                / 4
-                - u[i, j]
-            )
+            r1 = omega * ( ( u[i + 1, j] + u[i - 1, j] + u[i, j + 1] + u[i, j - 1] + h * h * w[i, j] ) / 4 - u[i, j] )
             u[i, j] += r1
-    for i in range(1, Nxmax):  # Relax vorticity
+# Relax vorticity
+    for i in range(1, Nxmax):  
         for j in range(1, Nymax):
             a1 = w[i + 1, j] + w[i - 1, j] + w[i, j + 1] + w[i, j - 1]
-            a2 = (u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
-            a3 = (u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
+            a2 = vector(u[i, j + 1] - u[i, j - 1]) * (w[i + 1, j] - w[i - 1, j])
+            a3 = vector(u[i + 1, j] - u[i - 1, j]) * (w[i, j + 1] - w[i, j - 1])
             r2 = omega * ((a1 - (R / 4.0) * (a2 - a3)) / 4.0 - w[i, j])
             w[i, j] += r2
 
@@ -99,23 +116,30 @@ while iter <= 300:
 for i in range(0, Nxmax + 1):
 
     for j in range(0, Nymax + 1):
-        u[i, j] = u[i, j] / (V0 * h)  # stream in V0h units
+# stream in V0h units
+        u[i, j] = u[i, j] / (V0 * h)  
 # u.resize((70,70));
 # w.resize((70,70));
-x = list(range(0, Nxmax - 1))  # to plot lines in x axis
+# to plot lines in x axis
+x = list(range(0, Nxmax - 1))  
 y = list(range(0, Nymax - 1))
 # x=range(0,69)                   #to plot lines in x axis
 # y=range(0,69)
-X, Y = p.meshgrid(x, y)  # grid for position and time
+# grid for position and time
+X, Y = p.meshgrid(x, y)  
 
 
-def functz(u):  # returns stream flow to plot
-    z = u[X, Y]  # for several iterations
+# returns stream flow to plot
+def functz(u):  
+# for several iterations
+    z = u[X, Y]  
     return z
 
 
-def functz1(w):  # returns stream flow to plot
-    z1 = w[X, Y]  # for several iterations
+# returns stream flow to plot
+def functz1(w):  
+# for several iterations
+    z1 = w[X, Y]  
     return z1
 
 
@@ -129,6 +153,7 @@ fig2 = p.figure()
 p.title("Vorticity - 2D Flow over a beam")
 p.imshow(Z1, origin="lower")
 p.colorbar()
-p.show()  # Shows the figure, close Python shell to
+# Shows the figure, close Python shell to
+p.show()  
 # Finish watching the figure
 print("finished")
