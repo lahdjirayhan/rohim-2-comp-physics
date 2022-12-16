@@ -3,9 +3,9 @@
     Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
     C Bordeianu, Univ Bucharest, 2017. 
     Please respect copyright & acknowledge our work."""
-    
- 
-# LaplaceFEM_2D.py solve 2D Laplace Eq via Finite elements method; utf-8coding 
+
+
+# LaplaceFEM_2D.py solve 2D Laplace Eq via Finite elements method; utf-8coding
 
 """ Dirichlet boundary conditions surrounding four walls 
  Domain dimensions: WxH, with 2 triangles per square  
@@ -19,13 +19,25 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # Num squares, nodes, triangles, mesh coords, Initialization
 
-Width = 1.;    Height = 1.;  Nx = 20;   Ny = 20; U0 = 100
-Xurc = Width;  Yurc = Height;   Yllc = 0;   Xllc = 0
-Ns = Nx * Ny;  Nn = (Nx + 1)*(Ny + 1)
-Dx = (Xurc-Xllc)/Nx;    Dy = (Yurc-Yllc)/Ny;   Ne = 2 * Ns
+Width = 1.0
+Height = 1.0
+Nx = 20
+Ny = 20
+U0 = 100
+Xurc = Width
+Yurc = Height
+Yllc = 0
+Xllc = 0
+Ns = Nx * Ny
+Nn = (Nx + 1) * (Ny + 1)
+Dx = (Xurc - Xllc) / Nx
+Dy = (Yurc - Yllc) / Ny
+Ne = 2 * Ns
 ge = zeros(Ne, float)
-x = zeros(Ne, float);      y = zeros(Ne, float)
-Ebcnod = zeros(Ne, int);   Ebcval = zeros(Ne, int)
+x = zeros(Ne, float)
+y = zeros(Ne, float)
+Ebcnod = zeros(Ne, int)
+Ebcval = zeros(Ne, int)
 node = zeros((Ne + 1, Ne + 1), int)
 
 for i in range(1, Nn + 1):
@@ -67,7 +79,7 @@ for e in range(1, Ne):
     y23 = y[node[e, 2]] - y[node[e, 3]]
     J = x21 * y31 - x31 * y21
 
-# Evaluate A matrix, element vector ge
+    # Evaluate A matrix, element vector ge
     A[1, 1] = -(y23 * y23 + x32 * x32) / (2 * J)
     A[1, 2] = -(y23 * y31 + x32 * x13) / (2 * J)
     A[2, 1] = A[1, 2]
@@ -81,16 +93,15 @@ for e in range(1, Ne):
     ge[2] = 0
     ge[3] = 0
 
-# Evaluate element pe & update A matrix
-    for i in  range(1, 4):
+    # Evaluate element pe & update A matrix
+    for i in range(1, 4):
         for j in range(1, 4):
-            A[node[e, i], node[e, j]] = A[node[e, i], node[e, j]] \
-                + A[i, j]
+            A[node[e, i], node[e, j]] = A[node[e, i], node[e, j]] + A[i, j]
         b[node[e, i]] = b[node[e, i]] + ge[i]
 
 # Imposition of Dirichlet boundary conditions
-for i in  range(1, Tnebc):
-    for j in  range(1, Nn + 1):
+for i in range(1, Tnebc):
+    for j in range(1, Nn + 1):
         if j != Ebcnod[i]:
             b[j] = b[j] - A[j, Ebcnod[i]] * Ebcval[i]
     A[Ebcnod[i], :] = 0
@@ -100,12 +111,14 @@ for i in  range(1, Tnebc):
 
 # Solution, place on grid, plot
 V = linalg.solve(A, b)
-(X, Y) = p.meshgrid(arange(Xllc, Xurc + 0.1, 0.1 * (Xurc - Xllc)),
-                    arange(Yllc, Yurc + 0.1, 0.1 * (Yurc - Yllc)))
+(X, Y) = p.meshgrid(
+    arange(Xllc, Xurc + 0.1, 0.1 * (Xurc - Xllc)),
+    arange(Yllc, Yurc + 0.1, 0.1 * (Yurc - Yllc)),
+)
 Vgrid = zeros((11, 11), float)
 for i in arange(1, 11):
     for j in arange(1, 11):
-        for e in  range(0, Ne):
+        for e in range(0, Ne):
             x2p = x[node[e, 2]] - X[i, j]
             x3p = x[node[e, 3]] - X[i, j]
             y2p = y[node[e, 2]] - Y[i, j]
@@ -127,21 +140,24 @@ for i in arange(1, 11):
             y31 = y[node[e, 3]] - y[node[e, 1]]
             J = x21 * y31 - x31 * y21
             if abs(J / 2 - (A1 + A2 + A3)) < 0.00001 * J / 2:
-                ksi = (y31 * (X[i, j] - x[node[e, 1]]) - x31 * (Y[i, j]
-                       - y[node[e, 1]])) / J
-                ita = (-y21 * (X[i, j] - x[node[e, 1]]) + x21 * (Y[i,
-                       j] - y[node[e, 1]])) / J
+                ksi = (
+                    y31 * (X[i, j] - x[node[e, 1]]) - x31 * (Y[i, j] - y[node[e, 1]])
+                ) / J
+                ita = (
+                    -y21 * (X[i, j] - x[node[e, 1]]) + x21 * (Y[i, j] - y[node[e, 1]])
+                ) / J
                 N1 = 1 - ksi - ita
                 N2 = ksi
                 N3 = ita
-                Vgrid[i, j] = N1 * V[node[e, 1]] + N2 * V[node[e, 2]] \
-                    + N3 * V[node[e, 3]]
+                Vgrid[i, j] = (
+                    N1 * V[node[e, 1]] + N2 * V[node[e, 2]] + N3 * V[node[e, 3]]
+                )
 
 # Plot the finite element solution of V using a contour plot
 fig = p.figure()
 ax = Axes3D(fig)
-ax.plot_wireframe(X, Y, Vgrid, color='r')
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Potential')
-p.show()		
+ax.plot_wireframe(X, Y, Vgrid, color="r")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Potential")
+p.show()
