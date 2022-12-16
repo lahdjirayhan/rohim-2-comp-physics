@@ -26,6 +26,6 @@ Es, evectors = eig(H)
 ReE = real(Es) ;   ImE = imag(Es)                # Eigenvalues
 
 for j in range(0,N):
-    print(" Npoints =",N, "Lambda =",Lambda," ReE =",ReE[j])
-    print(" ImE = ", ImE)
+    print((" Npoints =",N, "Lambda =",Lambda," ReE =",ReE[j]))
+    print((" ImE = ", ImE))
     break

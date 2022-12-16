@@ -89,4 +89,4 @@ while (t < b):                              # Loop over time
     Eexact = 1.  
     error = abs( (E - Eexact)/Eexact)       
     sum   +=  error
-print(" <error>=  ", sum/flops, ", flops = ", flops)
+print((" <error>=  ", sum/flops, ", flops = ", flops))

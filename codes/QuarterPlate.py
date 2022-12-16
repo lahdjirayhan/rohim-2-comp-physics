@@ -15,7 +15,7 @@ Hx = zeros((xmax,ts),float); Hxx = zeros((xmax,ts),float)
 Hy = zeros((xmax,ts),float); Hyy = zeros((xmax,ts),float)
 Exx = zeros((xmax,ts),float);  Eyy = zeros((xmax,ts),float)     
 
-scene = display(x=0,y=0,width= 800, height= 500, title= 'Ey: 
+scene = display(x=0,y=0,width= 800, height= 500, title= 'Ey: \
 	cyan, Ex:yellow. periodic BC', forward=(-0.8,-0.3,-0.7))
 Exfield = curve(x=list(range(0,xmax)),color= color.yellow,
 	radius=1.5,display=scene)

@@ -59,7 +59,7 @@ Psi_0(Xo,Yo)
 
 PlotPsi_0()
 for t in range(0,150):                         # Plot every 10 t's
-    if t%10==0: print('time =',t)  
+    if t%10==0: print(('time =',t))  
     ImPsi[1:-1,1:-1] =  ImPsi[1:-1,1:-1] + fc*(RePsi[2: ,1:-1 ] + RePsi[:-2 ,1:-1]\
                             -4*RePsi[1:-1,1:-1] + RePsi[1:-1,2: ] + RePsi[1:-1, :-2])\
                             + V[1:-1,1:-1]*dt*RePsi[1:-1,1:-1]

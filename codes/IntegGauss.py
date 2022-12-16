@@ -1,4 +1,4 @@
-Dirichlet boundary conditions surrounding four walls 
+"""Dirichlet boundary conditions surrounding four walls 
  Domain dimensions: WxH, with 2 triangles per square  
  Based on FEM2DL_Box Matlab program in Polycarpou, Intro to the Finite 
  Element Method in Electromagnetics, Morgan & Claypool (2006) """
@@ -58,5 +58,5 @@ def gaussint (no, min, max):
 
 for i in range(3, max_in + 1, 2):
     result = gaussint(i, vmin, vmax) 
-    print (" i ", i, " err ", abs(result - 1 + 1/ME))
+    print((" i ", i, " err ", abs(result - 1 + 1/ME)))
 print ("Enter and return any character to quit")

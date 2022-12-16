@@ -70,7 +70,7 @@ def Relax(iter):
                	       +h*h*w[i, j])*0.25-u[i,j]) 
                u[i,j]+= r1  
     if iter%50==0:
-       print("Residual r1 ", r1)
+       print(("Residual r1 ", r1))
     Borders(iter)   
     for  i in range(1, Nx):         # Relax stream function
       for  j in range (1, Ny):  
@@ -90,7 +90,7 @@ def Relax(iter):
 
 while (iter <=  Niter):    
     if iter %100 == 0:
-        print ("Iteration", iter)  # iterations counted
+        print(("Iteration", iter))  # iterations counted
     Relax(iter)
     iter   +=  1      # counter of iterations
 for j in range(0,Ny): # Send w to disk in gnuplot format

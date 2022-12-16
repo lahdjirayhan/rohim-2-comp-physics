@@ -12,7 +12,7 @@ N = 100; Nsteps = 101;  xscale = 10.                 # Initialize
 path = zeros([Nsteps], float);  prob = zeros([Nsteps], float)   
 
 trajec = display(width = 300,height=500, title='Spacetime Paths')
-trplot = curve(y = range(0, 100), color=color.magenta, display = trajec)
+trplot = curve(y = list(range(0, 100)), color=color.magenta, display = trajec)
 
 def PlotAxes():                                       # Axis
    trax = curve(pos=[(-97,-100),(100,-100)],colo =color.cyan,display=trajec)
@@ -40,7 +40,7 @@ def PlotWF(prob):                                      # Plot prob
                    
 wvgraph = display(x=340,y=150,width=500,height=300,
 	title='Ground State')
-wvplot = curve(x = range(0, 100), display = wvgraph)                
+wvplot = curve(x = list(range(0, 100)), display = wvgraph)                
 wvfax = curve(color = color.cyan)
 PlotAxes();  WaveFunctionAxes()                       # Plot axes
 oldE = Energy(path)                                      
@@ -62,5 +62,5 @@ while True:                                 # Pick random element
     if elem < 0: elem = 0,                     
     if elem > 100:  elem = 100                 # If exceed max
     prob[elem] += 1                     # increase probability
-    PlotWF(prob)                       w            # Plot prob
+    PlotWF(prob)                                   # Plot prob
     oldE = newE                

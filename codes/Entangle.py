@@ -14,11 +14,11 @@ XAXB = array([[0, 0, 0, 1],[0,0,1,0],[0,1,0,0],[1,0,0,0]])
 YAYB = array([[0,0,0,-1],[0,0,1,0],[0,1,0,0],[-1,0,0,0]])
 ZAZB = array([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
 SASB = XAXB + YAYB + ZAZB - 3*ZAZB       # Hamiltonian 
-print '\nHamiltonian without mu^2/r^3 factor \n', SASB, '\n'
+print(('\nHamiltonian without mu^2/r^3 factor \n', SASB, '\n'))
  
 es,ev = eig(SASB)            # Eigenvalues and eigenvectors
-print 'Eigenvalues\n', es, '\n'
-print "Eigenvectors (in columns)\n", ev, "\n"
+print(('Eigenvalues\n', es, '\n'))
+print(("Eigenvectors (in columns)\n", ev, "\n"))
 
 phi1 = (ev[0,0],ev[1,0],ev[2,0],ev[3,0])  # Eigenvectors
 phi4 = (ev[0,1],ev[1,1],ev[2,1],ev[3,1])  
@@ -31,4 +31,4 @@ for i in range(0,nmax):         # Hamiltonian in new basis
     for j in range(0,nmax):
        term   = dot(SASB,basis[i])
        H[i,j] = dot(basis[j],term)
-print "Hamiltonian in Eigenvector Basis\n", H    
+print(("Hamiltonian in Eigenvector Basis\n", H))    

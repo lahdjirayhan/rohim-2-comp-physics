@@ -103,7 +103,7 @@ for n in range (0,N):
         k = (n-N)*dk;                                      # negative k's
     trpl.plot(pos=(k,dtr[n,0]),display=transgr)
     if dtr[n,1] > 0.1 :
-        print(n, dtr[n,1])                     # dtr[n,1]= Im part is zero
+        print((n, dtr[n,1]))                     # dtr[n,1]= Im part is zero
     tipl.plot(pos=(k,dtr[n,1]),display=transgr)                 # no plot
 print ("Compute inverse FFT")                # its bars should be magenta
 isign = 1

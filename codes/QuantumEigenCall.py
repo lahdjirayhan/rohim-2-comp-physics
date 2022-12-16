@@ -90,7 +90,7 @@ for count in range(0,Nmax+1):              # Main program
     E = Etemp
     if (diffMax*Diff > 0):  Emax = E    # Bisection algor
     else:                   Emin = E
-    print("Iteration, E =", count,  E)
+    print(("Iteration, E =", count,  E))
     if ( abs(Diff)  <  eps ):     break
     if count >3:                            
         rate(4)
@@ -103,6 +103,6 @@ elabel = label(pos=(700, 400), text='E=', box=0)    # Last
 elabel.text = 'E=%13.10f' %E
 ilabel      = label(pos=(700, 600), text='istep=', box=0)
 ilabel.text = 'istep=%4s' %count   
-print("Final eigenvalue E =", E)
-print("Iterations = ",count,", max = ", Nmax)
+print(("Final eigenvalue E =", E))
+print(("Iterations = ",count,", max = ", Nmax))
 

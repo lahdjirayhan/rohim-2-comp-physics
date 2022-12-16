@@ -37,7 +37,7 @@ def filter():                    # Low-pass windowed-sinc filter
     for i in range(0,100):  sum = sum + h[i]
     for i in range(0,100):  h[i] = h[i]/sum
     for j in range(0,imax):
-      if j%100==0:  print('Waiting till reach 500, now at: ',j)
+      if j%100==0:  print(('Waiting till reach 500, now at: ',j))
       for k in range(0,imax):  # Convolute input with filter
         y[k,j] = 0                   
         for i in range(0,100):
@@ -56,5 +56,5 @@ for j in range(0,N):        # Output in rows
         Marnoi.write("\n")
         Out.write("\n")           
 Marnoi.closed;  Out.closed;  Input.closed;  Clean.closed
-filter()   
+list(filter())   
 print('MarianaCleaned written to disk\n All Done!')

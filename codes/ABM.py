@@ -31,7 +31,7 @@ def rk4(t, yy, h1):
         k2 = h1 * f(t + h1/2., yy[i] + k1/2.)
         k3 = h1 * f(t + h1, yy[i] + k2 )
         yy[i + 1] = yy[i]  +  (1./6.) * (k0  +  2.*k1  +  2.*k2 + k3)
-        print(i,yy[ i])
+        print((i,yy[ i]))
     return yy[3]
 
 def ABM(a,b,N):
@@ -62,6 +62,6 @@ def ABM(a,b,N):
 print("  k     t      Y numerical      Y exact")
 t, y = ABM(A,B,n)
 for k in range(0, n+1):
-    print (" %3d  %5.3f  %12.11f  %12.11f " %(k,t[k],y[k],(3.*exp(-t[k]/2.)-2.+t[k])))
+    print((" %3d  %5.3f  %12.11f  %12.11f " %(k,t[k],y[k],(3.*exp(-t[k]/2.)-2.+t[k]))))
     numsol.plot(pos = (t[k], y[k]) )
     exsol.plot(pos = (t[k], 3.*exp(-t[k]/2.) -2. + t[k]))

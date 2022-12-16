@@ -33,7 +33,7 @@ def FFT(N, isign):                        # FFT of dtr[n,2]
             m = m/2
         j = j + m;                           
     print("\n Bit-Reversed Input Data ")
-    for i in range(1,n+1,2): print("%2d data[%2d] %9.5f "%(i,i,data[i]))   
+    for i in range(1,n+1,2): print(("%2d data[%2d] %9.5f "%(i,i,data[i])))   
     mmax = 2
     while (mmax-n) < 0 :                        # Begin transform
        istep = 2*mmax
@@ -66,9 +66,9 @@ print("  i   Re part   Im  part")
 for i in range(0,N ):                             # Form array
     dtr[i,0] = 1.0*i                               # Real part
     dtr[i,1] = 1.0*i                                # Im part
-    print(" %2d %9.5f %9.5f" %(i,dtr[i,0],dtr[i,1]))
+    print((" %2d %9.5f %9.5f" %(i,dtr[i,0],dtr[i,1])))
 FFT(N, isign)                   # Call FFT, use global dtr[][]
 print('\n    Fourier Transform \n  i      Re      Im    ')
 for i in range(0,N):  
-    print(" %2d  %9.5f  %9.5f " %(i, dtr[i,0], dtr[i,1]) )
+    print((" %2d  %9.5f  %9.5f " %(i, dtr[i,0], dtr[i,1]) ))
 print("Enter and return any character to quit")

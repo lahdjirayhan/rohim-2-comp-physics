@@ -15,7 +15,7 @@ m=400                 # for positions of z, and r
 n=400
 #take constant e/(pi eps0L)=1
  
- def potential(r,z):          # Finds the potential at point (r,z)
+def potential(r,z):          # Finds the potential at point (r,z)
     summ=0                   # to sum product
     for n in range(1,200):  # number of terms to find  potential
         ter=n*np.pi/L        # common term in arguments of functions
@@ -31,7 +31,7 @@ x = np.arange(0.0001,0.4,0.4/400.) # values of r that are interesting
 X, Y = np.meshgrid(x, y) 
 Z=potential(X,Y)                     #  potential for all values of r and  z
 plt.figure()                         # to plot the figure
-levels = np.arange(05, 180,20)         # range of levels to plot every 2
+levels = np.arange(0o5, 180,20)         # range of levels to plot every 2
 CS = plt.contour(Z,levels,linewidths=2, extent=(0.001, 0.4, 0, 60))
 plt.clabel(CS, inline=1, fmt='%4.1f', fontsize=10)
 plt.xlabel('Rho (Distance from z Axis)')

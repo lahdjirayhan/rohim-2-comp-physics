@@ -52,4 +52,4 @@ def filter():                           # Low-pass windowed sinc filter
     for j in range(0,max-1):    funct3.plot(pos=(j*step,y[j]))
 
 function(array, max)                                       
-filter()                                                     
+list(filter())                                                     

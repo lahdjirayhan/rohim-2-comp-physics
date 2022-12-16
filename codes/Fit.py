@@ -29,14 +29,14 @@ for i in range(0, Nd):
 A    = array([ [ss,sx,sxx], [sx,sxx,sxxx], [sxx,sxxx,sxxxx] ])
 bvec = array([sy, sxy, sxxy])
 xvec = multiply(inv(A), bvec)                  # Invert matrix
-print('\n x via Inverse A\n', xvec, '\n' )
+print(('\n x via Inverse A\n', xvec, '\n' ))
 xvec = solve(A, bvec)                   # Solve via elimination
-print('\n x via Elimination \n', xvec, '\n Fit to Parabola\n') 
-print('y(x) = a0 + a1 x + a2 x^2\n a0 =', x[0],'a1 =', x[1], 'a2 =', x[2])      
+print(('\n x via Elimination \n', xvec, '\n Fit to Parabola\n')) 
+print(('y(x) = a0 + a1 x + a2 x^2\n a0 =', x[0],'a1 =', x[1], 'a2 =', x[2]))      
 print('\n i   xi     yi    yfit   ')
 for i in range(0, Nd):
     s = xvec[0] + xvec[1]*x[i] + xvec[2]*x[i]*x[i]
-    print(" %d %5.3f  %5.3f  %8.7f"  %(i, x[i], y[i], s))
+    print((" %d %5.3f  %5.3f  %8.7f"  %(i, x[i], y[i], s)))
 # red line is the fit, red dots the fits at y[i]m 
 curve  = xvec[0] + xvec[1]*xRange + xvec[2]*xRange**2
 points = xvec[0] + xvec[1]*x + xvec[2]*x**2

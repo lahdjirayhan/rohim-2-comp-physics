@@ -126,6 +126,6 @@ elabel.text = 'E=%13.10f' %E
 ilabel = label(pos=(700, 600), text='istep=', box=0)
 ilabel.text = 'istep=%4s' %count
         
-print("Final eigenvalue E = ",E)
-print("iterations, max = ",count)
+print(("Final eigenvalue E = ",E))
+print(("iterations, max = ",count))
 

@@ -1,4 +1,4 @@
-Dirichlet boundary conditions surrounding four walls 
+"""Dirichlet boundary conditions surrounding four walls 
  Domain dimensions: WxH, with 2 triangles per square  
  Based on FEM2DL_Box Matlab program in Polycarpou, Intro to the Finite 
  Element Method in Electromagnetics, Morgan & Claypool (2006) """
@@ -12,7 +12,7 @@ from visual.controls import *
 
 sceneK = display(x=0,y=0,width=500,height=500,
 title='Lagrange Interpolation with Toggle Switch')
-graph=curve(color= color.yellow,x=range(0,201),radius=3)
+graph=curve(color= color.yellow,x=list(range(0,201)),radius=3)
 xin = array([0, 25, 50, 75, 100, 125, 150, 175, 200])
 yin = array([10.6, 6, 45, 83.5, 52.8, 19.9, 10.8, 8.25, 4.7])
 expts=[]                          # Poits to fit

@@ -14,7 +14,7 @@ Energy = [0.]*(13); Combo = [0.]*(13)
 for k in range(0,26):
     c = factorial(n)/(factorial(n-k)*factorial(k)) 
     E =  -(n-k)*mu*B + k*mu*B
-    print(k, E-Eo,c)
+    print((k, E-Eo,c))
     if k < 13:          # Plot only first half (symmetry)
         Energy[i] = E - Eo  # 
         Combo[i] = c            

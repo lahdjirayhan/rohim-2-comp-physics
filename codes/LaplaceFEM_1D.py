@@ -1,4 +1,4 @@
-Dirichlet boundary conditions surrounding four walls 
+"""Dirichlet boundary conditions surrounding four walls 
  Domain dimensions: WxH, with 2 triangles per square  
  Based on FEM2DL_Box Matlab program in Polycarpou, Intro to the Finite 
  Element Method in Electromagnetics, Morgan & Claypool (2006) """

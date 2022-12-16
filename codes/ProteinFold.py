@@ -230,7 +230,7 @@ while 1:
     label(pos=(5,-18,0), text='Energy',box=0)
     evalue=label(pos=(10, -18), box=0) # Energy
     evalue.text = '%4s' %findenergy(length,DD)   
-    print("energy is ",findenergy(length,DD))
+    print(("energy is ",findenergy(length,DD)))
     print("dd") 
     graph1.mouse.getclick()         # Detect mouse click
     for obj in graph1.objects:      # Start new walk

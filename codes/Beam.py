@@ -70,7 +70,7 @@ while (iter <=  100):
     relax()
 for i in range (0, Nxmax+1):
     for  j in range(0, Nymax+ 1):  u[i,j] = u[i,j]/V0/h      
-x = range(0, Nxmax-1);        y = range(0, Nymax-1)                                                        
+x = list(range(0, Nxmax-1));        y = list(range(0, Nymax-1))                                                        
 X, Y = p.meshgrid(x, y)                                  
 
 def functz(u):                                  # Stream flow

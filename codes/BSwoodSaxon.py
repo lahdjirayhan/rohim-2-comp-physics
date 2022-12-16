@@ -110,7 +110,7 @@ while abs(dE) > dl and istep < imax :   # Begin bisection algorithm
          dE = Emax-Emin
          f0 = f1
     normalize()
-    print ("Iteration number =",istep,", energy = ", E)
+    print(("Iteration number =",istep,", energy = ", E))
     istep = istep+1
 curve(pos=[(-1000,e*20+300),(700,E*20+300)],color=color.green)
 

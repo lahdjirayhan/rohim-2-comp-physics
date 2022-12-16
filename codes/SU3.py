@@ -27,9 +27,9 @@ Im = 0.5*(L1-1j*L2)                        # Lowering operators
 Um = 0.5*(L6-1j*L7)
 Vm = 0.5*(L4-1j*L5)
 Ipxd = dot(Ip,d)                                 # Raise d to u
-print("Ipxd", Ipxd)
+print(("Ipxd", Ipxd))
 Vpxs = dot(Vp, s)                                # Raise s to u
-print("Vpxs", Vpxs)
+print(("Vpxs", Vpxs))
 Upxs=dot(Up,s)                                   # Raise s to d
-print("Upxs ", Upxs) 
+print(("Upxs ", Upxs)) 
 

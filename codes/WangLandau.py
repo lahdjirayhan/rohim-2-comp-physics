@@ -108,7 +108,7 @@ def WL():                                        # Wang - Landau sampling
            ave = Hsup + Hinf
            percent = 1.0* height/ave        # 1.0 to make it float number
            if percent < 0.3 :                           # Histogram flat?
-                print(" iter ", iter, "   log(f) ", fac) 
+                print((" iter ", iter, "   log(f) ", fac)) 
                 for j in range(0, N + 1):
                     prhist[j] = hist[j]                         # to plot
                     hist[j]   = 0                             # Save hist

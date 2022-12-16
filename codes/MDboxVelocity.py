@@ -73,7 +73,7 @@ distribution = ghistogram(bins=arange(minix,maxix,deltav),
 for t in range (0,2000):                 # time steps
      Nr=0                                 # begin at zero in each time
      if t%100==0:
-         print('t ',t)
+         print(('t ',t))
      for i in range(0,Natom):
         fr=forces(fr)
         dpos=pos[i]

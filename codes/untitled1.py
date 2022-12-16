@@ -30,8 +30,8 @@ Um = 0.5*(L6-1j*L7)
 Vm = 0.5*(L4-1j*L5)
 
 Ipxd = dot(Ip,d)    # raices d to u
-print "\n Ipxd",Ipxd
+print(("\n Ipxd",Ipxd))
 Vpxs = dot(Vp,s)    # raises s to u
-print "\n Vpxs",Vpxs
+print(("\n Vpxs",Vpxs))
 Upxs = dot(Up,s)    #  raises s to d
-print "\n Upxs",Upxs
+print(("\n Upxs",Upxs))

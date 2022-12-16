@@ -57,4 +57,4 @@ for i in range(1, Nfit + 2):                                 # Begin fit
     a = (x[khi] - xout)/h 
     b = (xout - x[klo])/h 
     yout = a*y[klo]+b*y[khi] +((a*a*a-a)*y2[klo]+(b*b*b-b)*y2[khi])*h*h/6
-    print("xout, yout = ", xout,",", yout)
+    print(("xout, yout = ", xout,",", yout))

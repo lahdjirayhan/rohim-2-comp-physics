@@ -14,7 +14,7 @@ N = 100;  dt = 0.05;          g = 2.0;       h = 0.00;      maxel = 0
 path = zeros([101], float);  arr = path; prob = zeros([201],float) # Init                  
     
 trajec = display(width = 300, height=500,title = 'Spacetime Trajectory')
-trplot = curve(y = range(0, 100), color=color.magenta, display = trajec)
+trplot = curve(y = list(range(0, 100)), color=color.magenta, display = trajec)
 
 def trjaxs():                               # plot axis for trajectories
   trax=curve(pos=[(-97,-100),(100,-100)],color=color.cyan,display=trajec)
@@ -24,7 +24,7 @@ def trjaxs():                               # plot axis for trajectories
   label(pos = (60, -110), text = 'x', box = 0, display = trajec) 
 
 wvgraph = display(x=350, y=80, width=500, height=300, title = 'GS Prob')
-wvplot  = curve(x = range(0, 50), display = wvgraph) # wave function plot
+wvplot  = curve(x = list(range(0, 50)), display = wvgraph) # wave function plot
 wvfax   = curve(color = color.cyan)
 
 def wvfaxs():                                # plot axis for wavefunction

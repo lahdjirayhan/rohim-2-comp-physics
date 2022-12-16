@@ -20,4 +20,4 @@ def trapezoid(A,B,N):
 A = 0.5
 B = 2.3
 N = 1200
-print(trapezoid(A,B,N-1)) 
+print((trapezoid(A,B,N-1))) 

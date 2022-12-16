@@ -16,7 +16,7 @@ graph1 = gdisplay( title='Projectile with & without Drag',
           xtitle='x', ytitle='y', xmax=R, xmin=-R/20.,ymax=8,ymin=-6.0)
 funct = gcurve(color=color.red)
 funct1 = gcurve(color=color.yellow)
-print('No Drag T =',T,', H =',H,', R =',R)
+print(('No Drag T =',T,', H =',H,', R =',R))
 
 def plotNumeric(k):
  vx = v0*cos(angle*pi/180.)
@@ -33,7 +33,7 @@ def plotNumeric(k):
     x = x + vx*dt
     y = y + vy*dt
     funct.plot(pos=(x,y))
-    print(" %13.10f  %13.10f "%(x,y))
+    print((" %13.10f  %13.10f "%(x,y)))
 		
 def plotAnalytic():
     v0x = v0*cos(angle*pi/180.)
@@ -47,7 +47,7 @@ def plotAnalytic():
         x = v0x*t
         y = v0y*t -g*t*t/2.
         funct1.plot(pos=(x,y))
-        print(" %13.10f  %13.10f"%(x ,y))
+        print((" %13.10f  %13.10f"%(x ,y)))
         
 plotNumeric(kf)
 plotAnalytic()

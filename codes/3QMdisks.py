@@ -37,7 +37,7 @@ def Psi_0(Xo,Yo):                               # Initial Psi
 Psi_0(Xo,Yo)  # Psi and Rho initial 
 Pot3Disks()                                        # Initial Psi
 for t in range(0, 120):  # 120->30         # Compute Psi t < 120
-    if t%5 == 0:  print 't =', t               # Print ea 5th t
+    if t%5 == 0:  print(('t =', t))               # Print ea 5th t
     ImPsi[1:-1,1:-1] =  ImPsi[1:-1,1:-1] + fc*(RePsi[2: ,1:-1] \
         + RePsi[:-2 ,1:-1] - 4*RePsi[1:-1,1:-1] + RePsi[1:-1,2: ]\
         + RePsi[1:-1, :-2]) + V[1:-1,1:-1]*dt*RePsi[1:-1,1:-1]

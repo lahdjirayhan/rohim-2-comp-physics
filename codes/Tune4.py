@@ -58,7 +58,7 @@ while (iter1  < 15 and err > 1.e-6): # Compute current energy & normalize
         coef[i] = t + step
         err     = err +  step*step 
     err = sqrt(err)   
-    print (" %2d  %15.13f  %15.13f "%(iter1, ener, err))
+    print((" %2d  %15.13f  %15.13f "%(iter1, ener, err)))
 delta_t = datetime.datetime.now()  -  t0                   # Elapsed time
-print " time = ",  delta_t
-print "press a key to finish"
+print((" time = ",  delta_t))
+print("press a key to finish")

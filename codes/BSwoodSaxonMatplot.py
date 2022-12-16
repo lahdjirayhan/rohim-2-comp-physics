@@ -122,6 +122,6 @@ while abs(de) > dl and istep < imax : # bisection algorithm begins
          de = amax-amin
          f0 = f1
     normalize(istep)                         # find new wavefunctions
-    print "iteration number =", istep, "Energy =",e
+    print(("iteration number =", istep, "Energy =",e))
     istep = istep+1
 plt.show()

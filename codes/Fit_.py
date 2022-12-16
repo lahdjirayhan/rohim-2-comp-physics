@@ -39,22 +39,22 @@ bvec = array([sy, sxy, sxxy])
 xvec = multiply(inv(A), bvec)                             # Invert matrix
 Itest = multiply(A, inv(A))                             # Matrix multiply
 print('\n x vector via inverse')                                       
-print(xvec, '\n')
+print((xvec, '\n'))
 print('A*inverse(A)')
-print(Itest, '\n')
+print((Itest, '\n'))
 
 xvec = solve(A, bvec)                             # Solve via elimination
 print('x Matrix via direct') 
-print(xvec, 'end= ') 
+print((xvec, 'end= ')) 
 print('FitParabola Final Results\n') 
 print('y(x) = a0 + a1 x + a2 x^2')                          # Desired fit
-print('a0 = ', x[0])                  
-print('a1 = ', x[1])
-print('a2 = ', x[2], '\n')
+print(('a0 = ', x[0]))                  
+print(('a1 = ', x[1]))
+print(('a2 = ', x[2], '\n'))
 print(' i   xi     yi    yfit   ')
 for i in range(0, Nd):
     s = xvec[0] + xvec[1]*x[i] + xvec[2]*x[i]*x[i]
-    print(" %d %5.3f  %5.3f  %8.7f \n"  %(i, x[i], y[i], s))
+    print((" %d %5.3f  %5.3f  %8.7f \n"  %(i, x[i], y[i], s)))
 # red line is the fit, red dots the fits at y[i]
 curve  = xvec[0] + xvec[1]*t + xvec[2]*t**2
 points = xvec[0] + xvec[1]*x + xvec[2]*x**2

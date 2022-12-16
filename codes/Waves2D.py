@@ -47,8 +47,8 @@ def vibration(tim):
    return v
 
 v = vibration(tim)                             
-x1 = range(0, N)
-y1 = range(0, N)
+x1 = list(range(0, N))
+y1 = list(range(0, N))
 X, Y = p.meshgrid(x1,y1)                          
                  
 def functz(v):                                

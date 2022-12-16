@@ -12,7 +12,7 @@ from visual.graph import *
 
 scene = display(x=0,y=0,width=500,height=500,
                 title='String and masses configuration')
-tempe = curve(x=range(0,500),color=color.black)
+tempe = curve(x=list(range(0,500)),color=color.black)
 
 n = 9
 eps = 1e-3
@@ -96,6 +96,6 @@ for it in range(1, 100):
         if ( abs(f[i]) > errF ):  errF = abs(f[i])        
         if ( (errX <=  eps) and (errF <=  eps) ): break
         
-print('Number of iterations = ', it, "\n Final Solution:")
+print(('Number of iterations = ', it, "\n Final Solution:"))
 for i in range(0, n):
-        print('x[', i, '] =  ', x[i])
+        print(('x[', i, '] =  ', x[i]))

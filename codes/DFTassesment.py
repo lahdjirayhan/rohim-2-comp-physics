@@ -47,8 +47,8 @@ def fourier(dftimag):                        # Discrete Fourier Transform
 
 f(signal) 
 fourier(dftimag)
-print "hola"
+print("hola")
 for i in range(0,N):
         if abs(dftimag[i])>5:
-            print "i=",i , "dftimag ", dftimag[i]
+            print(("i=",i , "dftimag ", dftimag[i]))
 

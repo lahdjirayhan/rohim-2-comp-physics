@@ -16,7 +16,7 @@ n = 1000; m = 2;  imax = 100;  Xleft0 = -10; Xright0 = 10
 h  = 0.02; amin= 81.; amax = 92.;  e = amin;  de  = 0.01
 eps=  1e-4; im = 500; nl = im + 2;  nr = n - im + 2
 xmax = 5.0                    
-print("nl, nr",nl, nr)
+print(("nl, nr",nl, nr))
 print(h)
 
 xLeft = arange(-10,0.02,0.02); xRight = arange(10,0.02,-0.02)
@@ -41,7 +41,7 @@ def Numerov (n,h,k2,u,e):
     setk2(e)
     b=(h**2)/12.0                                # L & R Psi
     for i in range( 1,n):  
-        u[i+1]=(2*u[i]*(1-5.*b*k2[i])-(1+b*k2[i-1])*u[i-1])
+        u[i+1]=(2*u[i]*(1-5.*b*k2[i])-(1+b*k2[i-1])*u[i-1])\
         /(1+b*k2[i+1])
  
 def diff(e):
@@ -58,7 +58,7 @@ ax.grid()
 
 while abs(diff(e)) > eps :       # Bisection algorithm
     e =(amin + amax)/2                
-    print(e,istep)
+    print((e,istep))
     if diff(e)*diff(amax) > 0: amax = e  
     else: amin = e
     ax.clear()   

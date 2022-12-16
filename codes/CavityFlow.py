@@ -62,7 +62,7 @@ def Relax(iter):
                    r1 = omega*((u[i+1,j]+u[i-1,j]+u[i,j+1]
                    	   +u[i,j-1]+h*h*w[i, j])*0.25-u[i,j]) 
                    u[i,j] += r1
-    if iter%100 == 0:  print( "Residual r1 ", r1)
+    if iter%100 == 0:  print(( "Residual r1 ", r1))
     Borders(iter)   
     for  i in range(1, Nx):          # Relax stream function
       for  j in range (1, Ny):  
@@ -73,7 +73,7 @@ def Relax(iter):
                   w[i,j] += r2
           
 while (iter <=  Niter):    
-    if iter %100 ==0:  print ("Iteration Number", iter)
+    if iter %100 ==0:  print(("Iteration Number", iter))
     Relax(iter)
     iter   +=  1
 utorr = open('Cavity.dat','w')    # Send data to disk  of u

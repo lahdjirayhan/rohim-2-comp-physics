@@ -36,6 +36,6 @@ while (iter  < 15 and err > 1.e-6):       # Compute current E & normalize
         coef[i] = coef[i] + step
         err = err +  step*step   
     err = sqrt(err) 
-    print" %2d  %9.7f  %9.7f "%(iter, ener, err)
+    print((" %2d  %9.7f  %9.7f "%(iter, ener, err)))
 delta_t = datetime.datetime.now()  -  t0                   # Elapsed time
-print" time = ", delta_t
+print((" time = ", delta_t))

@@ -32,14 +32,14 @@ for i in range(0,100):           # Set interior grid points to 0
              if(y <= sq3/4. + 0.01): V[i,j] = 0.0 # Triangle tip 
 for iter in range(1,Niter):                          # Iterate
      if(iter%50 == 0): 
-     	     print('Working, iteration', iter, 'out of', Niter)
+     	     print(('Working, iteration', iter, 'out of', Niter))
      contour() # keep one side at 1000V
      for i in range(1, Nmax-2):                                                
         for j in range(1,Nmax-2):
             if grid[i,j]==0.: # interior points
                 V[i,j] = 0.25*(V[i+1,j]+V[i-1,j]+V[i,j+1]+V[i,j-1])  
-x = range(0, Nmax-1, 2)
-y = range(0, Nmax, 2)                  # Plot every other point                        
+x = list(range(0, Nmax-1, 2))
+y = list(range(0, Nmax, 2))                  # Plot every other point                        
 X, Y = p.meshgrid(x,y)    
 
 def functz(V):                        # Function returns V(x, y)

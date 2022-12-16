@@ -12,7 +12,7 @@ import numpy as np, matplotlib.pyplot as plt, matplotlib.animation as animation
 rho = 0.01;   ten = 40.; c = sqrt(ten/rho)               # density, tension 
 c1 = c;       ratio =  c*c/(c1*c1)                       # CFL criterium = 1
 xi = np.zeros((101,3), float)                            # Declaration 
-k = range(0,101)
+k = list(range(0,101))
 
 def Initialize():                                       # Initial conditions
    for i in range(0, 81):    xi[i, 0] = 0.00125*i         

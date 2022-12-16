@@ -33,7 +33,7 @@ def fft(N,Switch):                                      # FFT of Y[n,2]
         j = j+m;
                                
     print("\n Bit-reversed y(t)")
-    for i in range(1,n+1,2): print("%2d y[%2d] %9.5f "%(i,i,y[i])) 
+    for i in range(1,n+1,2): print(("%2d y[%2d] %9.5f "%(i,i,y[i]))) 
     mmax = 2
     while (mmax-n) < 0 :                                # Begin transform
        istep = 2*mmax
@@ -67,9 +67,9 @@ for i in range(0,N+1):                               # Generate signal in Y
     Y[i,0] = 30*cos(x) + 60*sin(2*x) + 120*sin(3*x)             # Real part
     Y[i,1] = 0.                                                   # Im part
     x += h
-    print(" %2d %9.5f %9.5f" %(i,Y[i,0],Y[i,1]))
+    print((" %2d %9.5f %9.5f" %(i,Y[i,0],Y[i,1])))
 fft(N, Switch)                             # Call FFT, use global Y[][]
-print '\n Fourier Transform Y(omega)'
+print('\n Fourier Transform Y(omega)')
 print("  i      ReY(omega)      ImY(omega)   ")
 for i in range(0,N):  
-    print(" %2d  %9.5f  %9.5f "%(i,Y[i,0],Y[i,1])) 
+    print((" %2d  %9.5f  %9.5f "%(i,Y[i,0],Y[i,1]))) 

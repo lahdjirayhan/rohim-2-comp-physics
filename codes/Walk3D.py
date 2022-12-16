@@ -36,5 +36,5 @@ for i in range(1, 100):
     pts.y[i] = 200*yy - 100
     pts.z[i] = 200*zz - 100
     rate(100)
-print("Walk's distance R =", sqrt(xx*xx + yy*yy+zz*zz))
+print(("Walk's distance R =", sqrt(xx*xx + yy*yy+zz*zz)))
 

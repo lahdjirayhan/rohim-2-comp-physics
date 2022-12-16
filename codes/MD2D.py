@@ -107,7 +107,7 @@ def timevolution():
     w = 0.0
     initialposvel()   
     for i in range(0,Natom): KE = KE+(vx[i]*vx[i]+vy[i]*vy[i])/2
-     PE = Forces(t1,w,PE,1)
+    PE = Forces(t1,w,PE,1)
     time =1
     while 1:
         rate(100)

@@ -51,5 +51,5 @@ for M in range(16, 32, 8):
         realev = Es.real                               # Real eigenvalues
         for j in range(0,M):
             if (realev[j]<0):
-                print(" M (size), lmbda, ReE = ",M," ",lmbda," ",realev[j])
+                print((" M (size), lmbda, ReE = ",M," ",lmbda," ",realev[j]))
                 break

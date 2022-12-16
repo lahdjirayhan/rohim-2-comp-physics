@@ -18,8 +18,8 @@ T_final = 0.5;
 n = int(T_final/dt)                             # N time steps
 
 graph1 = gdisplay(width=600, height=500, xtitle = 'x', xmin=0,
-	xmax=1,ymin=0, ymax=1, ytitle = 
-	'u(x), Cyan=exact, Yellow=Numerical', title='Advect Eqn: 
+	xmax=1,ymin=0, ymax=1, ytitle = \
+	'u(x), Cyan=exact, Yellow=Numerical', title='Advect Eqn: \
 	Initial (red), Exact (cyan),Numerical (yellow)')
 initfn = gcurve(color = color.red);
 exactfn = gcurve(color = color.cyan)

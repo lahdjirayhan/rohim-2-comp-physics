@@ -9,7 +9,7 @@
 try:
     from tkinter import *
 except:
-    from Tkinter import *
+    from tkinter import *
 import math
 from numpy import zeros, arange
 

@@ -16,11 +16,11 @@ def NewtonR(x, dx, eps, Nmax):
     for it in range(0, Nmax + 1):
         F = f(x)
         if (abs(F) <= eps):                        # Converged?  
-            print("\n Root found, f(root) =", F, ", eps = " , eps) 
+            print(("\n Root found, f(root) =", F, ", eps = " , eps)) 
             break
-        print("Iteration # = ", it, " x = ", x, " f(x) = ", F)
+        print(("Iteration # = ", it, " x = ", x, " f(x) = ", F))
         df = (f(x+dx/2)  -  f(x-dx/2))/dx           # Central diff
         dx = - F/df 
         x   += dx                                     # New guess
-    if it == Nmax+1: print("\n Newton Failed for Nmax =", Nmax) 
+    if it == Nmax+1: print(("\n Newton Failed for Nmax =", Nmax)) 
     return x

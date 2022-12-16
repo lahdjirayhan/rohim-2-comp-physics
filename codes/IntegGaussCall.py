@@ -15,5 +15,5 @@ def f(x):  return exp(x)                           # Integrand
 
 GaussPoints(Npts, a, b, x, w, eps)      #  eps: precison of pts  
 for i in  range(0,Npts): Ans += f(x[i])*w[i]   # Sum integrands
-print '\n Npts =', Npts, ',   Ans =', Ans
-print ' eps =',eps, ', Error =', Ans-(exp(1)-1)
+print(('\n Npts =', Npts, ',   Ans =', Ans))
+print((' eps =',eps, ', Error =', Ans-(exp(1)-1)))

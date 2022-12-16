@@ -9,7 +9,7 @@
 from numpy import *; from visual.graph import *
 
 wavef = display(x=0,y=0,width=600,height=600,range=50)
-plotob = curve(x=range(0,80),color=color.yellow,radius=0.2) 
+plotob = curve(x=list(range(0,80)),color=color.yellow,radius=0.2) 
 sqpi = math.sqrt(math.pi)
 E = 3. ;  alpha = sqrt(E-0.5)        # E, Coherent Eigenvalue                             
 factr = math.exp(-0.5*alpha*alpha)

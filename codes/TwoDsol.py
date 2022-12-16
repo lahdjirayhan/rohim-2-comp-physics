@@ -42,7 +42,7 @@ def solution(nint):
     u[D-1][D-1][1] = u[D-2][D-1][1] 
     tmp = 0.   
     for  k in range(0, nint+1):    # Following iterations
-      print(k, "out of  ",nint)
+      print((k, "out of  ",nint))
       for  m in range(1,D-1):  
         for l in range(1, D-1):
           a1 = u[m + 1][l][1]+u[m-1][l][1]+u[m][l+1][1]+u[m][l-1][1]

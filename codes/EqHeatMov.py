@@ -31,12 +31,13 @@ SPH = 900.                                      # Specific heat
 RHO = 2700.                                           # Density
 T = zeros( (Nx, 2), float)               # Temp @ first 2 times
 
-for ix in range (1,                 # Initial temperature in bar
+for ix in range (1, Nx - 1):                # Initial temperature in bar
      T[ix, 0] = 100.0
-T[0, 0] = 0.0                            # Ends of bar at T = 0
-T[0, 1] = 0.                          
-T[Nx - 1, 0] = 0.
-T[Nx - 1, 1] = 0.0
+     T[0, 0] = 0.0                            # Ends of bar at T = 0
+     T[0, 1] = 0.                          
+     T[Nx - 1, 0] = 0.
+     T[Nx - 1, 1] = 0.0
+
 cons = KAPPA/(SPH*RHO)*Dt/(Dx*Dx)          # Constant in algor
 
 for i in range (0, Nx - 1):

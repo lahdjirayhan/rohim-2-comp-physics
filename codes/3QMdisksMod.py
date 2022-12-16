@@ -40,7 +40,7 @@ Psi_0(Xo,Yo)                                       # Initial Psi
 fig = p.figure()                                 # Create figure
 ax = Axes3D(fig)
 for t in range(0, 120):  # 120->30                 # Compute Psi t < 120
-    if t%5 == 0:  print 't =', t               # Print ea 10th t
+    if t%5 == 0:  print(('t =', t))               # Print ea 10th t
     ImPsi[1:-1,1:-1] =  ImPsi[1:-1,1:-1] + fc*(RePsi[2: ,1:-1] \
         + RePsi[:-2 ,1:-1] - 4*RePsi[1:-1,1:-1] + RePsi[1:-1,2: ]\
         + RePsi[1:-1, :-2]) + V[1:-1,1:-1]*dt*RePsi[1:-1,1:-1]

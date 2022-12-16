@@ -15,9 +15,9 @@ f(t).diff(t)
  
  # The ODE
 diffeq = Eq(f(t).diff(t,t) + kap*(f(t).diff(t)) + (w0*w0)*f(t))
-print "\n ODE to be solved:" 
-print diffeq
-print "\n Solution of ODE:"
+print("\n ODE to be solved:") 
+print(diffeq)
+print("\n Solution of ODE:")
 ff = dsolve(diffeq,f(t))     # Solves ODE
 F = ff.subs(t,0)
-print ff
+print(ff)

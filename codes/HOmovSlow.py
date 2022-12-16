@@ -14,7 +14,7 @@ V = zeros((xmax+1), float)
 RePsi = zeros((xmax+1,2), float);  ImPsi = zeros((xmax+1,2), float)                                 
 g = display(width = 500, height = 250,
 	title = 'Wave Packet Harmonic Well')
-PlotObj =  curve(x = range(0, 300+1), color = color.yellow)           
+PlotObj =  curve(x = list(range(0, 300+1)), color = color.yellow)           
 for i in range(0, xmax):                       # Initialize  
    xp2      = xp * xp
    RePsi[i,0] = math.exp(-0.5*xp2/0.25) * math.cos(k0*xp);       

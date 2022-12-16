@@ -15,9 +15,9 @@ try:
     q = open("ThrowCatch.dat",'w')                # Intentional error 'r'
                                                  # Replace r' to 'w', run
 except  IOError:
-    print 'Cannot open file'
+    print('Cannot open file')
 else:     
      q.write("r = %9.6f, length = %9.6f, A= %9.6f "%(r, circum, A))
      q.close()
-     print 'output in ThrowCatch.out'
+     print('output in ThrowCatch.out')
      #catch(IOException ex){ex.printStackTrace(); }               # Catch

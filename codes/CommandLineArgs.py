@@ -13,8 +13,8 @@ import sys
 intParam = 0                                            # Other values OK
 doubleParam = 0.0;                              # Defaults, args optional
 filename = "baseName"	
-print 'there are %d arguments ' % len(sys.argv)
-print sys.argv
+print(('there are %d arguments ' % len(sys.argv)))
+print((sys.argv))
 if len(sys.argv) == 3 or len(sys.argv) == 4:         # Demand 2 or 3 args
     intParam = int(sys.argv[1])
     doubleParam =float(sys.argv[2])
@@ -24,14 +24,14 @@ if len(sys.argv) == 3 or len(sys.argv) == 4:         # Demand 2 or 3 args
         filename ="_i"+ sys.argv[1]+"_d" + sys.argv[2] +".dat"
     # print intParam, doubleParam, filename
 else:
-    print "\n\t Usage: java CmdLineArgs intParam doubleParam [file]"
-    print "\t 1st arg must be int, 2nd double (or int),"
+    print("\n\t Usage: java CmdLineArgs intParam doubleParam [file]")
+    print("\t 1st arg must be int, 2nd double (or int),")
    
-print 'Input arguments: intParam (1st) = ',intParam,'doubleParam (2nd) = ', doubleParam
+print(('Input arguments: intParam (1st) = ',intParam,'doubleParam (2nd) = ', doubleParam))
 if len(sys.argv) == 4:
-    print "String input: ",filename
+    print(("String input: ",filename))
 elif len(sys.argv) == 3:
-    print "No file, use", filename
+    print(("No file, use", filename))
 else:
-    print "\n\t ERROR ! len(sys.argv) must be 3 or 4 \n"
+    print("\n\t ERROR ! len(sys.argv) must be 3 or 4 \n")
 

@@ -28,6 +28,6 @@ def GaussInt (Npts, a, b, eps):          # Sum integrand*weight
     return (quadra)
 
 Ans = GaussInt(Npts, a, b, eps) 
-print 
-print 'Npts =', Npts, 'Ans =', Ans
-print 'eps =',eps,	"Sum-Analytic =", Ans-(exp(1)-1)
+print() 
+print(('Npts =', Npts, 'Ans =', Ans))
+print(('eps =',eps,	"Sum-Analytic =", Ans-(exp(1)-1)))

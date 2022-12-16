@@ -30,12 +30,12 @@ def atomos():                      # put atoms at random in grid
             sphere(pos=(xpos,ypos),color=color.green,radius=2.0)#atom
             rejilla[x][y]=0         # occupied cell
             Natomos+=1              #another atom placed
-    print Natomos                   #numero de atomos colocados
+    print(Natomos)                   #numero de atomos colocados
 def decaimiento():                  #calcula y grafica el decaimiento
     global Natomos                  #use el valor que calculo de Natomos
     atomos()                        #la llama para colocar los atomos
     constdec=0.8                    #constante de decaimiento
-    print Natomos
+    print(Natomos)
    
     for t in range(0,50000):        # 50000 events
         rate(3000)                  #slow action

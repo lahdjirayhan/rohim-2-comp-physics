@@ -3,7 +3,7 @@
     Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
     C Bordeianu, Univ Bucharest, 2017. 
     Please respect copyright & acknowledge our work."""
-    visualizing dipole field with streamplot & quiver (from stackflow)
+    # visualizing dipole field with streamplot & quiver (from stackflow)
 
 import numpy as np
 import matplotlib.pyplot as plt

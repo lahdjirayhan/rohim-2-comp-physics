@@ -19,6 +19,6 @@ for i in range(1, N + 1):                                     # trap rule
     else:   w = h
     sum  = sum  +  w * t * t
     
-print('sum = ', sum)                                     # print integral
+print(('sum = ', sum))                                     # print integral
 print("Enter and return a character to finish")
-s = raw_input()
+s = eval(input())
