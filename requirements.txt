@@ -3,3 +3,4 @@ scipy==1.9.3
 numpy==1.23.5
 sympy==1.11.1
 vpython==7.6.4
+jupyterlab==3.5.1
