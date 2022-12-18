@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # ScattSqWell.py: Quantum scattering from square well
@@ -15,19 +15,34 @@ E = 10
 nLs = 10
 Nin = 100
 Nout = 100
+n = 10
 alpha = np.sqrt(V + E)
 beta = np.sqrt(E)
 delta = np.zeros((nLs), float)
 SigL = np.zeros((nLs, 200), float)
+partot = np.zeros((n, 200), float)
+nexpts = 100
+
+# Helper functions to deal with incompatible scipy
+def sph_jn(n, x):
+    jn = scipy.special.spherical_jn(n, x)
+    jnp = scipy.special.spherical_jn(n, x, derivative=True)
+    return jn, jnp
+
+
+def sph_yn(n, x):
+    yn = scipy.special.spherical_yn(n, x)
+    ynp = scipy.special.spherical_yn(n, x, derivative=True)
+    return yn, ynp
 
 
 # Spherical Bessel ratio
-def Gam(n, xx):  
+def Gam(n, xx):
     gamma = np.zeros((n), float)
     for nn in range(0, n):
-        jn, jpr = scipy.special.sph_jn(nn, xx)
-# gamma match psi outside-inside
-    gamma = alpha * jpr / jn  
+        jn, jpr = sph_jn(nn, xx)
+        # gamma match psi outside-inside
+        gamma[nn] = alpha * jpr / jn
     return gamma
 
 
@@ -35,13 +50,13 @@ def phaseshifts(n, alpha, beta):
     gamm = Gam(n, alpha)
     num = np.zeros((n), float)
     den = np.zeros((n), float)
-    jnb, jnpr = scipy.special.sph_jn(n, beta)
-    ynb, yprb = scipy.special.sph_yn(n, beta)
+    jnb, jnpr = sph_jn(n, beta)
+    ynb, yprb = sph_yn(n, beta)
     for i in range(0, n):
-        num1 = gamm[i] * jnb[i]
-        den1 = gamm[i] * ynb[i]
-        num[i] = beta * jnpr[i] - num1
-        den[i] = beta * yprb[i] - den1
+        num1 = gamm[i] * jnb
+        den1 = gamm[i] * ynb
+        num[i] = beta * jnpr - num1
+        den[i] = beta * yprb - den1
         td = atan2(num[i], den[i])
         delta[i] = td
     return delta
@@ -57,11 +72,11 @@ def totalcrossect(n, alpha, beta):
 
 def plotcross(alpha, beta):
     e = 0.0
-# total crossection
-    cross = np.zeros((200), float)  
+    # total crossection
+    cross = np.zeros((200), float)
     delta = phaseshifts(n, alpha, beta)
-# energies
-    en = np.zeros((200), float)  
+    # energies
+    en = np.zeros((200), float)
     for i in range(1, 200):
         e = e + 100 / 300.0
         en[i] = e
@@ -85,10 +100,10 @@ def plotcross(alpha, beta):
 def diffcrossection():
     zz2 = np.zeros((n), complex)
     dcr = np.zeros((180), float)
-# phaseshifts
-    delta = phaseshifts(n, alpha, beta)  
-# n partial waves
-    for i in range(0, n):  
+    # phaseshifts
+    delta = phaseshifts(n, alpha, beta)
+    # n partial waves
+    for i in range(0, n):
         cosd = cos(delta[i])
         sind = sin(delta[i])
         zz = complex(cosd, sind)
@@ -96,69 +111,69 @@ def diffcrossection():
     for ang in range(0, 180):
         summ = 0.0
         radi = cos(ang * pi / 180.0)
-#  partial wave loop
-        for i in range(0, n):  
+        #  partial wave loop
+        for i in range(0, n):
             poL = scipy.special.eval_legendre(i, radi)
             summ += (2 * i + 1) * zz2[i] * poL
         dcr[ang] = (summ.real**2 + summ.imag**2) / beta**2
     angu = np.arange(0, 180)
-# plot separate figure
-    f1 = plt.figure()  
+    # plot separate figure
+    f1 = plt.figure()
     ax1 = f1.add_subplot(111)
-# Semilog dsig/dw plot
-    plt.semilogy(angu, dcr)  
+    # Semilog dsig/dw plot
+    plt.semilogy(angu, dcr)
     plt.xlabel("Scattering Angle")
     plt.title("Differential Cross Section")
     plt.grid()
 
 
 # Compute Psi(<1) & Psi(>1)
-def wavefunction():  
+def wavefunction():
     delta = phaseshifts(n, alpha, beta)
     BL = np.zeros((n), complex)
-# Psi(r<1), nLs
-    Rin = np.zeros((n, Nin), float)  
+    # Psi(r<1), nLs
+    Rin = np.zeros((n, Nin), float)
     Rex = np.zeros((n, nexpts), float)
-# BL for matching
-    for i in range(0, 10):  
-# SphBes
-        jnb, jnpr = scipy.special.sph_jn(n, alpha)  
-        jnf, jnfr = scipy.special.sph_jn(n, beta)
-        ynb, yprb = r = scipy.special.sph_yn(n, beta)
+    # BL for matching
+    for i in range(0, 10):
+        # SphBes
+        jnb, jnpr = sph_jn(n, alpha)
+        jnf, jnfr = sph_jn(n, beta)
+        ynb, yprb = r = sph_yn(n, beta)
         cosd = cos(delta[i])
         sind = sin(delta[i])
         zz = complex(cosd, -sind)
-        num = jnb[i] * zz
-        den = cosd * jnf[i] - sind * ynb[i]
-# For wavefunction match
-        BL[i] = num / den  
-# Points increment
-    intr = 1.0 / Nin  
-# Internal Psi
-    for i in range(0, n):  
+        num = jnb * zz
+        den = cosd * jnf - sind * ynb
+        # For wavefunction match
+        BL[i] = num / den
+    # Points increment
+    intr = 1.0 / Nin
+    # Internal Psi
+    for i in range(0, n):
         rin = intr
-# PsiIn plot
-        for ri in range(0, Nin):  
+        # PsiIn plot
+        for ri in range(0, Nin):
             alpr = alpha * rin
-            jnint, jnintpr = scipy.special.sph_jn(n, alpr)
-            Rin[i, ri] = rin * jnint[i]
+            jnint, jnintpr = sph_jn(n, alpr)
+            Rin[i, ri] = rin * jnint
             rin = rin + intr
     extr = 2.0 / nexpts
     for i in range(0, n):
         rex = 1.0
-# PsiIn plot
-        for rx in range(0, nexpts):  
+        # PsiIn plot
+        for rx in range(0, nexpts):
             argu = beta * rex
-            jnxt, jnintpr = scipy.special.sph_jn(n, argu)
-            nxt, jnintpr = scipy.special.sph_yn(n, argu)
-            factr = jnxt[i] * cos(delta[i]) - nxt[i] * sin(delta[i])
+            jnxt, jnintpr = sph_jn(n, argu)
+            nxt, jnintpr = sph_yn(n, argu)
+            factr = jnxt * cos(delta[i]) - nxt * sin(delta[i])
             fsin = sin(delta[i]) * factr
             fcos = cos(delta[i]) * factr
             Rex[i, rx] = rex * (fcos * BL.real[i] - fsin * BL.imag[i])
             rex = rex + extr
     ai = np.arange(0, 1, intr)
-# PsiL to plot, CHANGE FOR OTHER WAVES
-    nwaf = 0  
+    # PsiL to plot, CHANGE FOR OTHER WAVES
+    nwaf = 0
     f3 = plt.figure()
     ax3 = f3.add_subplot(111)
     plt.plot(ai, Rin[nwaf, :])
@@ -166,11 +181,12 @@ def wavefunction():
     plt.title("$\Psi(r<1), \ \ \Psi(r>1), \ \ \ell = 0$")
     plt.xlabel("$r$")
     plt.plot(ae, Rex[nwaf, :])
+    plt.show()
 
 
 # Diff crossection
-diffcrossection()  
+diffcrossection()
 # Total crossections
-plotcross(alpha, beta)  
+plotcross(alpha, beta)
 # Psi
-wavefunction()  
+wavefunction()

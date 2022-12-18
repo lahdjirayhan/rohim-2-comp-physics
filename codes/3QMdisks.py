@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # 3QMdisks.py: Wavepacket scattering from 3 disks wi MatPlot
@@ -31,11 +31,11 @@ iy = np.arange(0, 101)
 X, Y = np.meshgrid(ix, iy)
 fig = p.figure()
 # Create figure
-ax = Axes3D(fig)  
+ax = fig.add_subplot(111, projection="3d")
 
 
 # Potential single disk
-def Pot1Disk(xa, ya):  
+def Pot1Disk(xa, ya):
     for i in range(ya - r, ya + r + 1):
         for j in range(xa - r, xa + r + 1):
             if np.sqrt((i - ya) ** 2 + (j - xa) ** 2) <= r:
@@ -43,14 +43,14 @@ def Pot1Disk(xa, ya):
 
 
 # Potential three disk
-def Pot3Disks():  
+def Pot3Disks():
     Pot1Disk(30, 45)
     Pot1Disk(70, 45)
     Pot1Disk(50, 80)
 
 
 # Initial Psi
-def Psi_0(Xo, Yo):  
+def Psi_0(Xo, Yo):
     for i in np.arange(0, N):
         for j in np.arange(0, N):
             Gaussian = np.exp(-0.03 * (i - Yo) ** 2 - 0.03 * (j - Xo) ** 2)
@@ -60,20 +60,42 @@ def Psi_0(Xo, Yo):
 
 
 # Psi and Rho initial
-Psi_0(Xo, Yo)  
+Psi_0(Xo, Yo)
 # Initial Psi
-Pot3Disks()  
+Pot3Disks()
 # 120->30         # Compute Psi t < 120
-for t in range(0, 120):  
+for t in range(0, 120):
     if t % 5 == 0:
-# Print ea 5th t
-        print(("t =", t))  
-    ImPsi[1:-1, 1:-1] = ( ImPsi[1:-1, 1:-1] + fc * ( RePsi[2:, 1:-1] + RePsi[:-2, 1:-1] - 4 * RePsi[1:-1, 1:-1] + RePsi[1:-1, 2:] + RePsi[1:-1, :-2] ) + V[1:-1, 1:-1] * dt * RePsi[1:-1, 1:-1] )
-    RePsi[1:-1, 1:-1] = ( RePsi[1:-1, 1:-1] - fc * ( ImPsi[2:, 1:-1] + ImPsi[:-2, 1:-1] - 4 * ImPsi[1:-1, 1:-1] + ImPsi[1:-1, 2:] + ImPsi[1:-1, :-2] ) + V[1:-1, 1:-1] * dt * ImPsi[1:-1, 1:-1] )
-# Compute Rho
-    for i in range(1, N - 1):  
-# Hard Disk, psi = 0
-        for j in range(1, N - 1):  
+        # Print ea 5th t
+        print("t =", t)
+    ImPsi[1:-1, 1:-1] = (
+        ImPsi[1:-1, 1:-1]
+        + fc
+        * (
+            RePsi[2:, 1:-1]
+            + RePsi[:-2, 1:-1]
+            - 4 * RePsi[1:-1, 1:-1]
+            + RePsi[1:-1, 2:]
+            + RePsi[1:-1, :-2]
+        )
+        + V[1:-1, 1:-1] * dt * RePsi[1:-1, 1:-1]
+    )
+    RePsi[1:-1, 1:-1] = (
+        RePsi[1:-1, 1:-1]
+        - fc
+        * (
+            ImPsi[2:, 1:-1]
+            + ImPsi[:-2, 1:-1]
+            - 4 * ImPsi[1:-1, 1:-1]
+            + ImPsi[1:-1, 2:]
+            + ImPsi[1:-1, :-2]
+        )
+        + V[1:-1, 1:-1] * dt * ImPsi[1:-1, 1:-1]
+    )
+    # Compute Rho
+    for i in range(1, N - 1):
+        # Hard Disk, psi = 0
+        for j in range(1, N - 1):
             if V[i, j] != 0:
                 RePsi[i, j] = 0
                 ImPsi[i, j] = 0

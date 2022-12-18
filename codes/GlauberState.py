@@ -1,25 +1,28 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
+
+# Note: book uses matplotlib instead of vpython
 
 # GlauberState.py: Glauber's Coherent Quantum State
 
 from numpy import *
 from vpython import *
+import math
 
 wavef = canvas(x=0, y=0, width=600, height=600, range=50)
-plotob = curve(x=list(range(0, 80)), color=color.yellow, radius=0.2)
+plotob = curve(pos=[(x, 0, 0) for x in range(0, 80)], color=color.yellow, radius=0.2)
 sqpi = math.sqrt(math.pi)
 E = 3.0
 # E, Coherent Eigenvalue
-alpha = sqrt(E - 0.5)  
+alpha = sqrt(E - 0.5)
 factr = math.exp(-0.5 * alpha * alpha)
 
 
 # Hermite polynomial
-def Hermite(x, n):  
+def Hermite(x, n):
     if n == 0:
         p = 1.0
     elif n == 1:
@@ -36,7 +39,7 @@ def Hermite(x, n):
 
 
 # Coherent state
-def glauber(x, t, nmax):  
+def glauber(x, t, nmax):
     Reterm = 0.0
     Imterm = 0.0
     factr = math.exp(-0.5 * alpha * alpha)
@@ -55,13 +58,12 @@ def motion(nmax):
     for t in arange(0, 18.0, 0.03):
         xx = -8.0
         for i in range(0, 80):
-# Find coherent state
-            y = glauber(xx, t, nmax)  
-# Plot state
-            plotob.x[i] = 4 * xx  
-            plotob.y[i] = 15.0 * y
+            # Find coherent state
+            y = glauber(xx, t, nmax)
+            # Plot state
+            plotob.modify(i, x=4 * xx, y=15 * y)
             xx += 0.2
 
 
 # Parameter: max degree Hn
-motion(20)  
+motion(20)

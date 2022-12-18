@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # QuantumNumerov.py: quantum bound state via Numerov algorithm
@@ -11,6 +11,7 @@
 
 from numpy import *
 import numpy as np, matplotlib.pyplot as plt
+from matplotlib import animation
 
 n = 1000
 m = 2
@@ -33,7 +34,7 @@ print(h)
 xLeft = arange(-10, 0.02, 0.02)
 xRight = arange(10, 0.02, -0.02)
 # Bisection interval
-xp = arange(-10, 10, 0.02)  
+xp = arange(-10, 10, 0.02)
 uL = zeros((503), float)
 uR = zeros([503], float)
 k2L = zeros([1000], float)
@@ -45,35 +46,37 @@ uR[1] = 0.00001
 
 
 # Potential harmonic oscillator
-def V(x):  
+def V(x):
     v = 4.7 * x * x
     return v
 
 
 # Sets k2L=(sqrt(e-V))^2 and k2R
-def setk2(e):  
+def setk2(e):
     for i in range(0, n):
         xLeft = Xleft0 + i * h
         xr = Xright0 - i * h
-# 2 m*c**2/hbarc**2=2*940/(197.33)**2
-        fact = 0.04829  
+        # 2 m*c**2/hbarc**2=2*940/(197.33)**2
+        fact = 0.04829
         k2L[i] = fact * (e - V(xLeft))
         k2R[i] = fact * (e - V(xr))
 
 
 def Numerov(n, h, k2, u, e):
     setk2(e)
-# L & R Psi
-    b = (h**2) / 12.0  
+    # L & R Psi
+    b = (h**2) / 12.0
     for i in range(1, n):
-        u[i + 1] = ( 2 * u[i] * (1 - 5.0 * b * k2[i]) - (1 + b * k2[i - 1]) * u[i - 1] ) / (1 + b * k2[i + 1])
+        u[i + 1] = (
+            2 * u[i] * (1 - 5.0 * b * k2[i]) - (1 + b * k2[i - 1]) * u[i - 1]
+        ) / (1 + b * k2[i + 1])
 
 
 def diff(e):
-# Left wf
-    Numerov(nl, h, k2L, uL, e)  
-# Right wf
-    Numerov(nr, h, k2R, uR, e)  
+    # Left wf
+    Numerov(nl, h, k2L, uL, e)
+    # Right wf
+    Numerov(nr, h, k2R, uR, e)
     f0 = (uR[nr - 1] + uL[nl - 1] - uR[nr - 3] - uL[nl - 3]) / (h * uR[nr - 2])
     return f0
 
@@ -82,25 +85,49 @@ istep = 0
 x1 = arange(-10, 0.02, 0.02)
 x2 = arange(10, -0.02, -0.02)
 fig = plt.figure()
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(111, xlim=(-10, 10), ylim=(-1000, 1000))
 ax.grid()
 
+plt.xlabel("x")
+plt.ylabel("$\psi(x) $", fontsize=18)
+plt.title("R & L Wavefunctions Matched at x = 0")
+
+line1, *_ = ax.plot(x1, uL[:-2])
+line2, *_ = ax.plot(x2, uR[:-2])
+text = ax.text(3, -200, "Energy= %10.4f" % (e), fontsize=14)
+
 # Bisection algorithm
-while abs(diff(e)) > eps:  
+# The "bisect" part
+def bisect():
+    global amin, amax, istep, e
     e = (amin + amax) / 2
     print((e, istep))
     if diff(e) * diff(amax) > 0:
         amax = e
     else:
         amin = e
-    ax.clear()
-    plt.text(3, -200, "Energy= %10.4f" % (e), fontsize=14)
-    plt.plot(x1, uL[:-2])
-    plt.plot(x2, uR[:-2])
-    plt.xlabel("x")
-    plt.ylabel("$\psi(x) $", fontsize=18)
-    plt.title("R & L Wavefunctions Matched at x = 0")
     istep = istep + 1
-# Pause to delay figures
-    plt.pause(0.8)  
+
+
+# The "continue" part
+def bisect_continue():
+    while abs(diff(e)) > eps:
+        bisect()
+        yield 1
+
+
+def animate(*args, **kwargs):
+    # ax.clear()
+    line1.set_data(x1, uL[:-2])
+    line2.set_data(x2, uR[:-2])
+    text.set_text("Energy= %10.4f" % (e))
+
+    return (
+        line1,
+        line2,
+        text,
+    )
+
+
+ani = animation.FuncAnimation(fig, animate, bisect_continue, interval=30, repeat=False)
 plt.show()

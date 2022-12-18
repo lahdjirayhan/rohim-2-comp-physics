@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # Plm.py: Associated Legendre Polynomials via Integration
@@ -15,7 +15,7 @@ y = [0] * (2)
 dCos = 0.001
 el = 4
 # m intger  m<=el,   m = 1,2,3,...
-m = 2  
+m = 2
 if el == 0 or el == 2:
     y[0] = 1
 if el > 2 and (el) % 2 == 0:
@@ -38,24 +38,26 @@ y[1] = 1
 
 
 # RHS of equation
-def f(Cos, y):  
-# Declare array dimension
-    rhs = [0] * (2)  
+def f(Cos, y):
+    # Declare array dimension
+    rhs = [0] * (2)
     rhs[0] = y[1]
-    rhs[1] = 2 * Cos * y[1] / (1 - Cos**2) - ( el * (el + 1) - m**2 / (1 - Cos**2) ) * y[0] / (1 - Cos**2)
+    rhs[1] = 2 * Cos * y[1] / (1 - Cos**2) - (
+        el * (el + 1) - m**2 / (1 - Cos**2)
+    ) * y[0] / (1 - Cos**2)
     return rhs
 
 
 # Call function for xi = 0 with init conds.
-f(0, y)  
+f(0, y)
 i = -1
 for Cos in np.arange(-0.999999, 1 - dCos, dCos):
     i = i + 1
     CosTheta[i] = Cos
-# call runge kutt
-    y = rk4Algor(Cos, dCos, 2, y, f)  
-#
-    Plm[i] = y[0]  
+    # call runge kutt
+    y = rk4Algor(Cos, dCos, 2, y, f)
+    #
+    Plm[i] = y[0]
 
 plt.figure()
 plt.plot(CosTheta, Plm)
