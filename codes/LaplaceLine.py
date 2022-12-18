@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # LaplaceLine.py:  Solve Laplace's eqtn within square
@@ -16,36 +16,36 @@ V = zeros((Nmax, Nmax), float)
 print("Working hard, wait for the figure while I count to 60")
 
 for k in range(0, Nmax - 1):
-# Line at 100V
-    V[0, k] = 100.0  
+    # Line at 100V
+    V[0, k] = 100.0
 for iter in range(Niter):
     if iter % 10 == 0:
         print(iter)
     for i in range(1, Nmax - 2):
         for j in range(1, Nmax - 2):
             V[i, j] = 0.25 * (V[i + 1, j] + V[i - 1, j] + V[i, j + 1] + V[i, j - 1])
-    print(("iter, V[Nmax/5,Nmax/5]", iter, V[Nmax / 5, Nmax / 5]))
+    # print(("iter, V[Nmax/5,Nmax/5]", iter, V[Nmax / 5, Nmax / 5]))
 x = list(range(0, 50, 2))
 y = list(range(0, 50, 2))
 X, Y = p.meshgrid(x, y)
 
 
 # V(x, y)
-def functz(V):  
+def functz(V):
     z = V[X, Y]
     return z
 
 
 Z = functz(V)
 # Create figure
-fig = p.figure()  
+fig = p.figure()
 # Plot axes
-ax = Axes3D(fig)  
+ax = fig.add_subplot(111, projection="3d")
 # Red wireframe
-ax.plot_wireframe(X, Y, Z, color="r")  
+ax.plot_wireframe(X, Y, Z, color="r")
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("V(x,y)")
 ax.set_title("Potential within Square V(x=0)=100V (Rotatable)")
 # Show fig
-p.show()  
+p.show()

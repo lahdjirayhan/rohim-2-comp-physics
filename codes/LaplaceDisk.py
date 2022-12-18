@@ -1,14 +1,15 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # LaplaceDisk.py:  Laplace's eqtn in cyclinder, Matplotlib 3D plot
 
 from scipy import special
+
 # for hypergeo
-from mpmath import *  
+from mpmath import *
 from matplotlib.pyplot import figure, show, rc
 import numpy as np
 
@@ -23,11 +24,11 @@ Mmax = 10
 x = [0] * (100)
 xx = [0] * (100)
 # Declare arrays
-xxx = [0] * (100)  
+xxx = [0] * (100)
 
 
 # Legendre polymonial
-def legendre(n, x):  
+def legendre(n, x):
     if n == 0:
         p = 1
     elif n == 1:
@@ -36,8 +37,8 @@ def legendre(n, x):
         p0 = 1
         p1 = x
         for m in range(1, n):
-# Recurrence
-            p2 = ((2 * m + 1) * x * p1 - m * p0) / (m + 1)  
+            # Recurrence
+            p2 = ((2 * m + 1) * x * p1 - m * p0) / (m + 1)
             p0 = p1
             p1 = p2
             p = p2

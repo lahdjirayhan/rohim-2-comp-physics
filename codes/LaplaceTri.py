@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # LaplaceTri.py: Soltn Laplace Eqtn for field in triangular capacitor
@@ -28,17 +28,17 @@ y0 = -sq3 / 4.0
 
 
 # Potential on one side
-def contour():  
-# Rows
-    for i in range(0, 100):  
-# Columns
-        for j in range(0, 100):  
+def contour():
+    # Rows
+    for i in range(0, 100):
+        # Columns
+        for j in range(0, 100):
             if i == 0:
                 V[0, j] = 1000
 
 
 # Set interior grid points to 0
-for i in range(0, 100):  
+for i in range(0, 100):
     y = y0 + i * 0.01
     x0 = -0.5
     for j in range(0, 100):
@@ -48,42 +48,42 @@ for i in range(0, 100):
             grid[i, j] = 0
         else:
             if y <= sq3 / 4.0 + 0.01:
-# Triangle tip
-                V[i, j] = 0.0  
+                # Triangle tip
+                V[i, j] = 0.0
 # Iterate
-for iter in range(1, Niter):  
+for iter in range(1, Niter):
     if iter % 50 == 0:
         print(("Working, iteration", iter, "out of", Niter))
-# keep one side at 1000V
-    contour()  
+    # keep one side at 1000V
+    contour()
     for i in range(1, Nmax - 2):
         for j in range(1, Nmax - 2):
-# interior points
-            if grid[i, j] == 0.0:  
+            # interior points
+            if grid[i, j] == 0.0:
                 V[i, j] = 0.25 * (V[i + 1, j] + V[i - 1, j] + V[i, j + 1] + V[i, j - 1])
 x = list(range(0, Nmax - 1, 2))
 # Plot every other point
-y = list(range(0, Nmax, 2))  
+y = list(range(0, Nmax, 2))
 X, Y = p.meshgrid(x, y)
 
 
 # Function returns V(x, y)
-def functz(V):  
+def functz(V):
     z = V[X, Y]
     return z
 
 
 Z = functz(V)
 # Create figure
-fig = p.figure()  
+fig = p.figure()
 # Plot axes
-ax = Axes3D(fig)  
+ax = fig.add_subplot(111, projection="3d")
 # Red wireframe
-ax.plot_wireframe(X, Y, Z, color="r")  
+ax.plot_wireframe(X, Y, Z, color="r")
 ax.set_title("Potential within Triangle (Rotatable)")
 # Label axes
-ax.set_xlabel("X")  
+ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Potential")
 # Display fig
-p.show()  
+p.show()
