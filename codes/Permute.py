@@ -1,7 +1,7 @@
 """ From "ComboPUTATIONAL PHYSICS" & "ComboPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # Permute.py accessible states versus energy
@@ -20,15 +20,14 @@ Combo = [0.0] * (13)
 for k in range(0, 26):
     c = factorial(n) / (factorial(n - k) * factorial(k))
     E = -(n - k) * mu * B + k * mu * B
-    print((k, E - Eo, c))
-# Plot only first half (symmetry)
-    if k < 13:  
-#
-        Energy[i] = E - Eo  
+    print(k, E - Eo, c)
+    # Plot only first half (symmetry)
+    if k < 13:
+        Energy[i] = E - Eo
         Combo[i] = c
         i += 1
 # L: accessible states vs E-Eo
-plt.subplot(121)  
+plt.subplot(121)
 plt.plot(Energy, Combo)
 plt.title("Number vs E-Eo")
 plt.subplot(122)

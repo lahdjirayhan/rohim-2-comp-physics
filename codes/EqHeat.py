@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # EqHeat.py: heat equation via finite differences, 3-D plot
@@ -11,7 +11,7 @@ import matplotlib.pylab as p
 from mpl_toolkits.mplot3d import Axes3D
 
 Nx = 101
-Nt = 3000
+Nt = 6000
 Dx = 0.03
 Dt = 0.9
 kappa = 210.0
@@ -19,24 +19,24 @@ C = 900.0
 rho = 2700.0
 T = zeros((Nx, 2), float)
 Tpl = zeros((Nx, 31), float)
-print("Working, wait for figure after count to 10")
+print("Working, wait for figure after count")
 
 for ix in range(1, Nx - 1):
     T[ix, 0] = 100.0
     # Initial T
 T[0, 0] = 0.0
 # 1st & last T = 0
-T[0, 1] = 0.0  
+T[0, 1] = 0.0
 T[Nx - 1, 0] = 0.0
 T[Nx - 1, 1] = 0.0
 cons = kappa / (C * rho) * Dt / (Dx * Dx)
 # Counter
-m = 1  
+m = 1
 for t in range(1, Nt):
     for ix in range(1, Nx - 1):
         T[ix, 1] = T[ix, 0] + cons * (T[ix + 1, 0] + T[ix - 1, 0] - 2.0 * T[ix, 0])
-# Every 300 steps
-    if t % 300 == 0 or t == 1:  
+    # Every 300 steps
+    if t % 300 == 0 or t == 1:
         for ix in range(1, Nx - 1, 2):
             Tpl[ix, m] = T[ix, 1]
         print(m)
@@ -44,7 +44,7 @@ for t in range(1, Nt):
     for ix in range(1, Nx - 1):
         T[ix, 0] = T[ix, 1]
 # Plot alternate pts
-x = list(range(1, Nx - 1, 2))  
+x = list(range(1, Nx - 1, 2))
 y = list(range(1, 30))
 X, Y = p.meshgrid(x, y)
 
@@ -56,8 +56,8 @@ def functz(Tpl):
 
 Z = functz(Tpl)
 # Create figure
-fig = p.figure()  
-ax = Axes3D(fig)
+fig = p.figure()
+ax = fig.add_subplot(111, projection="3d")
 ax.plot_wireframe(X, Y, Z, color="r")
 ax.set_xlabel("Position")
 ax.set_ylabel("time")

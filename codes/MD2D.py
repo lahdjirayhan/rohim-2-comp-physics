@@ -1,7 +1,7 @@
 """ From "COMPUTATIONAL PHYSICS" & "COMPUTER PROBLEMS in PHYSICS"
     by RH Landau, MJ Paez, and CC Bordeianu (deceased)
-    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia, 
-    C Bordeianu, Univ Bucharest, 2017. 
+    Copyright R Landau, Oregon State Unv, MJ Paez, Univ Antioquia,
+    C Bordeianu, Univ Bucharest, 2017.
     Please respect copyright & acknowledge our work."""
 
 # MD2.py:           Molecular dynamics in 2D
@@ -9,31 +9,56 @@
 from vpython import *
 from vpython import *
 import random
+import numpy as np
 
 scene = canvas(x=0, y=0, width=350, height=350, title="Molecular Dynamics", range=10)
-sceneK = graph( x=0, y=350, width=600, height=150, title="Average KE", ymin=0.0, ymax=5.0, xmin=0, xmax=500, xtitle="time", ytitle="KE avg", )
+sceneK = graph(
+    x=0,
+    y=350,
+    width=600,
+    height=150,
+    title="Average KE",
+    ymin=0.0,
+    ymax=5.0,
+    xmin=0,
+    xmax=500,
+    xtitle="time",
+    ytitle="KE avg",
+)
 Kavegraph = gcurve(color=color.red)
-sceneT = graph( x=0, y=500, width=600, height=150, title="Average PE", ymin=-60, ymax=0.0, xmin=0, xmax=500, xtitle="time", ytitle="PE avg", )
+sceneT = graph(
+    x=0,
+    y=500,
+    width=600,
+    height=150,
+    title="Average PE",
+    ymin=-60,
+    ymax=0.0,
+    xmin=0,
+    xmax=500,
+    xtitle="time",
+    ytitle="PE avg",
+)
 Tcurve = gcurve(color=color.cyan)
 Natom = 25
 Nmax = 25
 Tinit = 2.0
 # Density (1.20 for fcc)
-dens = 1.0  
+dens = 1.0
 t1 = 0
-x = zeros((Nmax), float)
-y = zeros((Nmax), float)
-vx = zeros((Nmax), float)
-vy = zeros((Nmax), float)
-fx = zeros((Nmax, 2), float)
-fy = zeros((Nmax, 2), float)
+x = np.zeros((Nmax), float)
+y = np.zeros((Nmax), float)
+vx = np.zeros((Nmax), float)
+vy = np.zeros((Nmax), float)
+fx = np.zeros((Nmax, 2), float)
+fy = np.zeros((Nmax, 2), float)
 # Side of lattice
-L = int(1.0 * Natom**0.5)  
+L = int(1.0 * Natom**0.5)
 atoms = []
 
 
 # Average 12 rands for Gaussian
-def twelveran():  
+def twelveran():
     s = 0.0
     for i in range(1, 13):
         s += random.random()
@@ -41,28 +66,28 @@ def twelveran():
 
 
 # Initialize
-def initialposvel():  
+def initialposvel():
     i = -1
-# x->   0  1  2  3  4
-    for ix in range(0, L):  
-# y=0   0  5  10 15 20
-        for iy in range(0, L):  
-# y=1   1  6  11 16 21
-            i = i + 1  
-# y=2   2  7  12 17 22
-            x[i] = ix  
-# y=3   3  8  13 18 23
-            y[i] = iy  
-# y=4   4  9  14 19 24
-            vx[i] = twelveran()  
-# numbering of 25 atoms
-            vy[i] = twelveran()  
+    # x->   0  1  2  3  4
+    for ix in range(0, L):
+        # y=0   0  5  10 15 20
+        for iy in range(0, L):
+            # y=1   1  6  11 16 21
+            i = i + 1
+            # y=2   2  7  12 17 22
+            x[i] = ix
+            # y=3   3  8  13 18 23
+            y[i] = iy
+            # y=4   4  9  14 19 24
+            vx[i] = twelveran()
+            # numbering of 25 atoms
+            vy[i] = twelveran()
             vx[i] = vx[i] * sqrt(Tinit)
             vy[i] = vy[i] * sqrt(Tinit)
     for j in range(0, Natom):
         xc = 2 * x[j] - 4
         yc = 2 * y[j] - 4
-        atoms.append(sphere(pos=vector(xc, yc,0), radius=0.5, color=color.red))
+        atoms.append(sphere(pos=vector(xc, yc, 0), radius=0.5, color=color.red))
 
 
 def sign(a, b):
@@ -73,10 +98,10 @@ def sign(a, b):
 
 
 # Forces
-def Forces(t, w, PE, PEorW):  
+def Forces(t, w, PE, PEorW):
     # invr2 = 0.
-# Switch: PEorW = 1 for PE
-    r2cut = 9.0  
+    # Switch: PEorW = 1 for PE
+    r2cut = 9.0
     PE = 0.0
     for i in range(0, Natom):
         fx[i][t] = fy[i][t] = 0.0
@@ -85,14 +110,14 @@ def Forces(t, w, PE, PEorW):
             dx = x[i] - x[j]
             dy = y[i] - y[j]
             if abs(dx) > 0.50 * L:
-# Closest image
-                dx = dx - sign(L, dx)  
+                # Closest image
+                dx = dx - sign(L, dx)
             if abs(dy) > 0.50 * L:
                 dy = dy - sign(L, dy)
             r2 = dx * dx + dy * dy
             if r2 < r2cut:
-# To avoid 0 denominator
-                if r2 == 0.0:  
+                # To avoid 0 denominator
+                if r2 == 0.0:
                     r2 = 0.0001
                 invr2 = 1.0 / r2
                 wij = 48.0 * (invr2**3 - 0.5) * invr2**3
@@ -118,8 +143,8 @@ def timevolution():
     avPE = 0.0
     t1 = 0
     PE = 0.0
-# step
-    h = 0.031  
+    # step
+    h = 0.031
     hover2 = h / 2.0
     # initial KE & PE via Forces
     KE = 0.0
@@ -136,8 +161,8 @@ def timevolution():
             x[i] = x[i] + h * (vx[i] + hover2 * fx[i][t1])
             y[i] = y[i] + h * (vy[i] + hover2 * fy[i][t1])
             if x[i] <= 0.0:
-# Periodic BC
-                x[i] = x[i] + L  
+                # Periodic BC
+                x[i] = x[i] + L
             if x[i] >= L:
                 x[i] = x[i] - L
             if y[i] <= 0.0:
@@ -146,7 +171,7 @@ def timevolution():
                 y[i] = y[i] - L
             xc = 2 * x[i] - 4
             yc = 2 * y[i] - 4
-            atoms[i].pos = vector(xc, yc,0)
+            atoms[i].pos = vector(xc, yc, 0)
         PE = 0.0
         t2 = 1
         PE = Forces(t2, w, PE, 1)
@@ -158,8 +183,8 @@ def timevolution():
             KE = KE + (vx[i] * vx[i] + vy[i] * vy[i]) / 2
         w = Forces(t2, w, PE, 2)
         P = dens * (KE + w)
-# increment averages
-        T = KE / (Natom)  
+        # increment averages
+        T = KE / (Natom)
         avT = avT + T
         avP = avP + P
         avKE = avKE + KE
