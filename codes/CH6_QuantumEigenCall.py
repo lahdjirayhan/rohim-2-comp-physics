@@ -118,6 +118,9 @@ def plot(h):
         j += 1
 
 
+import time
+
+time.sleep(5)
 # Main program
 for count in range(0, Nmax + 1):
     # Slow rate shows changes
@@ -138,7 +141,7 @@ for count in range(0, Nmax + 1):
     if abs(Diff) < eps:
         break
     if count > 3:
-        rate(4)
+        rate(1)
         plot(h)
     elabel = label(pos=vector(700, 400, 0), text="E=", box=0)
     elabel.text = "E=%13.10f" % E
